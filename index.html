@@ -1,0 +1,2734 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f5bd3">
+<title>옷 사이즈 변환 · 신발 사이즈 · 브라 사이즈 계산기 — 한국·미국·유럽·일본 사이즈표</title>
+<meta name="description" content="여성 옷 44·55·66, 남성 S·M·L, 바지 허리 인치, 신발 mm, 브라 75B, 아이 옷·아이 신발 사이즈를 미국·영국·유럽·일본 사이즈로 바로 바꿔 줍니다. 가슴둘레·허리·발 길이·밑가슴을 재서 넣으면 내 사이즈를 찾아 주고, 옷 사이즈표·신발 사이즈표·브라 사이즈표, 인쇄용 발 길이 측정지 PDF, 가족 사이즈 수첩과 링크 보내기까지. 설치·가입 없이 무료.">
+<meta property="og:title" content="옷·신발 사이즈 변환 · 한국·미국·유럽·일본 한 번에">
+<meta property="og:description" content="55는 미국 몇? 250mm는 US 몇? 여성·남성 옷, 바지 인치, 신발, 브라, 아이 옷 사이즈를 나라별로 바꾸고 치수로 내 사이즈를 찾아요.">
+<meta property="og:type" content="website">
+<!-- 링크 미리보기 그림: 스크래퍼는 절대 주소만 읽으므로 배포 주소로 적는다. 그림은 make_thumbnail.py 가 만든 og-image.png(1200×630) -->
+<meta property="og:image" content="https://hwj-hub.github.io/clothes_size/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="옷·신발 사이즈 변환 — 여성 옷 55를 고르면 미국·영국·유럽·일본 사이즈와 가슴둘레가 한 표로 나오는 화면">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%91%95%3C/text%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  color-scheme:light dark;
+  --bg:#f2f4f8; --card:#fff; --card2:#f7f8fb; --fg:#151a26; --muted:#556072; --line:#e0e4ec;
+  --accent:#2f5bd3; --accent2:#7c3aed; --afg:#fff;
+  --ok:#0f766e; --okbg:#e6f3f1; --warn:#b45309; --warnbg:#fef4e6; --danger:#c81e1e; --dangerbg:#fdecec;
+  --info:#475569; --infobg:#eef1f6;
+  --shadow:0 1px 2px rgba(16,24,40,.05),0 8px 24px -14px rgba(16,24,40,.32);
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){
+ :root{
+  --bg:#0c0f16; --card:#161b26; --card2:#121620; --fg:#eef1f8; --muted:#a8b1c4; --line:#2a3244;
+  --accent:#8fb0ff; --accent2:#c4a5ff; --afg:#0b1430;
+  --ok:#34d399; --okbg:#0f2a22; --warn:#fbbf24; --warnbg:#2a2110; --danger:#f87171; --dangerbg:#2c1414;
+  --info:#c3ccd8; --infobg:#1f242e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.8);
+ }
+}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);line-height:1.55;word-break:keep-all;overflow-wrap:anywhere;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",Roboto,sans-serif;
+  -webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:1180px;margin:0 auto;padding:0 14px calc(70px + env(safe-area-inset-bottom))}
+.hide{display:none !important}
+.nw{white-space:nowrap}
+
+/* ══ 광고 슬롯 ══ 자리만 비워 두고 화면 폭에 맞는 크기를 AD 가 채운다.
+   크기를 미리 잡아 두어 광고가 늦게 떠도 화면이 밀리지 않는다(애드핏: 광고 공간은 고정되어야 함) */
+.ad-slot{display:flex;align-items:center;justify-content:center;margin:10px auto;max-width:100%}
+.ad-top{width:320px;height:50px;max-width:100%}
+.ad-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;border:1px dashed var(--line);
+  border-radius:8px;background:var(--card2);color:var(--muted);font-size:11px;letter-spacing:.08em;font-weight:600}
+/* ── 인앱 브라우저 안내 띠 ── 앱 안 WebView 는 파일을 내려받지 못한다 */
+.iabar{display:none;align-items:center;gap:10px;margin:10px 0 0;padding:11px 12px;border-radius:12px;
+  background:var(--warnbg);border:1px solid color-mix(in srgb,var(--warn) 34%,transparent);line-height:1.5}
+body.inapp .iabar{display:flex}
+.iabar .ia-t{flex:1 1 auto;min-width:0;font-size:12.5px;font-weight:700;color:var(--fg)}
+.iabar .ia-t small{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-top:2px}
+.iabar .ia-go{flex:0 0 auto;font:inherit;font-size:12.5px;font-weight:800;color:#fff;border:0;border-radius:999px;
+  padding:9px 14px;min-height:38px;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+@media (prefers-color-scheme:dark){.iabar .ia-go{color:var(--afg)}}
+/* 닫기는 휴대폰에서 누르기 쉽게 36px(터치 대상 최소) */
+.iabar .ia-x{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;
+  color:var(--muted);font:inherit;font-size:12px;line-height:1;cursor:pointer}
+/* ── 앱 안에서 열었을 때 막는 창 ── 토스트(z-index 99)보다는 아래에 둔다 */
+.iamodal{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;padding:18px;
+  background:rgba(8,14,20,.72);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+body.ia-lock{overflow:hidden}
+body.ia-lock .iamodal{display:flex}
+body.ia-lock .wrap{pointer-events:none}
+.iasheet{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);
+  width:100%;max-width:420px;max-height:92vh;overflow:auto;padding:22px 18px 16px;text-align:center}
+.iasheet .iaic{font-size:34px;line-height:1;margin-bottom:10px}
+.iasheet h2{font-size:17.5px;font-weight:800;letter-spacing:-.02em;margin:0 0 10px;line-height:1.45}
+.iap{font-size:13.5px;font-weight:600;color:var(--muted);line-height:1.7;margin:0 0 14px}
+.iap b{color:var(--fg);font-weight:800}
+.iasteps{text-align:left;margin:0 0 16px;padding:12px 14px 12px 32px;border-radius:12px;background:var(--card2);
+  font-size:13px;font-weight:600;color:var(--muted);line-height:1.7}
+.iasteps li+li{margin-top:5px}
+.iasteps b{color:var(--fg);font-weight:800}
+.iabtn{display:block;width:100%;font:inherit;font-size:15px;font-weight:800;color:#fff;border:0;border-radius:12px;
+  padding:14px;min-height:52px;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:var(--shadow)}
+@media (prefers-color-scheme:dark){.iabtn{color:var(--afg)}}
+.iafine{margin:12px 0 0;font-size:12px;font-weight:600;color:var(--muted);line-height:1.6}
+.iafine button{font:inherit;font-size:12px;font-weight:700;color:var(--muted);background:none;border:0;padding:6px 8px;
+  text-decoration:underline;cursor:pointer;min-height:36px}
+.dwarn{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--warnbg);font-size:12.5px;font-weight:700;line-height:1.6}
+/* 문장 속 단추라 줄 높이는 그대로 두고(음수 여백) 누르는 면만 넓힌다 */
+.dwarn button{font:inherit;font-size:12.5px;font-weight:800;color:var(--accent);background:none;border:0;padding:9px 2px;margin:-9px 0;
+  text-decoration:underline;cursor:pointer}
+.ad-lab{display:block;text-align:center;font-size:9.5px;font-weight:700;letter-spacing:.14em;color:var(--muted);opacity:.7;margin:12px 0 -4px}
+body.no-ad .ad-slot,.ad-none{display:none !important}
+/* PC 옆 칸 — 결과 카드 바로 위 320×50 (좁은 화면에서는 숨긴다) */
+@media (max-width:979px){#ad-side{display:none}}
+@media (min-width:980px){#ad-side{margin:14px auto 0}}
+
+/* ── 하단 오버형 ── 콘텐츠를 가리지 않도록 본문 아래 여백을 같이 늘린다(애드핏: 콘텐츠를 덮는 배치 금지).
+   입력 중(아래 바가 떠 있을 때)에는 띄우지 않는다 — 핵심 행동 중 광고 노출 금지 조항 */
+#anchor{position:fixed;left:0;right:0;bottom:0;z-index:45;display:flex;align-items:center;justify-content:center;
+  background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 22px -14px rgba(0,0,0,.55);
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));transform:translateY(120%);
+  /* 내려가 있어도 「광고」 라벨(top:-11px)과 닫기(top:-38px)는 바 위쪽에 붙어 있어 화면에 걸쳐 보인다 → 통째로 감춘다.
+     미끄러져 내려간 뒤(.22s) 감추고, 올라올 때는 바로 보이게 한다.
+     ins 는 바가 올라온 뒤에 preload 로 만들므로 애드핏 보임 검사와는 무관하다 */
+  visibility:hidden;pointer-events:none;transition:transform .22s,visibility 0s linear .22s}
+#anchor.on{transform:none;visibility:visible;pointer-events:auto;transition:transform .22s,visibility 0s}
+#anchor .ad-slot{margin:0}
+#anchor .amk{position:absolute;left:10px;top:-11px;font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--muted);
+  background:var(--card);border:1px solid var(--line);border-radius:5px;padding:0 5px;line-height:15px}
+/* 닫기는 광고 영역 밖에 둔다 — 광고 안에 닫기 버튼을 넣는 것은 금지(오클릭 방지) */
+#anchor .axl{position:absolute;right:6px;top:-38px;width:36px;height:36px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:var(--muted);font-size:13px;line-height:1;box-shadow:var(--shadow)}
+#anchor .axl::before{content:'';position:absolute;inset:-6px}
+body.anch .wrap{padding-bottom:calc(124px + env(safe-area-inset-bottom))}
+body.anch #toast{bottom:calc(118px + env(safe-area-inset-bottom))}
+@media (min-width:980px){#anchor{display:none}}
+
+/* ── 저장 완료 카드 ── 화면을 덮지 않고 본문 흐름 안에 펼친다(애드핏: 콘텐츠를 덮거나 가리는 영역에 광고 배치 금지) */
+#doneCard{border-color:color-mix(in srgb,var(--ok) 40%,var(--line))}
+#doneCard .ad-lab{margin-top:16px}
+.dmsg{margin:0 0 10px;font-size:14px;font-weight:700;line-height:1.6}
+.dsteps{margin:0;padding:0 0 0 20px;font-size:13px;font-weight:600;line-height:1.75;color:var(--muted)}
+.dsteps b{color:var(--fg);font-weight:800}
+
+header{text-align:center;padding:14px 0 2px}
+.logo{display:inline-flex;align-items:center;gap:9px;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.logo .ico{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:var(--shadow)}
+.tag{font-size:14.5px;font-weight:600;color:var(--muted);margin:8px 0 0;text-wrap:balance}
+.tag b{color:var(--fg)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.badge{font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--okbg);color:var(--ok);border:1px solid transparent}
+.badge.gray{background:var(--card2);color:var(--muted);border-color:var(--line)}
+
+.toolbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+
+/* ── 두 칸 배치 · 넓은 화면에서 미리보기를 옆에 붙인다 ── */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:0 16px}
+@media (min-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr) 430px;align-items:start}
+  /* 옆 칸 맨 위에 광고가 들어가므로 미리보기 높이를 그만큼 줄여 「PDF로 저장」이 화면 안에 남게 한다.
+     옆 칸은 화면 높이 안에서 따로 스크롤한다 — sticky 만 두면 옆 칸이 화면보다 길 때
+     맨 위에서 저장했을 때 펼쳐지는 완료 카드(300×250)가 화면 아래로 빠진다 */
+  .side{position:sticky;top:8px;max-height:100vh;overflow:auto;padding-bottom:10px;scrollbar-width:thin}
+  .side .pv-pages{max-height:calc(100vh - 480px);min-height:320px;overflow:auto}
+}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-top:14px}
+.card h2{font-size:12px;font-weight:800;color:var(--muted);margin:0 0 12px;letter-spacing:.07em;
+  display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card h2 .n{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;margin-right:6px;
+  background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);letter-spacing:0;font-size:11.5px}
+.card h2 .opt{font-size:10.5px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;letter-spacing:.02em}
+
+/* ── 폼 ── */
+.row{margin-top:14px}
+.lab{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:13.5px;font-weight:800;margin-bottom:7px}
+.lab .hint{font-weight:500;color:var(--muted);font-size:12px;text-align:right}
+.lab>span:first-child{flex:0 0 auto}
+input[type=text],input[type=tel],input[type=date],select,textarea{font:inherit;font-size:16px;color:var(--fg);background:var(--card2);
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:46px;width:100%;min-width:0}
+input[type=date]{-webkit-appearance:none;appearance:none;display:block}
+input::placeholder,textarea::placeholder{color:color-mix(in srgb,var(--muted) 70%,transparent)}
+textarea{resize:vertical;line-height:1.6}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.grid2{display:flex;gap:10px;flex-wrap:wrap}
+.grid2>div{flex:1 1 180px;min-width:0}
+.grid2>div.wide{flex:2 1 240px}
+.seg{display:flex;gap:5px;flex-wrap:wrap}
+.seg button,.rgrid button,.tgrid button{flex:1 1 0;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:inherit;
+  font-size:13.5px;font-weight:800;padding:9px 8px;border-radius:10px;cursor:pointer;min-height:46px;transition:.15s;min-width:72px}
+.seg button:hover,.rgrid button:hover,.tgrid button:hover{border-color:var(--accent)}
+.seg button.on,.rgrid button.on,.tgrid button.on{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.seg button .s,.rgrid button .s,.tgrid button .s{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:1px;line-height:1.4}
+.seg button.on .s,.rgrid button.on .s,.tgrid button.on .s{color:var(--accent)}
+.rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.rgrid button{min-width:0;padding:8px 6px}
+@media (min-width:600px){.rgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* 문서 종류 — 휴대폰 2칸, 넓으면 4칸 */
+.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.tgrid button{min-width:0;padding:11px 10px;text-align:left;min-height:64px}
+.tgrid button b{display:block;font-size:14.5px;font-weight:800;color:var(--fg)}
+.tgrid button.on b{color:var(--accent)}
+@media (min-width:600px){.tgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.rinfo{margin-top:10px;border-radius:11px;padding:9px 11px 9px 12px;font-size:12.5px;font-weight:700;line-height:1.65;border-left:3px solid}
+.rinfo:empty{display:none}
+.rinfo.ok{background:var(--okbg);color:var(--ok)}
+.rinfo.warn{background:var(--warnbg);color:var(--warn)}
+.rinfo.info{background:var(--infobg);color:var(--info)}
+.chk{display:flex;align-items:flex-start;gap:9px;font-size:14px;font-weight:700;cursor:pointer;padding:8px 0;margin-top:4px}
+.chk input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto;margin:2px 0 0}
+.chk .d{display:block;font-size:12.5px;font-weight:600;color:var(--muted);line-height:1.6;margin-top:1px}
+.unit{display:flex;gap:8px;align-items:center}
+.unit input{flex:1 1 auto}
+.unit span{flex:0 0 auto;font-size:14px;font-weight:800;color:var(--muted)}
+.unit.short input{flex:0 1 90px;text-align:center}
+.sub{border-left:3px solid color-mix(in srgb,var(--accent) 30%,transparent);padding-left:12px;margin-left:2px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chips:empty{display:none}
+.chips button{border:1px solid var(--line);background:var(--card);color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;
+  padding:6px 11px;border-radius:999px;cursor:pointer;min-height:38px;text-align:left}
+.chips button:hover{border-color:var(--accent);color:var(--accent)}
+.chips button.on{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.party{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;background:var(--card2)}
+.party.first{margin-top:0}
+.party .grid2{margin-top:8px}
+.party .grid2:first-of-type{margin-top:0}
+.party input,.party textarea{background:var(--card)}
+.ph{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;margin-bottom:9px}
+.ph em{font-style:normal;font-size:11.5px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;background:var(--card)}
+.fine{font-size:12px;font-weight:600;color:var(--muted);line-height:1.65;margin:9px 0 0}
+.fine b{color:var(--fg)}
+.cnote{font-size:12px;font-weight:700;color:var(--accent);margin:7px 0 0;line-height:1.6}
+.cnote:empty{display:none}
+
+.mini{border:1px solid var(--line);background:var(--card);color:var(--fg);font:inherit;font-size:13px;font-weight:700;
+  padding:9px 14px;border-radius:999px;cursor:pointer;min-height:42px;transition:.15s}
+.mini:hover{border-color:var(--accent)}
+.btn{flex:1 1 130px;border:1px solid var(--line);background:var(--card2);color:var(--fg);font:inherit;font-size:14px;font-weight:800;
+  padding:11px 12px;border-radius:12px;cursor:pointer;min-height:48px;transition:.15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn:disabled{opacity:.5;cursor:progress}
+.btn.pri{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+@media (prefers-color-scheme:dark){.btn.pri{color:var(--afg)}}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.actions .btn.pri{flex-basis:100%}
+
+/* ── 결과 카드 ── */
+.pv h2 .pvinfo{letter-spacing:.02em;font-weight:700}
+.pv-pages{display:flex;flex-direction:column;gap:12px;background:color-mix(in srgb,var(--muted) 14%,var(--card2));border-radius:12px;padding:12px;
+  border:1px solid var(--line)}
+.pv-pages canvas{display:block;width:100%;height:auto;background:#fff;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.18),0 6px 18px -10px rgba(0,0,0,.35);cursor:zoom-in}
+
+/* ── 점검 ── */
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.checks li{position:relative;border-radius:11px;padding:9px 11px 9px 34px;font-size:12.5px;font-weight:600;line-height:1.65}
+.checks li b{font-weight:800}
+.checks li::before{position:absolute;left:10px;top:9px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;
+  font-size:10.5px;font-weight:900;line-height:1}
+.checks li.ok{background:var(--okbg);color:var(--ok)}
+.checks li.ok::before{content:"✓";background:var(--ok);color:var(--okbg)}
+.checks li.info{background:var(--infobg);color:var(--info)}
+.checks li.info::before{content:"i";background:var(--info);color:var(--infobg)}
+.checks li.warn{background:var(--warnbg);color:var(--warn)}
+.checks li.warn::before{content:"!";background:var(--warn);color:var(--warnbg)}
+.checks li.bad{background:var(--dangerbg);color:var(--danger)}
+.checks li.bad::before{content:"✕";background:var(--danger);color:var(--dangerbg)}
+
+/* ── 안내 ── */
+.steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.steps li{position:relative;padding-left:32px;margin-bottom:12px;font-size:14px;font-weight:600;line-height:1.7;counter-increment:st}
+.steps li:last-child{margin-bottom:0}
+.steps li::before{content:counter(st);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+  font-size:12px;font-weight:800;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.steps li b{font-weight:800}
+.steps li .d{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+.tbw{overflow-x:auto;margin:0 -2px;-webkit-overflow-scrolling:touch}
+table.kt{width:100%;min-width:560px;border-collapse:collapse;font-size:13px;line-height:1.6}
+table.kt th,table.kt td{border:1px solid var(--line);padding:9px 10px;vertical-align:top;text-align:left}
+table.kt th{background:var(--card2);font-weight:800;white-space:nowrap}
+table.kt td b{font-weight:800}
+table.kt td.k{font-weight:800;white-space:nowrap}
+.tnote{font-size:12px;font-weight:600;color:var(--muted);line-height:1.7;margin:10px 0 0}
+details{border-top:1px solid var(--line);padding:12px 0}
+details:first-of-type{border-top:0}
+summary{cursor:pointer;font-weight:700;font-size:14px;list-style:none;padding:10px 0;margin:-10px 0}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"＋ ";color:var(--accent);font-weight:800}
+details[open] summary::before{content:"－ "}
+details p{margin:8px 0 0;font-size:13.5px;color:var(--muted);line-height:1.8}
+details p b{color:var(--fg)}
+
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:22px;line-height:1.8}
+footer b{color:var(--fg)}
+footer a{color:inherit}
+
+/* ══ 주의 문구 ══ */
+.nbx{border:1px solid var(--warn);border-radius:14px;background:var(--warnbg);padding:14px 15px;margin-top:14px}
+.nbx-h{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:800;color:var(--warn);margin:0 0 10px}
+.nbx-h .ic{flex:0 0 auto;width:19px;height:19px;border-radius:6px;background:var(--warn);color:var(--warnbg);
+  font-size:12px;font-weight:800;display:grid;place-items:center;line-height:1}
+.nbx ul{list-style:none;margin:0;padding:0}
+.nbx li{position:relative;padding-left:12px;margin-bottom:7px;font-size:12px;font-weight:600;line-height:1.68;color:var(--warn)}
+.nbx li:last-child{margin-bottom:0}
+.nbx li::before{content:"·";position:absolute;left:1px;top:-1px;font-weight:800}
+.nbx li b{font-weight:800}
+.nbx .nbx-f{margin:11px 0 0;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--warn) 32%,transparent);
+  font-size:12px;font-weight:700;line-height:1.72;color:var(--warn)}
+.nbx .nbx-f b{font-weight:800}
+
+/* ── 모바일 하단 바 ── */
+#mbar{position:fixed;left:0;right:0;bottom:0;z-index:50;transform:translateY(115%);transition:transform .22s;
+  background:var(--card);border-top:1px solid var(--line);box-shadow:0 -8px 22px -14px rgba(0,0,0,.55);
+  padding:9px 14px calc(9px + env(safe-area-inset-bottom))}
+#mbar.on{transform:none}
+#mbar .in{max-width:700px;margin:0 auto;display:flex;align-items:center;gap:10px}
+#mbar .k{flex:1 1 auto;min-width:0;font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.03em}
+#mbar .k b{display:block;font-size:13.5px;font-weight:800;color:var(--fg);letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mbar .go{flex:0 0 auto;font:inherit;font-size:13px;font-weight:800;color:#fff;padding:10px 15px;border-radius:999px;border:0;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));min-height:42px}
+@media (prefers-color-scheme:dark){#mbar .go{color:var(--afg)}}
+@media (min-width:980px){#mbar{display:none}}
+
+#toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#151b2b;color:#fff;font-size:13.5px;font-weight:700;line-height:1.5;
+  padding:10px 16px;border-radius:14px;width:max-content;opacity:0;pointer-events:none;transition:.25s;z-index:99;max-width:92vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-color-scheme:dark){#toast{background:#e8edf8;color:#0b1430}}
+
+@media (max-width:430px){
+  .lab{flex-direction:column;align-items:stretch;gap:2px}
+  .lab .hint{text-align:left}
+  .card{padding:14px}
+  .seg button{font-size:13px;min-width:0}
+  .rgrid button{font-size:13px}
+  .tag{font-size:14px}
+  .rsbox{padding-left:0}
+  .tgrid button b{font-size:14px}
+}
+/* ══════════ 옷·신발 사이즈 변환 전용 ══════════ */
+/* 휴대폰 — 입력 → 결과(저장) → 완료 카드 → 수첩 순서로 두 칸을 한 줄로 푼다 */
+@media (max-width:979px){
+  .layout{display:flex;flex-direction:column}
+  .layout>main,.layout>aside{display:contents}
+  #cForm{order:1} #ad-side{order:2} #pvCard{order:3} #doneCard{order:4} #cHist{order:5} #cQuick{order:6}
+}
+/* 받은 링크 띠 */
+.rcvbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 0;padding:12px 14px;border-radius:14px;
+  background:color-mix(in srgb,var(--accent) 9%,var(--card));border:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+.rcvbar.hide{display:none}
+.rc-t{flex:1 1 240px;min-width:0;font-size:13.5px;line-height:1.5}
+.rc-t small{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-top:2px}
+.rc-b{display:flex;gap:6px;flex:0 0 auto;flex-wrap:wrap}
+.rc-b .btn{min-height:42px}
+/* 갈래 — 휴대폰 4칸 두 줄 */
+.catg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.catg button{min-width:0;padding:8px 4px 7px;min-height:58px;font-size:13px}
+.catg button i{display:block;font-style:normal;font-size:19px;line-height:1.1;margin-bottom:2px}
+.catg button .s{font-size:10.5px}
+.modeg{margin-top:12px}
+.modeg button{min-height:52px}
+.sysg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.sysg button{min-width:0;padding:8px 4px;font-size:13px}
+@media (min-width:600px){.sysg{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.selrow{display:flex;gap:8px}
+.selrow select{flex:1 1 0;font-size:17px;font-weight:800;min-height:50px}
+.pane{margin-top:2px}
+.op{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 7px;margin-left:4px;vertical-align:1px}
+.unit .u{min-width:34px;text-align:left}
+.useg button{flex:0 0 auto;min-width:70px}
+.vnote{margin:12px 0 0;padding:9px 12px;border-radius:11px;background:var(--infobg);color:var(--info);font-size:12.5px;font-weight:700;line-height:1.6}
+/* 재는 법 */
+.howto{margin-top:12px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card2)}
+.howto summary{font-size:13.5px}
+.howto ol{margin:8px 0 0;padding-left:20px;font-size:13px;font-weight:600;color:var(--muted);line-height:1.75}
+.howto ol b{color:var(--fg)}
+.howto svg{display:block;width:100%;max-width:300px;height:auto;margin:8px auto 2px}
+.hw-l{fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.hw-m{fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:5 4}
+.hw-t{font-size:11px;font-weight:800;fill:var(--accent)}
+/* 결과 */
+.rempty{margin:0;padding:14px 8px;text-align:center;font-size:13.5px;font-weight:700;color:var(--muted);line-height:1.6;
+  border:1px dashed var(--line);border-radius:12px;background:var(--card2)}
+.rhead{display:flex;align-items:center;gap:14px;margin:0 0 10px;padding:12px 14px;border-radius:14px;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,var(--card)),color-mix(in srgb,var(--accent2) 7%,var(--card)));
+  border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+.rbig{flex:0 0 auto;max-width:60%;font-size:48px;font-weight:800;line-height:1.05;color:var(--accent);letter-spacing:-.03em;font-variant-numeric:tabular-nums;overflow-wrap:normal;word-break:keep-all}
+.rbig.long{font-size:34px}
+.rbig small{font-size:18px;margin-left:3px;letter-spacing:0}
+.rsub2{flex:1 1 auto;min-width:0;margin:0;font-size:13px;font-weight:600;color:var(--muted);line-height:1.7}
+.rsub2 b{color:var(--fg);font-weight:800}
+.rtbl{width:100%;border-collapse:collapse;margin:0 0 10px;font-size:13.5px}
+.rtbl th,.rtbl td{padding:7px 4px;border-bottom:1px solid var(--line);vertical-align:baseline}
+.rtbl tr:last-child th,.rtbl tr:last-child td{border-bottom:0}
+.rtbl th{text-align:left;font-weight:700;color:var(--muted);white-space:nowrap}
+.rtbl td{text-align:right}
+.rtbl td b{font-size:15.5px;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums}
+.rtbl td small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+.rtbl tr:first-child th,.rtbl tr:first-child td b{color:var(--accent)}
+.pvacts.off{display:none}
+.pvacts .row:first-child{margin-top:12px}
+.actions .btn.wide{flex-basis:100%}
+/* 수첩 */
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:flex;align-items:center;gap:6px;border-top:1px solid var(--line);padding:4px 0}
+.hist li:first-child{border-top:0}
+.hv{flex:1 1 auto;min-width:0;display:block;text-align:left;font:inherit;color:var(--fg);background:none;border:0;border-radius:10px;padding:8px 6px;cursor:pointer;min-height:48px}
+.hv:hover{background:var(--card2)}
+.hl{display:flex;align-items:baseline;gap:8px;min-width:0}
+.hl i{flex:0 0 auto;font-style:normal;font-size:16px}
+.hl b{flex:0 0 auto;font-size:18px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+.hl b small{font-size:12px;margin-left:1px}
+.hl span{min-width:0;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hs{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-top:2px;line-height:1.5}
+.hx{flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--muted);font:inherit;font-size:13px;cursor:pointer}
+#histTools .mini{flex:0 0 auto;margin-left:auto}
+.mini.danger{color:var(--danger)}
+.mini.armed{background:var(--dangerbg);border-color:var(--danger)}
+/* 자주 찾는 사이즈 */
+.qk{margin-top:0}
+.qk button{min-height:40px}
+/* 사이즈표 */
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 4px}
+.jump a{font-size:12.5px;font-weight:700;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--card2);min-height:38px;display:inline-flex;align-items:center}
+table.kt.st{min-width:0}
+table.kt.st th,table.kt.st td{text-align:center;font-variant-numeric:tabular-nums;padding:8px 6px}
+table.kt.st td:first-child{font-weight:800;color:var(--accent)}
+table.kt.st.w9{min-width:640px}
+table.kt.st.w7{min-width:520px}
+.card h3{font-size:15px;font-weight:800;margin:18px 0 8px;letter-spacing:-.01em}
+.card h3:first-of-type{margin-top:4px}
+.gotool{font:inherit;font-size:12.5px;font-weight:800;color:var(--accent);background:none;border:0;padding:8px 0;margin-top:4px;cursor:pointer;text-decoration:underline}
+@media (max-width:430px){
+  .rbig{font-size:42px}
+  .rbig.long{font-size:30px}
+  .catg button{font-size:12.5px}
+  .sysg button{font-size:12.5px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ╔══════════════════════════════════════════════════════════════════════╗
+     ║  광고 자리 ① 맨 위 · 320×50 (모바일·PC 공통)                        ║
+     ║  단위 ID 는 스크립트 아래쪽 AD.units 한 곳에서 바꿉니다.               ║
+     ║  한 화면 3곳 — 모바일 ① 맨 위 ② 저장 완료 카드 ③ 하단 오버형           ║
+     ║              PC   ① 맨 위 ② 옆 칸 결과 카드 위 ③ 저장 완료 카드        ║
+     ╚══════════════════════════════════════════════════════════════════════╝ -->
+<div class="ad-slot ad-top" id="ad-top"></div>
+
+<!-- 네이버·카카오 앱 안에서 열렸을 때만 보이는 띠 (body.inapp) -->
+<div class="iabar" id="iabar">
+  <div class="ia-t"><span id="iaMsg">앱 안에서는 그림·PDF 저장이 안 될 수 있어요.</span>
+    <small id="iaSub">사이즈 바꾸기는 그대로 됩니다.</small></div>
+  <button class="ia-go" id="iaGo" type="button">크롬에서 열기</button>
+  <button class="ia-x" id="iaX" type="button" aria-label="안내 닫기">✕</button>
+</div>
+
+<!-- 받은 링크로 열었을 때 -->
+<div class="rcvbar hide" id="rcvBar" role="region" aria-label="받은 사이즈">
+  <div class="rc-t"><b id="rcvTitle">받은 사이즈가 있어요.</b><small id="rcvSub"></small></div>
+  <div class="rc-b"><button class="btn pri" id="rcvAdd" type="button">내 수첩에 더하기</button><button class="btn" id="rcvNo" type="button">닫기</button></div>
+</div>
+
+<header>
+  <div class="logo"><span class="ico">👕</span><span>옷·신발 사이즈 변환</span></div>
+  <p class="tag"><b>55는 미국 몇? 250mm는 US 몇?</b> · <span class="nw">여성·남성 옷</span> · <span class="nw">바지 허리</span> · <span class="nw">신발</span> · <span class="nw">브라</span> · <span class="nw">아이 옷·신발</span>을 나라별로 바꾸고, 치수를 재서 내 사이즈를 찾아요</p>
+  <div class="badges">
+    <span class="badge">🌏 한국 · 미국 · 영국 · 유럽 · 일본</span>
+    <span class="badge gray">치수(cm·인치)로 찾기</span>
+    <span class="badge gray">발 길이 측정지 PDF</span>
+    <span class="badge gray">무료 · 설치·가입 없음</span>
+  </div>
+</header>
+
+<div class="layout">
+<main id="form">
+
+  <section class="card" id="cForm">
+    <h2><span><span class="n">1</span>무엇의 사이즈인가요</span></h2>
+    <div class="seg catg" data-seg="cat">
+      <button type="button" data-v="women" class="on"><i>👗</i>여성 옷<span class="s">44·55·66</span></button>
+      <button type="button" data-v="men"><i>👔</i>남성 옷<span class="s">S·M·L</span></button>
+      <button type="button" data-v="pants"><i>👖</i>바지<span class="s">허리 인치</span></button>
+      <button type="button" data-v="shoes"><i>👟</i>신발<span class="s">mm·US·EU</span></button>
+      <button type="button" data-v="bra"><i>👙</i>브라<span class="s">75B·34B</span></button>
+      <button type="button" data-v="kids"><i>🧸</i>아이 옷<span class="s">키 90·100</span></button>
+      <button type="button" data-v="kshoes"><i>🧒</i>아이 신발<span class="s">mm·C·Y</span></button>
+    </div>
+    <div class="seg modeg" data-seg="mode">
+      <button type="button" data-v="conv" class="on">사이즈 바꾸기<span class="s">알고 있는 사이즈로</span></button>
+      <button type="button" data-v="meas">치수로 찾기<span class="s">cm·인치를 재서</span></button>
+    </div>
+
+    <!-- 사이즈 바꾸기 -->
+    <div class="pane" id="pane-conv">
+      <div class="row"><div class="lab"><span>알고 있는 사이즈 표기</span><span class="hint" id="sysHint">옷 안쪽 라벨이나 쇼핑몰에 적힌 표기</span></div>
+        <div class="seg sysg" data-seg="sys" id="sysSeg"></div></div>
+      <div class="row"><div class="lab"><label for="convSel" id="convLab">사이즈</label><span class="hint">고르면 바로 바뀌어요</span></div>
+        <div class="selrow"><select id="convSel" aria-labelledby="convLab"></select><select id="convCup" class="hide" aria-label="컵"></select></div></div>
+      <p class="vnote hide" id="viewNote"></p>
+    </div>
+
+    <!-- 치수로 찾기 -->
+    <div class="pane hide" id="pane-meas">
+      <div class="row" id="unitRow"><div class="lab"><span>줄자 단위</span><span class="hint">바꾸면 적은 숫자도 바꿔 적어요</span></div>
+        <div class="seg useg" data-seg="unit"><button type="button" data-v="cm" class="on">cm</button><button type="button" data-v="in">인치</button></div></div>
+      <div class="row hide" id="pmRow"><div class="lab"><span>무엇을 쟀나요</span><span class="hint">잘 맞는 바지로 재도 돼요</span></div>
+        <div class="seg" data-seg="pm">
+          <button type="button" data-v="body" class="on">몸 허리둘레<span class="s">줄자로 한 바퀴</span></button>
+          <button type="button" data-v="flat">바지 허리 단면<span class="s">펴 놓고 한쪽 폭</span></button>
+        </div></div>
+      <div id="measFields"></div>
+      <div class="row hide" id="wideRow"><div class="lab"><span>발볼</span><span class="hint">넓으면 5mm 크게 권해요</span></div>
+        <div class="seg" data-seg="wide">
+          <button type="button" data-v="no" class="on">보통</button>
+          <button type="button" data-v="yes">넓은 편</button>
+        </div></div>
+      <p class="cnote" id="measNote"></p>
+
+      <details class="howto" data-cat="women"><summary>가슴둘레 재는 법</summary>
+        <svg viewBox="0 0 300 120" aria-hidden="true"><path class="hw-l" d="M110 10 q40 -6 80 0 l14 30 q-6 40 2 76 h-112 q8 -36 2 -76 z"/><path class="hw-m" d="M100 46 q50 14 100 0"/><text class="hw-t" x="214" y="50">가슴 가장 높은 곳</text></svg>
+        <ol><li>평소 입는 브라를 한 채로, 줄자를 <b>가슴의 가장 높은 곳</b>에 대요.</li><li>줄자가 등 뒤에서 처지지 않게 <b>바닥과 수평</b>으로 한 바퀴 둘러요.</li><li>숨을 편하게 내쉰 상태에서, 살이 눌리지 않을 만큼 감아 읽어요.</li></ol></details>
+      <details class="howto" data-cat="men"><summary>가슴둘레 재는 법</summary>
+        <svg viewBox="0 0 300 120" aria-hidden="true"><path class="hw-l" d="M96 12 q54 -8 108 0 l10 34 q-6 36 0 70 h-128 q6 -34 0 -70 z"/><path class="hw-m" d="M88 44 q62 12 124 0"/><text class="hw-t" x="222" y="48">겨드랑이 바로 아래</text></svg>
+        <ol><li>얇은 티셔츠만 입고 팔을 편하게 내려요.</li><li>줄자를 <b>겨드랑이 바로 아래, 가슴의 가장 굵은 곳</b>에 수평으로 둘러요.</li><li>숨을 내쉰 상태로 손가락 하나가 들어갈 만큼 여유를 두고 읽어요.</li></ol></details>
+      <details class="howto" data-cat="pants"><summary>허리 재는 법 · 바지 단면</summary>
+        <svg viewBox="0 0 300 120" aria-hidden="true"><path class="hw-l" d="M100 14 h100 l10 100 h-44 l-16 -70 l-16 70 h-44 z"/><path class="hw-m" d="M98 24 h104"/><text class="hw-t" x="210" y="28">허리 단면 × 2</text></svg>
+        <ol><li><b>몸에 대고 잴 때</b>: 바지를 입는 높이(청바지는 배꼽 2~3cm 아래, 정장 바지는 배꼽 높이)를 수평으로 한 바퀴 재요.</li><li><b>바지로 잴 때</b>: 잘 맞는 바지의 단추를 채우고 평평하게 펴서, 허리 <b>왼쪽 끝에서 오른쪽 끝까지</b>를 재고 위에서 「바지 허리 단면」을 고르세요(× 2 해서 계산해요).</li><li>쇼핑몰 실측표의 「허리 단면」과 이 값을 견주면 가장 확실해요.</li></ol></details>
+      <details class="howto" data-cat="shoes"><summary>발 길이 재는 법</summary>
+        <svg viewBox="0 0 300 120" aria-hidden="true"><path class="hw-l" d="M40 10 v100"/><path class="hw-l" d="M44 60 q0 -26 40 -28 q80 -4 130 8 q36 10 36 22 q0 12 -36 20 q-60 12 -130 6 q-40 -2 -40 -28 z"/><path class="hw-m" d="M44 96 h206"/><text class="hw-t" x="110" y="112">벽 ~ 가장 긴 발가락 끝</text></svg>
+        <ol><li>A4 종이를 바닥에 놓고 한 변을 <b>벽에 딱 붙여요</b>. 아래 단추로 인쇄용 측정지를 받을 수 있어요.</li><li>신을 양말을 신고 <b>뒤꿈치를 벽에 댄 채</b> 똑바로 서서, 가장 긴 발가락 끝에 펜을 세워 표시해요.</li><li>벽에서 표시까지를 mm 로 재요. 두 발을 다 재서 큰 쪽을 쓰고, 붓는 <b>저녁에</b> 재면 더 정확해요.</li></ol></details>
+      <details class="howto" data-cat="bra"><summary>밑가슴·윗가슴 재는 법</summary>
+        <svg viewBox="0 0 300 120" aria-hidden="true"><path class="hw-l" d="M106 8 q44 -6 88 0 l12 30 q-6 40 0 78 h-112 q6 -38 0 -78 z"/><path class="hw-m" d="M98 44 q52 14 104 0"/><path class="hw-m" d="M100 70 q50 8 100 0"/><text class="hw-t" x="210" y="46">윗가슴</text><text class="hw-t" x="210" y="74">밑가슴</text></svg>
+        <ol><li><b>밑가슴</b>: 가슴 바로 밑을 수평으로, 숨을 내쉰 채 <b>꼭 맞게</b> 재요.</li><li><b>윗가슴</b>: 패드 없는 브라를 하고 똑바로 서서, 가슴의 가장 높은 곳(유두 높이)을 <b>누르지 않게</b> 수평으로 재요.</li><li>두 값의 차이로 컵을 정해요. 몸을 숙이면 값이 바뀌니 똑바로 선 채로 재세요.</li></ol></details>
+      <details class="howto" data-cat="kids"><summary>아이 키 재는 법</summary>
+        <ol><li>신발을 벗고 벽에 <b>뒤꿈치·엉덩이·등</b>을 붙여 바로 서게 해요.</li><li>머리 위에 책을 벽과 직각으로 대고, 닿은 자리를 표시해 바닥에서 재요.</li><li>걷기 전 아기는 눕혀서 머리끝에서 발뒤꿈치까지 재요.</li></ol></details>
+      <details class="howto" data-cat="kshoes"><summary>아이 발 길이 재는 법</summary>
+        <ol><li>아이를 종이 위에 <b>세워서</b> 재요. 앉아서 재면 발이 덜 펴져 작게 나와요.</li><li>뒤꿈치를 벽에 대고, 발가락이 오므라들지 않았는지 보고 가장 긴 발가락 끝을 표시해요.</li><li>아이 발은 금방 자라니 신발을 살 때마다 다시 재 주세요.</li></ol></details>
+    </div>
+  </section>
+
+  <section class="card" id="cQuick">
+    <h2><span>자주 찾는 사이즈 바로 보기</span></h2>
+    <div class="chips qk">
+      <button type="button" data-q="women|kr|55">여성 55 → 미국·유럽</button>
+      <button type="button" data-q="women|kr|66">여성 66 → 미국·유럽</button>
+      <button type="button" data-q="women|jp|11호">일본 11호 → 한국</button>
+      <button type="button" data-q="men|kr|L">남성 L(100) → 미국</button>
+      <button type="button" data-q="men|us|M">미국 남성 M → 한국</button>
+      <button type="button" data-q="pants|in|30">바지 30인치 → cm</button>
+      <button type="button" data-q="pants|in|32">바지 32인치 → cm</button>
+      <button type="button" data-q="shoes|kr|240mm">신발 240mm → US</button>
+      <button type="button" data-q="shoes|kr|250mm">신발 250mm → US</button>
+      <button type="button" data-q="shoes|kr|270mm">신발 270mm → US</button>
+      <button type="button" data-q="shoes|usm|9">미국 남성 9 → mm</button>
+      <button type="button" data-q="shoes|eu|40">유럽 40 → mm</button>
+      <button type="button" data-q="bra|kr|75|B">브라 75B → 해외</button>
+      <button type="button" data-q="bra|us|34|B">미국 34B → 한국</button>
+      <button type="button" data-q="kids|kr|100">아이 옷 100 → 해외</button>
+      <button type="button" data-q="kshoes|kr|150mm">아이 신발 150mm → US</button>
+    </div>
+  </section>
+
+</main>
+
+<aside class="side" id="side">
+  <!-- 광고 자리 · PC 결과 카드 위 320×50 (모바일에서는 숨깁니다) -->
+  <div class="ad-slot" id="ad-side"></div>
+  <section class="card pv" id="pvCard">
+    <h2><span>결과 · 나라별 사이즈</span><span class="pvinfo" id="resMeta"></span></h2>
+    <p class="rempty" id="resEmpty">알고 있는 사이즈를 고르면 나라별 사이즈로 바꿔 드립니다.</p>
+    <div class="hide" id="resBody">
+      <div class="rhead"><div class="rbig" id="resBig"></div><p class="rsub2" id="resSub"></p></div>
+      <table class="rtbl" id="resTbl"></table>
+      <ul class="checks" id="resFacts"></ul>
+    </div>
+    <div class="pvacts" id="pvActs">
+      <div class="row"><div class="lab"><label for="inpWho">누구 사이즈인가요</label><span class="hint">수첩·카드에 들어가요(선택)</span></div>
+        <input type="text" id="inpWho" placeholder="예: 홍길동 · 나 · 엄마 · 첫째" maxlength="20" autocomplete="off" enterkeyhint="done"></div>
+      <div class="actions">
+        <button class="btn pri" id="btnSave" type="button">＋ 사이즈 수첩에 저장</button>
+        <button class="btn" id="btnImg" type="button">🖼️ 사이즈 카드 그림</button>
+        <button class="btn" id="btnCopy" type="button">📋 글로 복사</button>
+        <button class="btn" id="btnShare" type="button">🔗 링크로 보내기</button>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="btn wide" id="btnPdf" type="button">🖨️ 발 길이 측정지 · 신발 사이즈표 PDF (A4)</button>
+    </div>
+    <p class="fine">넣은 치수와 수첩은 이 기기 브라우저에만 남고 어디에도 보내지 않습니다. 「링크로 보내기」는 사이즈를 주소 안에 담아 만듭니다.</p>
+  </section>
+
+  <!-- 저장 완료 카드 · 광고 자리 — 저장을 누른 다음(핵심 행동이 끝난 뒤)에 펼쳐집니다.
+       창으로 화면을 덮지 않고 본문 흐름 안에 두며, 닫기는 광고 영역 밖 머리글에 둡니다. -->
+  <section class="card hide" id="doneCard">
+    <h2><span>저장했습니다</span><button class="mini" id="doneHide" type="button">닫기</button></h2>
+    <p class="dmsg" id="doneMsg"></p>
+    <ol class="dsteps" id="doneSteps"></ol>
+    <p class="dwarn hide" id="doneInapp">저장된 파일이 안 보이나요? 앱 안 브라우저는 내려받기가 막혀 있습니다.
+      <button type="button" id="doneGo">다른 브라우저로 열기</button></p>
+    <div id="doneAd"><span class="ad-lab">광고</span><div class="ad-slot" id="ad-done"></div></div>
+  </section>
+
+  <section class="card" id="cHist">
+    <h2><span>내 사이즈 수첩</span><span class="opt" id="histCount"></span></h2>
+    <p class="rempty" id="histEmpty">「＋ 사이즈 수첩에 저장」을 누르면 여기에 쌓여요. 가족 옷·신발 사이즈를 모아 두고 선물할 때 한 장 그림이나 링크로 보낼 수 있습니다.</p>
+    <ul class="hist" id="histList"></ul>
+    <div class="actions hide" id="histTools">
+      <button class="btn" id="histImg" type="button">🖼️ 수첩 한 장 그림</button>
+      <button class="btn" id="histCopy" type="button">📋 글로 복사</button>
+      <button class="btn" id="histShare" type="button">🔗 링크로 보내기</button>
+      <button class="mini danger" id="histClear" type="button">수첩 모두 지우기</button>
+    </div>
+  </section>
+</aside>
+</div>
+
+<section class="card" id="tables">
+  <h2><span>사이즈표 모음 — 한국 · 미국 · 영국 · 유럽 · 일본</span></h2>
+  <nav class="jump" aria-label="사이즈표 바로 가기">
+    <a href="#t-women">여성 옷</a><a href="#t-men">남성 옷</a><a href="#t-pants">바지 허리</a><a href="#t-shoes">신발</a><a href="#t-bra">브라</a><a href="#t-kids">아이 옷</a><a href="#t-kshoes">아이 신발</a>
+  </nav>
+
+  <h3 id="t-women">여성 옷 사이즈표 (상의·원피스)</h3>
+  <div class="tbw"><table class="kt st w9">
+    <thead><tr><th>한국</th><th>한국 숫자</th><th>국제</th><th>미국</th><th>영국</th><th>유럽(독일)</th><th>프랑스·스페인</th><th>이탈리아</th><th>일본</th><th>가슴둘레</th></tr></thead>
+    <tbody data-cat="women">
+        <tr><td>44</td><td>85</td><td>XS</td><td>00~0</td><td>8</td><td>34</td><td>36</td><td>40</td><td>7호</td><td>80cm</td></tr>
+        <tr><td>55</td><td>90</td><td>S</td><td>2~4</td><td>10</td><td>36</td><td>38</td><td>42</td><td>9~11호</td><td>85cm</td></tr>
+        <tr><td>66</td><td>95</td><td>M</td><td>6</td><td>12</td><td>38~40</td><td>40~42</td><td>44~46</td><td>13~15호</td><td>90cm</td></tr>
+        <tr><td>77</td><td>100</td><td>L</td><td>10</td><td>14</td><td>42</td><td>44</td><td>48</td><td>17호</td><td>95cm</td></tr>
+        <tr><td>88</td><td>105</td><td>XL</td><td>12~14</td><td>14~16</td><td>44</td><td>46</td><td>50</td><td>19호</td><td>100cm</td></tr>
+        <tr><td>99</td><td>110</td><td>2XL</td><td>14~16</td><td>16~18</td><td>46</td><td>48</td><td>52</td><td>21호</td><td>105cm</td></tr>
+      </tbody></table></div>
+  <p class="tnote">한국 사이즈는 국가표준(KS K 0051) 여성 가슴둘레 80·85·90·95·100·105cm 를 44~99 로 놓고, 나라마다 자기 표준의 가슴둘레로 바꾼 값입니다. 두 칸 사이(예: 2~4)는 그 가슴둘레가 두 표기의 가운데쯤이라는 뜻이에요. 국내 쇼핑몰 표 가운데는 「55 = 미국 4 · 유럽 36」처럼 한 칸씩 짝지은 표가 많은데, 실제 치수로 따지면 나라마다 칸 간격이 달라 딱 맞지 않습니다.</p>
+
+  <h3 id="t-men">남성 옷 사이즈표 (상의·셔츠·재킷)</h3>
+  <div class="tbw"><table class="kt st w7">
+    <thead><tr><th>한국</th><th>한국 숫자</th><th>미국</th><th>유럽(정장)</th><th>영·미 정장(인치)</th><th>일본</th><th>가슴둘레</th></tr></thead>
+    <tbody data-cat="men">
+        <tr><td>XS</td><td>85</td><td>XS</td><td>42</td><td>34</td><td>S</td><td>85cm</td></tr>
+        <tr><td>S</td><td>90</td><td>S</td><td>44~46</td><td>36</td><td>M</td><td>90cm</td></tr>
+        <tr><td>M</td><td>95</td><td>S~M</td><td>48</td><td>38</td><td>M~L</td><td>95cm</td></tr>
+        <tr><td>L</td><td>100</td><td>M</td><td>50</td><td>38~40</td><td>L</td><td>100cm</td></tr>
+        <tr><td>XL</td><td>105</td><td>L</td><td>52</td><td>40~42</td><td>L~LL</td><td>105cm</td></tr>
+        <tr><td>2XL</td><td>110</td><td>L~XL</td><td>54~56</td><td>42~44</td><td>LL</td><td>110cm</td></tr>
+        <tr><td>3XL</td><td>115</td><td>XL</td><td>58</td><td>44~46</td><td>3L</td><td>115cm</td></tr>
+      </tbody></table></div>
+  <p class="tnote">한국 남성 사이즈 95·100·105 는 가슴둘레(cm)입니다. 미국 옷은 같은 글자라도 크게 나와 <b>한국 L(100) ≈ 미국 M</b>, 유럽 정장 50 은 가슴둘레 100cm, 영국·미국 정장 40 은 가슴 40인치(101.6cm)예요. 일본은 국가표준(JIS)의 가슴둘레 칸(M 88~96cm)을 썼습니다.</p>
+
+  <h3 id="t-pants">바지 허리 사이즈표 (인치 · cm · S·M·L)</h3>
+  <div class="tbw"><table class="kt st w7">
+    <thead><tr><th>허리 인치</th><th>허리 cm</th><th>남성</th><th>여성</th><th>미국 여성</th></tr></thead>
+    <tbody data-cat="pants">
+        <tr><td>24</td><td>61</td><td>S 미만</td><td>XS(44)</td><td>0 미만</td></tr>
+        <tr><td>25</td><td>64</td><td>S 미만</td><td>XS(44)~S(55)</td><td>0 미만</td></tr>
+        <tr><td>26</td><td>66</td><td>S 미만</td><td>S(55)</td><td>0</td></tr>
+        <tr><td>27</td><td>69</td><td>S 미만</td><td>M(66)</td><td>2</td></tr>
+        <tr><td>28</td><td>71</td><td>S</td><td>M(66)</td><td>4~6</td></tr>
+        <tr><td>29</td><td>74</td><td>S</td><td>L(77)</td><td>6~8</td></tr>
+        <tr><td>30</td><td>76</td><td>M</td><td>L(77)</td><td>8~10</td></tr>
+        <tr><td>31</td><td>79</td><td>M</td><td>XL(88)</td><td>10</td></tr>
+        <tr><td>32</td><td>81</td><td>L</td><td>XL(88)</td><td>12</td></tr>
+        <tr><td>33</td><td>84</td><td>L</td><td>2XL(99)</td><td>12~14</td></tr>
+        <tr><td>34</td><td>86</td><td>XL</td><td>2XL(99)</td><td>14</td></tr>
+        <tr><td>35</td><td>89</td><td>XL</td><td>2XL(99) 초과</td><td>14</td></tr>
+        <tr><td>36</td><td>91</td><td>2XL</td><td>2XL(99) 초과</td><td>14 초과</td></tr>
+        <tr><td>37</td><td>94</td><td>2XL</td><td>2XL(99) 초과</td><td>14 초과</td></tr>
+        <tr><td>38</td><td>97</td><td>3XL</td><td>2XL(99) 초과</td><td>14 초과</td></tr>
+        <tr><td>39</td><td>99</td><td>3XL</td><td>2XL(99) 초과</td><td>14 초과</td></tr>
+        <tr><td>40</td><td>102</td><td>3XL 초과</td><td>2XL(99) 초과</td><td>14 초과</td></tr>
+      </tbody></table></div>
+  <p class="tnote">허리 cm = 인치 × 2.54 를 반올림한 값입니다(30인치 = 76.2cm). 「남성·여성」 칸은 국내 쇼핑몰에서 흔히 쓰는 S·M·L 묶음이라 쇼핑몰마다 1인치쯤 다를 수 있고, 미국 여성 숫자는 미국 표준(ASTM D5585) 허리둘레로 맞췄습니다. 같은 인치라도 핏에 따라 실제 허리가 다르니 상품 실측표의 <b>허리 단면 × 2</b>를 꼭 함께 보세요.</p>
+
+  <h3 id="t-shoes">신발 사이즈표 (어른 · mm → 미국·영국·유럽·일본)</h3>
+  <div class="tbw"><table class="kt st w7">
+    <thead><tr><th>한국(mm)</th><th>미국 남성</th><th>미국 여성</th><th>영국</th><th>유럽</th><th>일본(cm)</th></tr></thead>
+    <tbody data-cat="shoes">
+        <tr><td>220</td><td>4</td><td>5</td><td>3</td><td>35</td><td>22</td></tr>
+        <tr><td>225</td><td>4.5</td><td>5.5</td><td>3.5</td><td>35.5</td><td>22.5</td></tr>
+        <tr><td>230</td><td>5</td><td>6</td><td>4</td><td>36.5</td><td>23</td></tr>
+        <tr><td>235</td><td>5.5</td><td>6.5</td><td>4.5</td><td>37</td><td>23.5</td></tr>
+        <tr><td>240</td><td>6</td><td>7</td><td>5</td><td>38</td><td>24</td></tr>
+        <tr><td>245</td><td>6.5</td><td>7.5</td><td>5.5</td><td>38.5</td><td>24.5</td></tr>
+        <tr><td>250</td><td>7</td><td>8</td><td>6</td><td>39.5</td><td>25</td></tr>
+        <tr><td>255</td><td>7.5</td><td>8.5</td><td>6.5</td><td>40</td><td>25.5</td></tr>
+        <tr><td>260</td><td>8</td><td>9</td><td>7</td><td>41</td><td>26</td></tr>
+        <tr><td>265</td><td>8.5</td><td>9.5</td><td>7.5</td><td>41.5</td><td>26.5</td></tr>
+        <tr><td>270</td><td>9</td><td>10</td><td>8</td><td>42.5</td><td>27</td></tr>
+        <tr><td>275</td><td>9.5</td><td>10.5</td><td>8.5</td><td>43</td><td>27.5</td></tr>
+        <tr><td>280</td><td>10</td><td>11</td><td>9</td><td>44</td><td>28</td></tr>
+        <tr><td>285</td><td>10.5</td><td>11.5</td><td>9.5</td><td>44.5</td><td>28.5</td></tr>
+        <tr><td>290</td><td>11</td><td>12</td><td>10</td><td>45.5</td><td>29</td></tr>
+        <tr><td>295</td><td>11.5</td><td>12.5</td><td>10.5</td><td>46</td><td>29.5</td></tr>
+        <tr><td>300</td><td>12</td><td>13</td><td>11</td><td>47</td><td>30</td></tr>
+      </tbody></table></div>
+  <p class="tnote">한국 신발 사이즈는 <b>발 길이(mm)</b>입니다. 미국은 남성 = cm − 18, 여성 = cm − 17, 영국 = cm − 19, 유럽은 1.5 × cm + 2 를 0.5 단위로 내린 값으로 계산했어요. 유럽 0.5 칸은 약 3.3mm 라 5mm 칸과 딱 맞지 않아, 표에 없는 유럽 숫자(39·42 등)는 앞뒤 칸 사이입니다. 브랜드·모델마다 ±5mm 차이가 날 수 있어요.</p>
+
+  <h3 id="t-bra">브라 사이즈표 (컵 · 밑가슴)</h3>
+  <div class="tbw"><table class="kt st w7">
+    <thead><tr><th>윗가슴 − 밑가슴</th><th>한국·일본 컵</th><th>유럽 컵</th><th>영국 컵</th><th>미국 컵</th></tr></thead>
+    <tbody data-cat="bracup">
+        <tr><td>약 7.5cm</td><td>AA</td><td>-</td><td>-</td><td>-</td></tr>
+        <tr><td>약 10cm</td><td>A</td><td>AA</td><td>AA</td><td>AA</td></tr>
+        <tr><td>약 12.5cm</td><td>B</td><td>A</td><td>A</td><td>A</td></tr>
+        <tr><td>약 15cm</td><td>C</td><td>B</td><td>B</td><td>B</td></tr>
+        <tr><td>약 17.5cm</td><td>D</td><td>C</td><td>C</td><td>C</td></tr>
+        <tr><td>약 20cm</td><td>E</td><td>D~E</td><td>D~DD</td><td>D~DD(E)</td></tr>
+        <tr><td>약 22.5cm</td><td>F</td><td>F</td><td>E</td><td>DDD(F)</td></tr>
+        <tr><td>약 25cm</td><td>G</td><td>G</td><td>F</td><td>G</td></tr>
+      </tbody></table></div>
+  <div class="tbw" style="margin-top:10px"><table class="kt st w7">
+    <thead><tr><th>밑가슴(cm)</th><th>한국·유럽</th><th>영국·미국</th><th>프랑스·스페인</th><th>이탈리아</th><th>호주</th></tr></thead>
+    <tbody data-cat="braband">
+        <tr><td>58~62</td><td>60</td><td>28</td><td>75</td><td>-</td><td>6</td></tr>
+        <tr><td>63~67</td><td>65</td><td>30</td><td>80</td><td>1</td><td>8</td></tr>
+        <tr><td>68~72</td><td>70</td><td>32</td><td>85</td><td>2</td><td>10</td></tr>
+        <tr><td>73~77</td><td>75</td><td>34</td><td>90</td><td>3</td><td>12</td></tr>
+        <tr><td>78~82</td><td>80</td><td>36</td><td>95</td><td>4</td><td>14</td></tr>
+        <tr><td>83~87</td><td>85</td><td>38</td><td>100</td><td>5</td><td>16</td></tr>
+        <tr><td>88~92</td><td>90</td><td>40</td><td>105</td><td>6</td><td>18</td></tr>
+        <tr><td>93~97</td><td>95</td><td>42</td><td>110</td><td>7</td><td>20</td></tr>
+        <tr><td>98~102</td><td>100</td><td>44</td><td>115</td><td>8</td><td>22</td></tr>
+        <tr><td>103~107</td><td>105</td><td>46</td><td>120</td><td>9</td><td>24</td></tr>
+      </tbody></table></div>
+  <p class="tnote">한국·일본은 윗가슴과 밑가슴의 차이를 <b>2.5cm</b> 간격으로 컵을 나누고(A 10 · B 12.5 · C 15cm), 유럽·영국·미국은 <b>2cm</b> 간격(유럽 A 12~14 · B 14~16cm)이라 같은 몸이 한국 B, 유럽 A 로 나올 수 있습니다. D 다음 컵 이름은 나라·브랜드마다 다르니 해외 제품은 그 브랜드 표를 확인하세요.</p>
+
+  <h3 id="t-kids">아이 옷 사이즈표 (키 기준)</h3>
+  <div class="tbw"><table class="kt st w7">
+    <thead><tr><th>한국·일본</th><th>키(약)</th><th>유럽</th><th>영국(나이)</th><th>미국</th></tr></thead>
+    <tbody data-cat="kids">
+        <tr><td>70</td><td>65~75</td><td>74</td><td>6~9개월</td><td>9M</td></tr>
+        <tr><td>80</td><td>75~85</td><td>80</td><td>9~12개월</td><td>18M</td></tr>
+        <tr><td>90</td><td>85~95</td><td>92</td><td>18~24개월</td><td>24M·2T~3T</td></tr>
+        <tr><td>100</td><td>95~105</td><td>104</td><td>3~4세</td><td>4T</td></tr>
+        <tr><td>110</td><td>105~115</td><td>110</td><td>4~5세</td><td>5</td></tr>
+        <tr><td>120</td><td>115~125</td><td>122</td><td>6~7세</td><td>6~7</td></tr>
+        <tr><td>130</td><td>125~135</td><td>134</td><td>8~9세</td><td>8</td></tr>
+        <tr><td>140</td><td>135~145</td><td>140</td><td>9~10세</td><td>10</td></tr>
+        <tr><td>150</td><td>145~155</td><td>152</td><td>11~12세</td><td>12</td></tr>
+        <tr><td>160</td><td>155~165</td><td>164</td><td>13~14세</td><td>14</td></tr>
+      </tbody></table></div>
+  <p class="tnote">한국·일본 아이 옷의 90·100·110 은 그 키를 가운데로 하는 옷입니다(100 = 키 95~105cm). 유럽은 「그 키까지 입는 옷」(104 = 키 98~104cm), 영국은 나이 칸, 미국은 아기 개월(3M·6M)·걸음마(2T~4T)·숫자로 적어요. 같은 나이라도 아이마다 키 차이가 커서 <b>나이보다 키로 고르는 것</b>이 정확합니다.</p>
+
+  <h3 id="t-kshoes">아이 신발 사이즈표 (mm → 미국 C·Y · 유럽 · 일본)</h3>
+  <div class="tbw"><table class="kt st">
+    <thead><tr><th>한국(mm)</th><th>미국</th><th>유럽</th><th>일본(cm)</th></tr></thead>
+    <tbody data-cat="kshoes">
+        <tr><td>100</td><td>4C</td><td>16.5</td><td>10</td></tr>
+        <tr><td>105</td><td>4.5C</td><td>17</td><td>10.5</td></tr>
+        <tr><td>110</td><td>5C</td><td>18</td><td>11</td></tr>
+        <tr><td>115</td><td>5.5C</td><td>19</td><td>11.5</td></tr>
+        <tr><td>120</td><td>6C</td><td>19.5</td><td>12</td></tr>
+        <tr><td>125</td><td>6.5C</td><td>20</td><td>12.5</td></tr>
+        <tr><td>130</td><td>7C</td><td>21</td><td>13</td></tr>
+        <tr><td>135</td><td>7.5C</td><td>22</td><td>13.5</td></tr>
+        <tr><td>140</td><td>8C</td><td>22.5</td><td>14</td></tr>
+        <tr><td>145</td><td>8.5C</td><td>23</td><td>14.5</td></tr>
+        <tr><td>150</td><td>9C</td><td>24</td><td>15</td></tr>
+        <tr><td>155</td><td>9.5C</td><td>25</td><td>15.5</td></tr>
+        <tr><td>160</td><td>10C</td><td>25.5</td><td>16</td></tr>
+        <tr><td>165</td><td>10.5C</td><td>26</td><td>16.5</td></tr>
+        <tr><td>170</td><td>11C</td><td>27</td><td>17</td></tr>
+        <tr><td>175</td><td>11.5C</td><td>28</td><td>17.5</td></tr>
+        <tr><td>180</td><td>12C</td><td>28.5</td><td>18</td></tr>
+        <tr><td>185</td><td>12.5C</td><td>29</td><td>18.5</td></tr>
+        <tr><td>190</td><td>13C</td><td>30</td><td>19</td></tr>
+        <tr><td>195</td><td>13.5C</td><td>31</td><td>19.5</td></tr>
+        <tr><td>200</td><td>1Y</td><td>31.5</td><td>20</td></tr>
+        <tr><td>205</td><td>1.5Y</td><td>32</td><td>20.5</td></tr>
+        <tr><td>210</td><td>2Y</td><td>33</td><td>21</td></tr>
+        <tr><td>215</td><td>2.5Y</td><td>34</td><td>21.5</td></tr>
+        <tr><td>220</td><td>3Y</td><td>35</td><td>22</td></tr>
+        <tr><td>225</td><td>3.5Y</td><td>35.5</td><td>22.5</td></tr>
+        <tr><td>230</td><td>4Y</td><td>36.5</td><td>23</td></tr>
+      </tbody></table></div>
+  <p class="tnote">미국 아이 신발은 C(Child, 어린이) 13.5 다음이 Y(Youth, 큰 아이) 1 입니다. 아이 신발은 발 길이에 <b>5~10mm 여유</b>를 더해 고르세요.</p>
+</section>
+
+<section class="card">
+  <h2><span>정확하게 재는 요령</span></h2>
+  <div class="tbw">
+    <table class="kt">
+      <thead><tr><th>재는 곳</th><th>어디를</th><th>이것만 지키세요</th></tr></thead>
+      <tbody>
+        <tr><td class="k">가슴둘레</td><td>여성은 가슴 가장 높은 곳, 남성은 겨드랑이 바로 아래 가장 굵은 곳</td><td>줄자가 등 뒤에서 처지지 않게 <b>바닥과 수평</b>. 숨은 편하게 내쉰 채.</td></tr>
+        <tr><td class="k">허리둘레</td><td>바지를 입는 높이(청바지는 배꼽 2~3cm 아래)</td><td>배에 힘을 주지 말고 손가락 하나 들어갈 만큼. 잘 맞는 바지가 있으면 <b>허리 단면 × 2</b> 가 더 정확해요.</td></tr>
+        <tr><td class="k">발 길이</td><td>벽에 댄 뒤꿈치 ~ 가장 긴 발가락 끝</td><td>양말을 신고 <b>서서</b>, 두 발 모두. 붓는 <b>저녁</b>에 재세요.</td></tr>
+        <tr><td class="k">밑가슴·윗가슴</td><td>가슴 바로 밑 · 가슴 가장 높은 곳</td><td>밑가슴은 꼭 맞게, 윗가슴은 누르지 않게. 똑바로 선 채로.</td></tr>
+        <tr><td class="k">아이 키</td><td>벽에 뒤꿈치·엉덩이·등을 붙이고</td><td>머리 위에 책을 직각으로 대고 표시. 아기는 눕혀서.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="tnote">줄자가 없으면 끈이나 실로 감고 표시한 뒤 자로 재도 됩니다. 쇼핑몰의 <b>실측표</b>는 옷을 펴 놓고 잰 단면이라, 둘레와 견줄 때는 단면 × 2 를 하세요. 여유분이 있는 옷은 몸 치수보다 5~10cm 큽니다.</p>
+</section>
+
+<section class="card">
+  <h2><span>자주 묻는 질문</span></h2>
+  <details>
+    <summary>55 사이즈는 미국·유럽 사이즈로 몇인가요?</summary>
+    <p>한국 55 는 국가표준에서 <b>가슴둘레 85cm</b> 체형입니다. 이 가슴둘레를 나라마다 자기 표준으로 바꾸면 <b>미국 2~4, 영국 10, 유럽(독일) 36, 프랑스 38, 이탈리아 42, 일본 9~11호</b>예요. 66(가슴 90cm)은 미국 6, 영국 12, 유럽 38~40 입니다. 국내 쇼핑몰의 「55 = 미국 4」 같은 짝짓기 표와 한 칸쯤 다를 수 있는데, 그 표는 칸을 하나씩 짝지은 관례라 그렇습니다.</p>
+  </details>
+  <details>
+    <summary>남자 L(100) 사이즈는 미국 사이즈로 무엇인가요?</summary>
+    <p>미국 브랜드는 같은 글자라도 품이 넉넉해서, 한국 <b>L(100)은 미국 M</b> 안팎입니다. 한국 M(95)은 미국 S~M, XL(105)은 미국 L 이에요. 정장·재킷은 유럽 사이즈가 가슴둘레의 절반이라 100cm 면 <b>유럽 50</b>, 영국·미국 정장은 가슴 인치라 38~40 입니다.</p>
+  </details>
+  <details>
+    <summary>신발 250mm 는 미국 사이즈로 몇인가요?</summary>
+    <p>250mm 는 <b>미국 남성 7, 미국 여성 8, 영국 6, 유럽 39.5, 일본 25</b>입니다. 미국은 같은 발이라도 남성 표기가 여성보다 1 작아요. 남녀 공용 신발은 대개 남성 표기를 쓰니, 여성이 공용 신발을 살 때는 1 을 빼서 고르세요.</p>
+  </details>
+  <details>
+    <summary>미국 신발 사이즈 9 는 몇 mm 인가요?</summary>
+    <p>미국 <b>남성 9 는 270mm, 여성 9 는 260mm</b>입니다. 미국 사이즈 0.5 가 한국 5mm 와 같아서 남성 8.5 는 265mm, 9.5 는 275mm 예요. 「사이즈 바꾸기」에서 신발 → 미국 남성(또는 여성)을 고르고 숫자를 고르면 다른 나라 사이즈도 함께 나옵니다.</p>
+  </details>
+  <details>
+    <summary>유럽 신발 사이즈 42 는 몇 mm 인가요?</summary>
+    <p>유럽 사이즈는 한 칸(0.5)이 약 3.3mm 라 한국 5mm 칸과 딱 맞지 않습니다. 유럽 42 는 <b>265~270mm 사이</b>, 40 은 255mm, 38 은 240mm 예요. 유럽 사이즈만 적힌 신발은 두 칸 사이에서 발볼이 넓으면 큰 쪽을 고르세요.</p>
+  </details>
+  <details>
+    <summary>바지 30인치는 몇 cm 인가요?</summary>
+    <p>1인치는 2.54cm 라서 <b>30인치 = 76.2cm</b>(라벨에는 76)입니다. 28인치는 71cm, 32인치는 81cm, 34인치는 86cm 예요. 내 허리(cm)를 2.54 로 나누면 인치가 나옵니다. 다만 같은 30인치라도 브랜드와 핏에 따라 실제 허리가 1~2인치 다르게 나오니 실측표를 함께 보세요.</p>
+  </details>
+  <details>
+    <summary>허리 사이즈를 줄자 없이 알 수 있나요?</summary>
+    <p>잘 맞는 바지를 단추를 채워 평평하게 펴 놓고, <b>허리 왼쪽 끝에서 오른쪽 끝까지</b>(허리 단면)를 자로 재서 2 를 곱하면 됩니다. 「치수로 찾기」 → 바지 → 「바지 허리 단면」을 고르고 단면 길이를 넣으면 인치로 바꿔 드려요. 쇼핑몰 실측표도 이 단면으로 적혀 있어 견주기 쉽습니다.</p>
+  </details>
+  <details>
+    <summary>브라 75B 는 해외 사이즈로 몇인가요?</summary>
+    <p>한국 75B(밑가슴 75cm, 차이 12.5cm)는 유럽 컵이 2cm 간격이라 <b>유럽 75A, 영국·미국 34A, 프랑스 90A, 이탈리아 3A</b> 안팎입니다. 같은 글자로 짝지은 표(75B = 34B)도 많지만, 컵을 나누는 간격이 달라 실제로는 한 컵쯤 차이가 납니다. 해외 제품은 그 브랜드의 밑가슴·윗가슴 표로 한 번 더 확인하세요.</p>
+  </details>
+  <details>
+    <summary>브라 사이즈는 어떻게 재나요?</summary>
+    <p><b>밑가슴</b>(가슴 바로 밑)을 꼭 맞게, <b>윗가슴</b>(가슴 가장 높은 곳)을 누르지 않게 재서 두 값의 차이로 컵을 정합니다. 한국은 차이 10cm 가 A, 12.5cm 가 B, 15cm 가 C 컵이에요. 밑가슴이 72.5cm 처럼 두 사이즈 경계에 걸리면 70·75 를 다 입어 보고, 컵 부피가 같은 자매 사이즈(75B ≈ 70C ≈ 80A)도 참고하세요.</p>
+  </details>
+  <details>
+    <summary>아이 옷 100 사이즈는 키 몇 cm 인가요?</summary>
+    <p>한국 아이 옷 100 은 <b>키 95~105cm</b> 아이에게 맞는 옷입니다. 유럽 표기로는 104, 영국 3~4세, 미국 4T 안팎이에요. 아이는 금방 자라니 한 철 넉넉히 입히려면 한 치수(10cm) 큰 것을 고르는 사람이 많습니다. 「3호·5호」 같은 호수는 브랜드마다 기준이 달라 키 cm 표기를 보는 것이 정확해요.</p>
+  </details>
+  <details>
+    <summary>일본 옷 9호·11호는 한국 몇 사이즈인가요?</summary>
+    <p>일본 국가표준(JIS)으로 9호는 가슴둘레 83cm, 11호는 86cm 라 <b>9호는 한국 44~55, 11호는 55</b> 안팎입니다. 일본 옷은 같은 표기라도 품과 기장이 작게 나오는 편이라 평소 한국 사이즈보다 한 치수 크게 고르는 사람이 많아요.</p>
+  </details>
+  <details>
+    <summary>아이 신발의 C 와 Y 는 무엇인가요?</summary>
+    <p>미국 아이 신발 표기로 <b>C 는 Child(아기·어린이)</b>, <b>Y 는 Youth(큰 아이)</b>입니다. 13.5C(195mm) 다음이 1Y(200mm)이고, 그 위로 어른 사이즈가 이어져요. 아이 신발은 발가락 앞에 5~10mm 가 남게 고르세요.</p>
+  </details>
+  <details>
+    <summary>왜 쇼핑몰 사이즈표와 조금 다르게 나오나요?</summary>
+    <p>사이즈 표기는 나라마다 표준 체형이 달라 <b>딱 맞아떨어지는 변환표가 없습니다</b>. 이 도구는 표기마다 가운데 치수(가슴둘레·허리·발 길이·키)를 구해 다른 나라 표기로 옮기고, 두 칸 사이면 「2~4」처럼 둘 다 보여 줍니다. 쇼핑몰 표는 칸을 하나씩 짝지은 관례인 경우가 많아 한 칸쯤 다를 수 있어요. 결국 가장 정확한 것은 <b>상품 실측표와 내 치수를 직접 견주는 것</b>입니다.</p>
+  </details>
+  <details>
+    <summary>넣은 치수와 수첩은 어디에 저장되나요?</summary>
+    <p><b>이 기기 브라우저에만</b> 저장되고 서버로 보내지 않습니다. 다른 기기에서 보려면 「사이즈 카드 그림」으로 저장하거나 「링크로 보내기」를 쓰세요. 링크는 사이즈를 주소 안에 담아 만들므로, 받은 사람이 열면 같은 사이즈가 뜨고 자기 수첩에 더할 수 있습니다.</p>
+  </details>
+</section>
+
+<!-- ══ 주의 문구 ══ -->
+<div class="nbx">
+  <div class="nbx-h"><span class="ic">!</span><span>쓰기 전에 확인하세요</span></div>
+  <ul>
+    <li><b>참고용 변환입니다.</b> 사이즈 표기는 나라·브랜드·제품마다 기준이 달라 같은 표기라도 실제 품이 한 치수 안팎 다를 수 있습니다.</li>
+    <li><b>사기 전에 상품 실측표를 확인하세요.</b> 특히 해외 직구·반품이 어려운 제품은 판매처의 사이즈 안내와 내 치수를 직접 견주세요.</li>
+    <li>재는 방법(줄자를 감는 힘·자세·시간)에 따라 1~2cm, 발은 몇 mm 차이가 날 수 있습니다. 두세 번 재서 가운데 값을 쓰면 실패가 적습니다.</li>
+    <li>속옷·보정용품·의료용 신발처럼 몸에 꼭 맞아야 하는 제품은 매장에서 직접 입어 보거나 전문가와 상담하세요.</li>
+  </ul>
+  <p class="nbx-f">이 도구는 <b>있는 그대로 제공되며</b>, 변환 결과를 근거로 한 구매·주문·판단에 대해 <b>제작자와 운영자는 법적 책임을 지지 않습니다.</b> 특정 상품·업체를 추천하지 않습니다.</p>
+</div>
+
+<footer>
+  <b>옷·신발 사이즈 변환</b> · 옷 사이즈표 · 여성 옷 사이즈 · 남자 옷 사이즈 · 바지 허리 사이즈표 · 신발 사이즈표 · 미국·유럽 신발 사이즈 · 브라 사이즈 계산기 · 아기 옷·아이 신발 사이즈<br>
+  함께 보면 좋은 도구: <a href="https://hwj-hub.github.io/birth_checklist/" target="_blank" rel="noopener">출산 준비물 체크리스트</a> · <a href="https://hwj-hub.github.io/travel_checklist/" target="_blank" rel="noopener">여행 준비물 체크리스트</a> · <a href="https://hwj-hub.github.io/personal_color/" target="_blank" rel="noopener">퍼스널컬러 자가진단</a><br>
+  근거: KS K 0051(의류 치수 규격 — 여성 가슴둘레 XS 80~2XL 105cm), KS K 9401·JIS L 4006(파운데이션 — 밑가슴 5cm · 컵 2.5cm), ASTM D5585-11(미국 여성 치수), JIS L 4004·L 4005(일본 남녀 의류 치수), EN 13402(유럽 의류 치수 표시 — 브라 컵 2cm), 신발 길이 표기(한국 = 발 길이 mm, Mondopoint), 미국·영국·유럽 신발 사이즈 관행식, 2026년 11월 확인<br>
+  입력한 내용은 어디에도 전송되지 않으며, 페이지를 연 뒤에는 인터넷 없이도 동작합니다 · 외부 라이브러리 없음
+</footer>
+</div>
+
+<!-- 앱 안(네이버·카카오톡 등) 안내 창 — 변환은 앱 안에서도 되므로 띄우지 않는다(모듈이 참조만 한다) -->
+<div class="iamodal" id="iaModal" role="dialog" aria-modal="true" aria-labelledby="iaTitle">
+  <div class="iasheet">
+    <div class="iaic">📱</div>
+    <h2 id="iaTitle">앱 안에서는 파일이 저장되지 않을 수 있습니다</h2>
+    <p class="iap" id="iaDesc"></p>
+    <ol class="iasteps" id="iaSteps"></ol>
+    <button class="iabtn" id="iaGo2" type="button">크롬에서 열기</button>
+    <p class="iafine"><button type="button" id="iaStay">그냥 볼게요</button></p>
+  </div>
+</div>
+
+<!-- 광고 자리 ③ 하단 오버형 · 320×50 — 아래쪽 사이즈표·안내 글을 읽는 구간에서만 올라오고, 입력·결과 카드가 보이는 동안에는 내려가 있습니다. -->
+<div id="anchor"><span class="amk">광고</span><div class="ad-slot" id="ad-anchor"></div>
+  <button class="axl" id="anchorX" type="button" aria-label="광고 닫기">✕</button></div>
+
+<div id="mbar"><div class="in"><div class="k">지금 사이즈<b id="mbarTxt">-</b></div><button class="go" id="mbarGo" type="button">결과 보기 ↓</button></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+/* ════════════════════════════════════════════════════════════
+   옷·신발 사이즈 변환 — 라이브러리 없이 순수 JS
+   여성·남성 옷 · 바지 허리 · 신발 · 브라 · 아이 옷 · 아이 신발 — 한국·미국·영국·유럽·일본 표기를 몸 치수 하나로 모아 서로 바꾼다
+   저장: 사이즈 카드 PNG · 발 길이 측정지·신발 사이즈표 PDF(글자 윤곽선 Type3, 선은 종이 윗변에서 실제 mm) · 글 · 링크(# 뒤에 담기)
+   근거: KS K 0051 · KS K 9401 · ASTM D5585-11 · JIS L 4004·4005·4006 · EN 13402 · 신발 길이 표기 관행식(2026.11 확인)
+   ════════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+const esc = s => String(s).replace(/[&<>"']/g, c => ESC[c]);
+let toastT = 0;
+function toast(msg, ms) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), ms || 2600);
+}
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+/* 배경 탭에서도 느려지지 않는 양보(타이머는 배경 탭에서 1초로 늘어난다) */
+const _ych = new MessageChannel(); const _yq = [];
+_ych.port1.onmessage = () => { const f = _yq.shift(); if (f) f(); };
+const yieldUI = () => new Promise(r => { _yq.push(r); _ych.port2.postMessage(0); });
+
+/* ════════════════════════════════════════════════════════════
+   글꼴 · 글자 폭 · 윤곽선
+   — 같은 시리즈의 견적서 도구에서 가져온 방식. 기기 글꼴로 글자를 그려 윤곽선을 따고,
+     미리보기·이미지·PDF 가 모두 같은 글리프를 쓰게 한다(PDF 에서 확대해도 깨지지 않고 글자 복사·검색이 된다)
+   ════════════════════════════════════════════════════════════ */
+const FACES = {
+  sans: '"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo","Noto Sans KR","Noto Sans CJK KR","Nanum Gothic","NanumGothic",sans-serif'
+};
+const fkey = bold => bold ? 'sans-b' : 'sans';
+function fcss(key, px) {
+  const bold = key.slice(-2) === '-b';
+  return (bold ? 'bold ' : '') + px + 'px ' + FACES.sans;
+}
+let _mctx = null;
+function mctx() {
+  if (!_mctx) { const c = document.createElement('canvas'); c.width = 8; c.height = 8; _mctx = c.getContext('2d'); }
+  return _mctx;
+}
+/* 글자 폭 (em) — 1/1000 em 로 반올림해 PDF 의 Widths 와 똑같이 맞춘다 */
+const _adv = new Map();
+function adv(key, ch) {
+  const k = key + '|' + ch;
+  let v = _adv.get(k);
+  if (v === undefined) {
+    const c = mctx(); c.font = fcss(key, 200);
+    v = Math.round(c.measureText(ch).width / 200 * 1000) / 1000;
+    _adv.set(k, v);
+  }
+  return v;
+}
+/* 글줄 폭(pt) */
+function textW(s, z, bold) {
+  const key = fkey(bold);
+  let w = 0;
+  for (const ch of String(s)) w += adv(key, ch);
+  return w * z;
+}
+/* 폭 안에 들어가게 — 글자를 minZ 까지 줄이고, 그래도 넘치면 끝을 … 로 자른다 */
+function fitText(s, maxW, z, bold, minZ) {
+  s = String(s == null ? '' : s);
+  if (maxW <= 0) return { s: '', z };
+  let w = textW(s, z, bold);
+  if (w <= maxW) return { s, z };
+  const z2 = Math.max(minZ || z * 0.72, z * maxW / w);
+  w = textW(s, z2, bold);
+  if (w <= maxW) return { s, z: z2 };
+  const chars = Array.from(s);
+  while (chars.length > 1 && textW(chars.join('') + '…', z2, bold) > maxW) chars.pop();
+  return { s: chars.join('') + '…', z: z2 };
+}
+
+/* 알파 격자 → 닫힌 윤곽선들 (픽셀 좌표). 안쪽을 오른쪽에 두고 도는 방향으로 일관되게 만든다 */
+function marchAlpha(A, W, H, T) {
+  const HN = W * H;
+  const next = new Int32Array(2 * HN).fill(-1);
+  const px = new Float32Array(2 * HN), py = new Float32Array(2 * HN);
+  const cr = [0, 0, 0, 0], ct = [0, 0, 0, 0];
+  for (let y = 0; y < H - 1; y++) {
+    const r0 = y * W, r1 = r0 + W;
+    for (let x = 0; x < W - 1; x++) {
+      const tl = A[r0 + x], tr = A[r0 + x + 1], br = A[r1 + x + 1], bl = A[r1 + x];
+      const it = tl > T, ir = tr > T, ib = br > T, il = bl > T;
+      if (it === ir && ir === ib && ib === il) continue;
+      let n = 0;
+      if (it !== ir) { const e = r0 + x; px[e] = x + 0.5 + (T - tl) / (tr - tl); py[e] = y + 0.5; cr[n] = e; ct[n++] = it ? 1 : 0; }
+      if (ir !== ib) { const e = HN + r0 + x + 1; px[e] = x + 1.5; py[e] = y + 0.5 + (T - tr) / (br - tr); cr[n] = e; ct[n++] = ir ? 1 : 0; }
+      if (ib !== il) { const e = r1 + x; px[e] = x + 0.5 + (T - bl) / (br - bl); py[e] = y + 1.5; cr[n] = e; ct[n++] = ib ? 1 : 0; }
+      if (il !== it) { const e = HN + r0 + x; px[e] = x + 0.5; py[e] = y + 0.5 + (T - tl) / (bl - tl); cr[n] = e; ct[n++] = il ? 1 : 0; }
+      if (n === 2) {
+        if (ct[0]) next[cr[0]] = cr[1]; else next[cr[1]] = cr[0];
+      } else if (n === 4) {
+        const connected = (tl + tr + br + bl) / 4 > T;
+        for (let k = 0; k < 4; k++) if (ct[k]) next[cr[k]] = cr[connected ? (k + 1) % 4 : (k + 3) % 4];
+      }
+    }
+  }
+  const loops = [];
+  for (let e0 = 0; e0 < 2 * HN; e0++) {
+    if (next[e0] < 0) continue;
+    const pts = [];
+    let e = e0, guard = 0;
+    while (e >= 0 && guard++ < 1e6) {
+      const nx = next[e];
+      if (nx < 0) break;
+      pts.push(px[e], py[e]);
+      next[e] = -1;
+      e = nx;
+      if (e === e0) break;
+    }
+    if (pts.length >= 6) loops.push(pts);
+  }
+  return loops;
+}
+/* 더글러스-포이커 (닫힌 다각형) */
+function simplifyLoop(p, eps) {
+  const n = p.length / 2;
+  if (n <= 4) return p;
+  let far = 0, fd = -1;
+  for (let i = 1; i < n; i++) { const d = (p[2 * i] - p[0]) ** 2 + (p[2 * i + 1] - p[1]) ** 2; if (d > fd) { fd = d; far = i; } }
+  const keep = new Uint8Array(n); keep[0] = 1; keep[far] = 1;
+  const e2 = eps * eps;
+  const stack = [[0, far], [far, n]];
+  while (stack.length) {
+    const [a, b] = stack.pop();
+    if (b - a < 2) continue;
+    const ax = p[2 * a], ay = p[2 * a + 1], bi = b % n, bx = p[2 * bi], by = p[2 * bi + 1];
+    const dx = bx - ax, dy = by - ay, L2 = dx * dx + dy * dy;
+    let best = -1, bd = -1;
+    for (let i = a + 1; i < b; i++) {
+      const qx = p[2 * i] - ax, qy = p[2 * i + 1] - ay;
+      let d;
+      if (L2 < 1e-12) d = qx * qx + qy * qy;
+      else { const c = qx * dy - qy * dx; d = c * c / L2; }
+      if (d > bd) { bd = d; best = i; }
+    }
+    if (bd > e2) { keep[best] = 1; stack.push([a, best], [best, b]); }
+  }
+  const out = [];
+  for (let i = 0; i < n; i++) if (keep[i]) out.push(p[2 * i], p[2 * i + 1]);
+  return out;
+}
+const TRACE_EM = 256;
+const _trace = new Map();
+let _tcanvas = null;
+/* 글자 하나 → { adv, bbox:[x0,y0,x1,y1], path } — 좌표는 1/1000 em, y 는 위쪽이 + */
+function traceGlyph(key, ch) {
+  const ck = key + '|' + ch;
+  let g = _trace.get(ck);
+  if (g) return g;
+  g = { adv: Math.round(adv(key, ch) * 1000), bbox: [0, 0, 0, 0], path: '' };
+  if (!/\s/.test(ch)) {
+    const E = TRACE_EM, pad = 4;
+    if (!_tcanvas) _tcanvas = document.createElement('canvas');
+    const c0 = mctx(); c0.font = fcss(key, E);
+    const m = c0.measureText(ch);
+    const left = Math.ceil(Math.max(0, m.actualBoundingBoxLeft || 0)) + pad;
+    const right = Math.ceil(Math.max(m.width, m.actualBoundingBoxRight || m.width)) + pad;
+    const asc = Math.ceil(Math.max(m.actualBoundingBoxAscent || E, 1)) + pad;
+    const desc = Math.ceil(Math.max(m.actualBoundingBoxDescent || E * 0.3, 0)) + pad;
+    const W = Math.min(2048, left + right + 2), H = Math.min(2048, asc + desc + 2);
+    const c = _tcanvas; c.width = W; c.height = H;
+    const ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = fcss(key, E);
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#000';
+    ctx.fillText(ch, left, asc);
+    const d = ctx.getImageData(0, 0, W, H).data;
+    const A = new Uint8Array(W * H);
+    for (let i = 0, j = 3; i < A.length; i++, j += 4) A[i] = d[j];
+    const loops = marchAlpha(A, W, H, 127.5);
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    const parts = [];
+    const S = 1000 / E;
+    for (const lp of loops) {
+      const q = simplifyLoop(lp, 0.35);
+      if (q.length < 6) continue;
+      let area = 0;
+      for (let i = 0, n = q.length / 2; i < n; i++) { const j = (i + 1) % n; area += q[2 * i] * q[2 * j + 1] - q[2 * j] * q[2 * i + 1]; }
+      if (Math.abs(area) < 1.2) continue;
+      let s = '';
+      for (let i = 0; i < q.length; i += 2) {
+        const X = Math.round((q[i] - left) * S), Y = Math.round((asc - q[i + 1]) * S);
+        if (X < x0) x0 = X; if (X > x1) x1 = X; if (Y < y0) y0 = Y; if (Y > y1) y1 = Y;
+        s += X + ' ' + Y + (i ? ' l\n' : ' m\n');
+      }
+      parts.push(s + 'h\n');
+    }
+    if (parts.length) { g.path = parts.join('') + 'f\n'; g.bbox = [x0, y0, x1, y1]; }
+  }
+  _trace.set(ck, g);
+  return g;
+}
+
+/* ════════════════════════════════════════════════════════════
+   그리기 — 쪽마다 「그리기 목록(ops)」을 만들어 두고 캔버스(미리보기·이미지·인쇄)와 PDF 가 같은 목록을 그린다.
+   좌표는 pt(1/72 인치), 위쪽이 0. 색은 '#RRGGBB'
+     t 글자 {x, y(기준선), s, z(크기), b(굵게), c}
+     l 선   {x1, y1, x2, y2, w, c, d(점선 [칠, 빔])}
+     r 상자 {x, y, w, h, f(채움), s(테두리), lw, rr(모서리 둥글기)}
+     c 원   {x, y, r, f, s, lw}
+   ════════════════════════════════════════════════════════════ */
+const _p2d = new Map();
+function glyphPath(key, ch) {
+  const k = key + '|' + ch;
+  let p = _p2d.get(k);
+  if (p === undefined) {
+    const g = traceGlyph(key, ch);
+    p = null;
+    if (g.path) {
+      p = new Path2D();
+      for (const ln of g.path.split(/\n/)) {
+        const a = ln.split(' ');
+        if (a.length === 3) { if (a[2] === 'm') p.moveTo(+a[0], -a[1]); else p.lineTo(+a[0], -a[1]); }
+        else if (ln === 'h') p.closePath();
+      }
+    }
+    _p2d.set(k, p);
+  }
+  return p;
+}
+const hexRGB = h => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255];
+function roundRectPath(ctx, x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w / 2, h / 2));
+  ctx.beginPath();
+  ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r); ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h); ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r); ctx.arcTo(x, y, x + r, y, r); ctx.closePath();
+}
+function paintPage(ctx, page, sc, vector) {
+  ctx.save();
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, page.W * sc, page.H * sc);
+  ctx.textBaseline = 'alphabetic';
+  ctx.lineCap = 'butt'; ctx.lineJoin = 'miter';
+  let font = '';
+  for (const op of page.ops) {
+    if (op.o === 't') {
+      const key = fkey(op.b), f = fcss(key, op.z * sc);
+      if (f !== font) { ctx.font = f; font = f; }
+      ctx.fillStyle = op.c || '#000000';
+      let x = op.x;
+      const gs = op.z * sc / 1000;
+      for (const ch of op.s) {
+        if (!/\s/.test(ch)) {
+          if (!vector) ctx.fillText(ch, x * sc, op.y * sc);
+          else { const p = glyphPath(key, ch); if (p) { ctx.save(); ctx.translate(x * sc, op.y * sc); ctx.scale(gs, gs); ctx.fill(p); ctx.restore(); } }
+        }
+        x += adv(key, ch) * op.z;
+      }
+    } else if (op.o === 'l') {
+      ctx.strokeStyle = op.c || '#000000'; ctx.lineWidth = Math.max(0.6, op.w * sc);
+      ctx.setLineDash(op.d ? op.d.map(v => v * sc) : []);
+      ctx.beginPath(); ctx.moveTo(op.x1 * sc, op.y1 * sc); ctx.lineTo(op.x2 * sc, op.y2 * sc); ctx.stroke();
+      if (op.d) ctx.setLineDash([]);
+    } else if (op.o === 'r') {
+      const rr = (op.rr || 0) * sc;
+      if (op.f) { ctx.fillStyle = op.f; if (rr) { roundRectPath(ctx, op.x * sc, op.y * sc, op.w * sc, op.h * sc, rr); ctx.fill(); } else ctx.fillRect(op.x * sc, op.y * sc, op.w * sc, op.h * sc); }
+      if (op.s) {
+        ctx.strokeStyle = op.s; ctx.lineWidth = Math.max(0.6, op.lw * sc);
+        if (rr) { roundRectPath(ctx, op.x * sc, op.y * sc, op.w * sc, op.h * sc, rr); ctx.stroke(); } else ctx.strokeRect(op.x * sc, op.y * sc, op.w * sc, op.h * sc);
+      }
+    } else if (op.o === 'c') {
+      ctx.beginPath(); ctx.arc(op.x * sc, op.y * sc, op.r * sc, 0, Math.PI * 2);
+      if (op.f) { ctx.fillStyle = op.f; ctx.fill(); }
+      if (op.s) { ctx.strokeStyle = op.s; ctx.lineWidth = Math.max(0.6, op.lw * sc); ctx.stroke(); }
+    }
+  }
+  ctx.restore();
+}
+function pageCanvas(page, sc, vector) {
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(page.W * sc); cv.height = Math.round(page.H * sc);
+  paintPage(cv.getContext('2d'), page, sc, vector);
+  return cv;
+}
+const canvasBlob = (cv, type, q) => new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('toBlob')), type || 'image/png', q));
+
+/* ════════════════════════════════════════════════════════════
+   PDF — 직접 쓴다 (글자는 Type3 윤곽선 + ToUnicode 라 복사·검색이 된다)
+   ════════════════════════════════════════════════════════════ */
+const te = new TextEncoder();
+const latin1 = s => { const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i) & 255; return u; };
+const pf = n => { const v = Math.round(n * 1000) / 1000; return Object.is(v, -0) ? '0' : String(v); };
+async function deflate(u8) {
+  if (typeof CompressionStream === 'undefined') return null;
+  try {
+    const st = new Blob([u8]).stream().pipeThrough(new CompressionStream('deflate'));
+    return new Uint8Array(await new Response(st).arrayBuffer());
+  } catch (e) { return null; }
+}
+async function pdfStream(dict, u8) {
+  const z = u8.length > 60 ? await deflate(u8) : null;
+  return z && z.length < u8.length ? { dict: dict + ' /Filter /FlateDecode', data: z } : { dict, data: u8 };
+}
+const utf16hex = s => { let h = 'FEFF'; for (let i = 0; i < s.length; i++) h += s.charCodeAt(i).toString(16).toUpperCase().padStart(4, '0'); return h; };
+class PdfW {
+  constructor() { this.objs = [null]; }
+  alloc() { this.objs.push(null); return this.objs.length - 1; }
+  set(n, body) { this.objs[n] = body; }
+  blob(root, info) {
+    const parts = [], offs = [];
+    let off = 0;
+    const push = u => { parts.push(u); off += u.length; };
+    push(latin1('%PDF-1.7\n%' + String.fromCharCode(226, 227, 207, 211) + '\n'));
+    for (let i = 1; i < this.objs.length; i++) {
+      offs[i] = off;
+      const o = this.objs[i];
+      if (o && o.data) {
+        push(latin1(`${i} 0 obj\n<< ${o.dict} /Length ${o.data.length} >>\nstream\n`)); push(o.data); push(latin1('\nendstream\nendobj\n'));
+      } else push(latin1(`${i} 0 obj\n${o == null ? 'null' : o}\nendobj\n`));
+    }
+    const xref = off;
+    let x = `xref\n0 ${this.objs.length}\n0000000000 65535 f \n`;
+    for (let i = 1; i < this.objs.length; i++) x += String(offs[i]).padStart(10, '0') + ' 00000 n \n';
+    let id = ''; for (let i = 0; i < 16; i++) id += Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+    x += `trailer\n<< /Size ${this.objs.length} /Root ${root} 0 R /Info ${info} 0 R /ID [<${id}> <${id}>] >>\nstartxref\n${xref}\n%%EOF\n`;
+    push(latin1(x));
+    return new Blob(parts, { type: 'application/pdf' });
+  }
+}
+/* 새 글자용 Type3 글꼴 묶음 — 한 벌에 코드 223개(33~255, 32 는 띄어쓰기), 넘치면 다음 벌 */
+class Type3Set {
+  constructor() { this.byKey = new Map(); this.seq = 0; }
+  encode(key, text) {
+    let list = this.byKey.get(key);
+    if (!list) { list = []; this.byKey.set(key, list); }
+    const out = [];
+    let cur = null;
+    for (const ch of Array.from(text)) {
+      let chunk = null, code = 0;
+      if (ch === ' ') { chunk = (cur && cur.chunk) || list[list.length - 1] || this.newChunk(key, list); code = 32; }
+      else {
+        for (const c of list) { const v = c.codes.get(ch); if (v !== undefined) { chunk = c; code = v; break; } }
+        if (!chunk) {
+          chunk = list[list.length - 1];
+          if (!chunk || chunk.next > 255) chunk = this.newChunk(key, list);
+          code = chunk.next++;
+          chunk.codes.set(ch, code);
+        }
+      }
+      if (!cur || cur.chunk !== chunk) { cur = { chunk, codes: [], chars: [] }; out.push(cur); }
+      cur.codes.push(code); cur.chars.push(ch);
+    }
+    return out;
+  }
+  newChunk(key, list) { const c = { key, id: ++this.seq, codes: new Map([[' ', 32]]), next: 33, ref: 0 }; list.push(c); return c; }
+  count() { let n = 0; for (const list of this.byKey.values()) for (const c of list) n += c.codes.size; return n; }
+  async build(W, progress) {
+    const total = this.count(); let done = 0;
+    for (const [key, list] of this.byKey) {
+      for (const c of list) {
+        const fontRef = W.alloc();
+        c.ref = fontRef;
+        const procs = [], diffs = [], uni = [];
+        const widths = new Array(224).fill(0);
+        let bx0 = 0, by0 = 0, bx1 = 0, by1 = 0;
+        const entries = Array.from(c.codes.entries()).sort((a, b) => a[1] - b[1]);
+        for (const [ch, code] of entries) {
+          const g = traceGlyph(key, ch);
+          const body = `${g.adv} 0 ${g.bbox.join(' ')} d1\n${g.path}`;
+          const n = W.alloc();
+          W.set(n, await pdfStream('', te.encode(body)));
+          procs.push(`/g${code} ${n} 0 R`);
+          diffs.push(`${code} /g${code}`);
+          widths[code - 32] = g.adv;
+          bx0 = Math.min(bx0, g.bbox[0]); by0 = Math.min(by0, g.bbox[1]); bx1 = Math.max(bx1, g.bbox[2]); by1 = Math.max(by1, g.bbox[3]);
+          uni.push([code, ch]);
+          if (++done % 24 === 0) { if (progress) progress(done / total); await yieldUI(); }
+        }
+        const tu = W.alloc();
+        W.set(tu, await pdfStream('', te.encode(toUnicodeCMap(uni))));
+        W.set(fontRef, `<< /Type /Font /Subtype /Type3 /FontBBox [${bx0} ${by0} ${bx1} ${by1}] /FontMatrix [0.001 0 0 0.001 0 0] ` +
+          `/CharProcs << ${procs.join(' ')} >> /Encoding << /Type /Encoding /Differences [${diffs.join(' ')}] >> ` +
+          `/FirstChar 32 /LastChar 255 /Widths [${widths.join(' ')}] /Resources << /ProcSet [/PDF] >> /ToUnicode ${tu} 0 R >>`);
+      }
+    }
+  }
+}
+function toUnicodeCMap(pairs) {
+  const hx = (v, n) => v.toString(16).toUpperCase().padStart(n, '0');
+  let s = '/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def\n' +
+    '/CMapName /Adobe-Identity-UCS def\n/CMapType 2 def\n1 begincodespacerange\n<00> <FF>\nendcodespacerange\n';
+  for (let i = 0; i < pairs.length; i += 100) {
+    const blk = pairs.slice(i, i + 100);
+    s += blk.length + ' beginbfchar\n';
+    for (const [code, ch] of blk) {
+      let u = '';
+      for (let k = 0; k < ch.length; k++) u += hx(ch.charCodeAt(k), 4);
+      s += '<' + hx(code, 2) + '> <' + u + '>\n';
+    }
+    s += 'endbfchar\n';
+  }
+  return s + 'endcmap\nCMapName currentdict /CMap defineresource pop\nend\nend\n';
+}
+const fillC = c => hexRGB(c || '#000000').map(pf).join(' ') + ' rg';
+const strokeC = c => hexRGB(c || '#000000').map(pf).join(' ') + ' RG';
+/* 둥근 상자·원은 베지어 곡선으로 (k = 원을 네 토막 낸 3차 곡선의 손잡이 비율) */
+const KAPPA = 0.5523;
+function pdfRoundRect(x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w / 2, h / 2));
+  if (!r) return `${pf(x)} ${pf(y)} ${pf(w)} ${pf(h)} re`;
+  const k = r * KAPPA, X2 = x + w, Y2 = y + h;
+  return [`${pf(x + r)} ${pf(y)} m`, `${pf(X2 - r)} ${pf(y)} l`, `${pf(X2 - r + k)} ${pf(y)} ${pf(X2)} ${pf(y + r - k)} ${pf(X2)} ${pf(y + r)} c`,
+    `${pf(X2)} ${pf(Y2 - r)} l`, `${pf(X2)} ${pf(Y2 - r + k)} ${pf(X2 - r + k)} ${pf(Y2)} ${pf(X2 - r)} ${pf(Y2)} c`,
+    `${pf(x + r)} ${pf(Y2)} l`, `${pf(x + r - k)} ${pf(Y2)} ${pf(x)} ${pf(Y2 - r + k)} ${pf(x)} ${pf(Y2 - r)} c`,
+    `${pf(x)} ${pf(y + r)} l`, `${pf(x)} ${pf(y + r - k)} ${pf(x + r - k)} ${pf(y)} ${pf(x + r)} ${pf(y)} c`, 'h'].join(' ');
+}
+function pdfCircle(cx, cy, r) {
+  const k = r * KAPPA;
+  return [`${pf(cx + r)} ${pf(cy)} m`, `${pf(cx + r)} ${pf(cy + k)} ${pf(cx + k)} ${pf(cy + r)} ${pf(cx)} ${pf(cy + r)} c`,
+    `${pf(cx - k)} ${pf(cy + r)} ${pf(cx - r)} ${pf(cy + k)} ${pf(cx - r)} ${pf(cy)} c`,
+    `${pf(cx - r)} ${pf(cy - k)} ${pf(cx - k)} ${pf(cy - r)} ${pf(cx)} ${pf(cy - r)} c`,
+    `${pf(cx + k)} ${pf(cy - r)} ${pf(cx + r)} ${pf(cy - k)} ${pf(cx + r)} ${pf(cy)} c`, 'h'].join(' ');
+}
+async function makePDF(pages, title, progress) {
+  const W = new PdfW();
+  const cat = W.alloc(), pagesN = W.alloc(), info = W.alloc();
+  const t3 = new Type3Set();
+  const contents = [];
+  for (const pg of pages) {
+    const out = ['0 J 0 j'];
+    const fonts = new Set();
+    const PH = pg.H;
+    let lastFill = '';
+    const fill = g => { if (g !== lastFill) { out.push(fillC(g)); lastFill = g; } };
+    for (const op of pg.ops) {
+      if (op.o === 't') {
+        const key = fkey(op.b);
+        fill(op.c || '#000000');
+        let x = op.x;
+        const y = PH - op.y;
+        for (const sg of t3.encode(key, op.s)) {
+          fonts.add(sg.chunk);
+          let hex = '';
+          for (const cd of sg.codes) hex += cd.toString(16).padStart(2, '0');
+          out.push(`BT /T${sg.chunk.id} ${pf(op.z)} Tf ${pf(x)} ${pf(y)} Td <${hex}> Tj ET`);
+          for (const ch of sg.chars) x += adv(key, ch) * op.z;
+        }
+      } else if (op.o === 'l') {
+        out.push(`${op.d ? '[' + op.d.map(pf).join(' ') + '] 0 d ' : ''}${pf(op.w)} w ${strokeC(op.c)} ${pf(op.x1)} ${pf(PH - op.y1)} m ${pf(op.x2)} ${pf(PH - op.y2)} l S${op.d ? ' [] 0 d' : ''}`);
+      } else if (op.o === 'r') {
+        const path = pdfRoundRect(op.x, PH - op.y - op.h, op.w, op.h, op.rr || 0);
+        if (op.f) { fill(op.f); out.push(path + ' f'); }
+        if (op.s) out.push(`${pf(op.lw)} w ${strokeC(op.s)} ${path} S`);
+      } else if (op.o === 'c') {
+        const path = pdfCircle(op.x, PH - op.y, op.r);
+        if (op.f) { fill(op.f); out.push(path + ' f'); }
+        if (op.s) out.push(`${pf(op.lw)} w ${strokeC(op.s)} ${path} S`);
+      }
+    }
+    contents.push({ s: out.join('\n') + '\n', fonts, W: pg.W, H: PH });
+  }
+  await t3.build(W, progress);
+  const kids = [];
+  for (const ct of contents) {
+    const cn = W.alloc();
+    W.set(cn, await pdfStream('', latin1(ct.s)));
+    const fr = Array.from(ct.fonts).map(c => `/T${c.id} ${c.ref} 0 R`).join(' ');
+    const pn = W.alloc();
+    W.set(pn, `<< /Type /Page /Parent ${pagesN} 0 R /MediaBox [0 0 ${pf(ct.W)} ${pf(ct.H)}] ` +
+      `/Resources << /ProcSet [/PDF /Text] /Font << ${fr} >> >> /Contents ${cn} 0 R >>`);
+    kids.push(pn);
+  }
+  W.set(pagesN, `<< /Type /Pages /Kids [${kids.map(k => k + ' 0 R').join(' ')}] /Count ${kids.length} >>`);
+  W.set(cat, `<< /Type /Catalog /Pages ${pagesN} 0 R /ViewerPreferences << /DisplayDocTitle true >> >>`);
+  const t = new Date(), p2 = v => String(v).padStart(2, '0');
+  const ds = `${t.getFullYear()}${p2(t.getMonth() + 1)}${p2(t.getDate())}${p2(t.getHours())}${p2(t.getMinutes())}${p2(t.getSeconds())}`;
+  W.set(info, `<< /Title <${utf16hex(title)}> /Creator <${utf16hex('옷·신발 사이즈 변환')}> /Producer (clothes_size) /CreationDate (D:${ds}) >>`);
+  return W.blob(cat, info);
+}
+
+/* ════════════════════════════════════════════════════════════
+   사이즈 엔진 — 나라마다 다른 표기를 몸 치수 하나(허브)로 모아 서로 바꾼다
+   허브: 여성·남성 옷 = 가슴둘레 cm · 바지 = 허리 인치 · 신발 = 길이 mm · 아이 옷 = 키 cm
+         브라 = [밑가슴 cm, 윗가슴 − 밑가슴 cm]
+   표기 하나 → 그 표기의 가운데 치수(허브) → 다른 나라 표기.
+   두 표기 사이 30~70% 자리면 「a~b」 로 둘 다 보여 준다(한쪽으로 잘라 말하지 않는다)
+   ※ build.py 의 사이즈표가 같은 식을 파이썬으로 다시 쓴다 — 여기를 고치면 거기도 고친다
+   ════════════════════════════════════════════════════════════ */
+const IN = 2.54;
+/* 조사 — 사이즈 이름은 숫자·영문이라 받침을 읽는 소리로 판단한다(55와 66 · 66과 77 · 100과 110 · L과 XL · 31을)
+   숫자 끝자리: 0(십·백)·1(일)·3(삼)·6(육)·7(칠)·8(팔)은 받침 있음 / 영문: L(엘)·M(엠)·N(엔)·R(알)만 받침 있음 */
+function hasBatchim(s) {
+  const t = String(s).replace(/<[^>]*>/g, '').replace(/[)\]」』"'\s]+$/, '');
+  const ch = t.slice(-1), code = ch.charCodeAt(0);
+  if (code >= 0xAC00 && code <= 0xD7A3) return (code - 0xAC00) % 28 !== 0;
+  if (/[0-9]/.test(ch)) return '013678'.includes(ch);
+  if (/[a-z]/i.test(ch)) return 'LMNR'.includes(ch.toUpperCase());
+  return false;
+}
+const josa = (s, withB, noB) => (hasBatchim(s) ? withB : noB);
+const fmtN = v => String(Math.round(v * 10) / 10);
+const fmtHalf = v => String(Math.round(v * 2) / 2);
+/* a 부터 b 까지 st 간격(정수 걸음으로 세서 소수 누적 오차를 막는다) */
+function seq(a, b, st, f) {
+  const o = [], n = Math.round((b - a) / st);
+  for (let i = 0; i <= n; i++) o.push(f(Math.round((a + i * st) * 1000) / 1000));
+  return o;
+}
+/* 가운데 값이 커지는 순서인 [표기, 가운데] 목록에서 h 의 자리 */
+function ladder(L, h) {
+  const n = L.length;
+  if (h < L[0][1]) {
+    const st = L[1][1] - L[0][1];
+    return h < L[0][1] - st * 0.7 ? { lab: '', lo: true } : { lab: L[0][0], i: 0 };
+  }
+  if (h > L[n - 1][1]) {
+    const st = L[n - 1][1] - L[n - 2][1];
+    return h > L[n - 1][1] + st * 0.7 ? { lab: '', hi: true } : { lab: L[n - 1][0], i: n - 1 };
+  }
+  for (let i = 0; i < n - 1; i++) {
+    const a = L[i][1], b = L[i + 1][1];
+    if (h >= a && h <= b) {
+      const f = (h - a) / (b - a);
+      if (f < 0.3) return { lab: L[i][0], i };
+      if (f > 0.7) return { lab: L[i + 1][0], i: i + 1 };
+      return { lab: L[i][0] + '~' + L[i + 1][0], i, j: i + 1, f };
+    }
+  }
+  return { lab: '' };
+}
+/* 사다리 표기를 글로 — 범위 밖이면 「44 미만」 「99 초과」 */
+function ladTxt(sy, h) {
+  const r = ladder(sy.L, h), suf = sy.suf || '';
+  if (r.lo) return sy.L[0][0] + suf + ' 미만';
+  if (r.hi) return sy.L[sy.L.length - 1][0] + suf + ' 초과';
+  return r.lab + suf;
+}
+
+/* ── 여성 옷(상의·원피스) — 허브: 가슴둘레 cm ──
+   한국 KS K 0051 여성 가슴둘레(XS 80 · S 85 · M 90 · L 95 · XL 100 · 2XL 105) = 44~99
+   미국 ASTM D5585-11 가슴둘레(인치) · 영국 가슴(인치) − 24 · 독일 가슴/2 − 6 · 프랑스 가슴/2 − 4 · 이탈리아 가슴/2
+   일본 JIS L 4005 호(9호 83cm 에서 3cm 간격) */
+const SYS_W = [
+  { k: 'kr', n: '한국', s: '44·55·66', L: [['44', 80], ['55', 85], ['66', 90], ['77', 95], ['88', 100], ['99', 105]] },
+  { k: 'krn', n: '한국 숫자', s: '85·90·95', L: [['85', 80], ['90', 85], ['95', 90], ['100', 95], ['105', 100], ['110', 105]] },
+  { k: 'intl', n: '국제(문자)', s: 'XS·S·M', L: [['XS', 80], ['S', 85], ['M', 90], ['L', 95], ['XL', 100], ['2XL', 105]] },
+  { k: 'us', n: '미국', s: 'US 2·4·6', L: [['00', 31.125], ['0', 31.75], ['2', 33], ['4', 34.125], ['6', 35.25], ['8', 36.25], ['10', 37.25],
+    ['12', 38.75], ['14', 40.375], ['16', 42.125], ['18', 44], ['20', 46]].map(a => [a[0], a[1] * IN]) },
+  { k: 'uk', n: '영국', s: 'UK 8·10', L: seq(4, 22, 2, s => [String(s), (s + 24) * IN]) },
+  { k: 'eu', n: '유럽(독일)', s: 'EU 34·36', L: seq(30, 50, 2, s => [String(s), 2 * (s + 6)]) },
+  { k: 'fr', n: '프랑스·스페인', s: 'FR 36·38', L: seq(32, 52, 2, s => [String(s), 2 * (s + 4)]) },
+  { k: 'it', n: '이탈리아', s: 'IT 40·42', L: seq(36, 56, 2, s => [String(s), 2 * s]) },
+  { k: 'jp', n: '일본', s: '9·11호', suf: '호', L: [['3', 74], ['5', 77], ['7', 80], ['9', 83], ['11', 86], ['13', 89], ['15', 92], ['17', 96], ['19', 100], ['21', 104], ['23', 108]] }
+];
+/* ── 남성 옷(상의) — 허브: 가슴둘레 cm ──
+   한국 KS 남성 가슴둘레 85~115 · 미국 문자(가슴 인치 XS 33 · S 36 · M 39 · L 42 …) · 유럽 정장 = 가슴/2
+   영국·미국 정장 = 가슴 인치 · 일본 JIS L 4004(S 80~88 · M 88~96 · L 96~104 · LL 104~112) */
+const SYS_M = [
+  { k: 'kr', n: '한국', s: 'S·M·L', L: [['XS', 85], ['S', 90], ['M', 95], ['L', 100], ['XL', 105], ['2XL', 110], ['3XL', 115]] },
+  { k: 'krn', n: '한국 숫자', s: '90·95·100', L: seq(85, 115, 5, s => [String(s), s]) },
+  { k: 'us', n: '미국', s: 'US S·M·L', L: [['XS', 33], ['S', 36], ['M', 39], ['L', 42], ['XL', 45], ['2XL', 48], ['3XL', 51]].map(a => [a[0], a[1] * IN]) },
+  { k: 'eu', n: '유럽(정장)', s: 'EU 46·48', L: seq(42, 60, 2, s => [String(s), 2 * s]) },
+  { k: 'in', n: '영·미 정장', s: '가슴 36·38인치', L: seq(32, 50, 2, s => [String(s), s * IN]) },
+  { k: 'jp', n: '일본', s: 'S·M·L·LL', L: [['S', 84], ['M', 92], ['L', 100], ['LL', 108], ['3L', 116], ['4L', 124]] }
+];
+/* ── 바지 — 허브: 허리 인치(몸 허리둘레 ÷ 2.54) ── */
+const SYS_P = [
+  { k: 'in', n: '허리 인치', s: '28·30·32', L: seq(22, 44, 1, n => [String(n), n]) },
+  { k: 'cm', n: '허리 cm', s: '71·76·81', L: seq(22, 44, 1, n => [String(Math.round(n * IN)), n]) },
+  { k: 'men', n: '남성 문자', s: 'S·M·L', L: [['S', 28.5], ['M', 30.5], ['L', 32.5], ['XL', 34.5], ['2XL', 36.5], ['3XL', 38.5]] },
+  { k: 'women', n: '여성 문자', s: 'S(55)·M(66)', L: [['XS(44)', 24], ['S(55)', 25.5], ['M(66)', 27.5], ['L(77)', 29.5], ['XL(88)', 31.5], ['2XL(99)', 33.5]] },
+  { k: 'usw', n: '미국 여성', s: 'US 2·4·6', L: [['0', 26.125], ['2', 26.875], ['4', 27.625], ['6', 28.5], ['8', 29.5], ['10', 30.5], ['12', 32.25], ['14', 34]] }
+];
+
+/* ── 신발 — 허브: 길이 mm(5mm 칸). 한국 표기 = 발 길이 mm ──
+   미국 남성 = cm − 18 · 미국 여성 = cm − 17 · 영국 = cm − 19 · 유럽 = 1.5 × cm + 2 를 0.5 아래로 · 일본 = cm */
+const SH_MIN = 210, SH_MAX = 320;
+const euMM = g => Math.floor((1.5 * g / 10 + 2) * 2 + 1e-9) / 2;
+const SYS_S = [
+  { k: 'kr', n: '한국', s: 'mm', suf: 'mm', f: g => String(g) },
+  { k: 'usm', n: '미국 남성', s: 'US 7·8·9', f: g => fmtHalf(g / 10 - 18), o: seq(3, 14, 0.5, u => [fmtHalf(u), (u + 18) * 10]) },
+  { k: 'usw', n: '미국 여성', s: 'US 6·7·8', f: g => fmtHalf(g / 10 - 17), o: seq(4, 15, 0.5, u => [fmtHalf(u), (u + 17) * 10]) },
+  { k: 'uk', n: '영국', s: 'UK 5·6·7', f: g => fmtHalf(g / 10 - 19), o: seq(2, 13, 0.5, u => [fmtHalf(u), (u + 19) * 10]) },
+  { k: 'eu', n: '유럽', s: 'EU 38·40', f: g => fmtHalf(euMM(g)) },
+  { k: 'jp', n: '일본', s: 'cm', suf: 'cm', f: g => fmtHalf(g / 10), o: seq(21, 32, 0.5, u => [fmtHalf(u), u * 10]) }
+];
+/* ── 아이 신발 — 허브: 길이 mm ──
+   미국 아이 C(Child) = cm − 6 (19.5cm 까지) · 큰 아이 Y(Youth) = cm − 19 · 유럽 아이 칸은 표(21.5cm 부터 어른 식) */
+const KS_MIN = 95, KS_MAX = 230;
+const EU_KID = { 95: 16, 100: 16.5, 105: 17, 110: 18, 115: 19, 120: 19.5, 125: 20, 130: 21, 135: 22, 140: 22.5, 145: 23, 150: 24, 155: 25,
+  160: 25.5, 165: 26, 170: 27, 175: 28, 180: 28.5, 185: 29, 190: 30, 195: 31, 200: 31.5, 205: 32, 210: 33, 215: 34 };
+const euKid = g => g <= 215 ? EU_KID[g] : euMM(g);
+const usKid = g => g <= 195 ? fmtHalf(g / 10 - 6) + 'C' : fmtHalf(g / 10 - 19) + 'Y';
+const SYS_K = [
+  { k: 'kr', n: '한국', s: 'mm', suf: 'mm', f: g => String(g) },
+  { k: 'us', n: '미국', s: '7C·10C·1Y', f: usKid },
+  { k: 'eu', n: '유럽', s: 'EU 22·24', f: g => fmtHalf(euKid(g)) },
+  { k: 'jp', n: '일본', s: 'cm', suf: 'cm', f: g => fmtHalf(g / 10) }
+];
+/* ── 아이 옷 — 허브: 키 cm ──
+   한국·일본 = 키 cm(10cm 칸, 표기 = 그 키의 가운데) · 유럽 = 입을 수 있는 가장 큰 키 · 영국 = 나이 칸 · 미국 = 아기 개월·T·숫자 */
+const EU_KH = [50, 56, 62, 68, 74, 80, 86, 92, 98, 104, 110, 116, 122, 128, 134, 140, 146, 152, 158, 164, 170];
+const UK_KH = [['0~3개월', 62], ['3~6개월', 68], ['6~9개월', 74], ['9~12개월', 80], ['12~18개월', 86], ['18~24개월', 92], ['2~3세', 98], ['3~4세', 104],
+  ['4~5세', 110], ['5~6세', 116], ['6~7세', 122], ['7~8세', 128], ['8~9세', 134], ['9~10세', 140], ['10~11세', 146], ['11~12세', 152], ['12~13세', 158], ['13~14세', 164]];
+const upTo = (list, h, lab) => { for (const x of list) { const top = lab ? x[1] : x; if (top >= h - 0.5) return lab ? x[0] : String(x); } return ''; };
+const SYS_C = [
+  { k: 'kr', n: '한국·일본', s: '90·100·110', L: seq(70, 160, 10, s => [String(s), s]) },
+  { k: 'eu', n: '유럽', s: '98·104·110', of: h => h < 45 ? '' : upTo(EU_KH, h), o: EU_KH.map(e => [String(e), e - 3]) },
+  { k: 'uk', n: '영국(나이)', s: '3~4세', of: h => h < 50 ? '' : upTo(UK_KH, h, true), o: UK_KH.map(u => [u[0], u[1] - 3]) },
+  { k: 'us', n: '미국', s: '3T·4T·5', L: [['NB', 50], ['3M', 58], ['6M', 65], ['9M', 70], ['12M', 75], ['18M', 81], ['24M·2T', 87], ['3T', 94], ['4T', 102],
+    ['5', 109], ['6', 117], ['7', 122], ['8', 130], ['10', 140], ['12', 150], ['14', 158], ['16', 165]] }
+];
+
+/* ── 브라 ── 한국·일본 KS K 9401 · JIS L 4006: 밑가슴 5cm 칸, 컵은 윗가슴 − 밑가슴 2.5cm 간격
+   유럽 EN 13402: 컵 2cm 간격(AA 10~12 · A 12~14 …) — 칸 가운데로 놓고 경계 근처는 두 컵을 함께 보인다 · 프랑스·스페인 밑 = 유럽 + 15 · 이탈리아 밑 = 유럽 ÷ 5 − 12
+   영국·미국 밑(인치) 60 = 28 … 100 = 44 · 호주 밑 = 영국 − 22 */
+const KR_CUPS = [['AAA', 5], ['AA', 7.5], ['A', 10], ['B', 12.5], ['C', 15], ['D', 17.5], ['E', 20], ['F', 22.5], ['G', 25]];
+const EU_CUPS = ['AA', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+const UK_CUPS = ['AA', 'A', 'B', 'C', 'D', 'DD', 'E', 'F', 'FF'];
+const US_CUPS = ['AA', 'A', 'B', 'C', 'D', 'DD(E)', 'DDD(F)', 'G', 'H'];
+const BANDS = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105];
+const bandOf = ub => Math.round(ub / 5) * 5;
+function krCupI(d) {
+  if (d < 3.75 || d >= 26.25) return -1;
+  let best = 0;
+  KR_CUPS.forEach((c, i) => { if (Math.abs(c[1] - d) < Math.abs(KR_CUPS[best][1] - d) - 1e-9) best = i; });
+  /* 정확히 경계(예: 11.25)면 큰 컵 — 컵이 작으면 눌리고 크면 뜨는데, 뜨는 쪽은 끈으로 고칠 수 있다 */
+  const nx = best + 1;
+  if (nx < KR_CUPS.length && Math.abs(Math.abs(KR_CUPS[nx][1] - d) - Math.abs(KR_CUPS[best][1] - d)) < 1e-9) best = nx;
+  return best;
+}
+/* 유럽 컵은 2cm 칸의 가운데(AA 11 · A 13 · B 15 …)로 놓고 두 컵 경계 근처면 「D~E」 */
+const EU_L = EU_CUPS.map((c, i) => [c, 11 + 2 * i]);
+const ukBand = b => 2 * (b / 5) + 4;
+const BRA_SYS = [
+  { k: 'kr', n: '한국·일본', s: '75B', bands: BANDS.map(b => [String(b), b]), cups: KR_CUPS.map(c => [c[0], c[1]]) },
+  { k: 'eu', n: '유럽', s: '75A', bands: BANDS.map(b => [String(b), b]), cups: EU_CUPS.map((c, i) => [c, 11 + 2 * i]) },
+  { k: 'uk', n: '영국', s: '34A', bands: BANDS.map(b => [String(ukBand(b)), b]), cups: UK_CUPS.map((c, i) => [c, 11 + 2 * i]) },
+  { k: 'us', n: '미국', s: '34A', bands: BANDS.map(b => [String(ukBand(b)), b]), cups: US_CUPS.map((c, i) => [c, 11 + 2 * i]) },
+  { k: 'fr', n: '프랑스·스페인', s: '90A', bands: BANDS.map(b => [String(b + 15), b]), cups: EU_CUPS.map((c, i) => [c, 11 + 2 * i]) },
+  { k: 'it', n: '이탈리아', s: '3A', bands: BANDS.filter(b => b >= 65).map(b => [String(b / 5 - 12), b]), cups: EU_CUPS.map((c, i) => [c, 11 + 2 * i]) },
+  { k: 'au', n: '호주', s: '12A', bands: BANDS.map(b => [String(ukBand(b) - 22), b]), cups: UK_CUPS.map((c, i) => [c, 11 + 2 * i]) }
+];
+/* 브라 한 벌을 나라별 글로 */
+function braRow(h) {
+  const ub = h[0], d = h[1], b = bandOf(ub);
+  const ki = krCupI(d), r = ladder(EU_L, d);
+  const ok = b >= 60 && b <= 105;
+  const ue = ok && !r.lo && !r.hi && r.lab !== '';
+  const cup = names => r.j !== undefined ? names[r.i] + '~' + names[r.j] : names[r.i];
+  return {
+    b, ki, ei: ue ? (r.j !== undefined ? r.j : r.i) : -1,
+    kr: ok && ki >= 0 ? b + KR_CUPS[ki][0] : '',
+    eu: ue ? b + cup(EU_CUPS) : '', uk: ue ? ukBand(b) + cup(UK_CUPS) : '', us: ue ? ukBand(b) + cup(US_CUPS) : '',
+    fr: ue ? (b + 15) + cup(EU_CUPS) : '', it: ue && b >= 65 ? (b / 5 - 12) + cup(EU_CUPS) : '',
+    au: ue ? (ukBand(b) - 22) + cup(UK_CUPS) : ''
+  };
+}
+/* ── 갈래 ── */
+const CATS = {
+  women: { n: '여성 옷', ico: '👗', s: '상의·원피스', sys: SYS_W, hub: '가슴둘레',
+    fields: [{ k: 'b', n: '가슴둘레', hint: '가슴 가장 높은 곳을 수평으로', ph: '예: 86', len: true, min: 60, max: 140 }] },
+  men: { n: '남성 옷', ico: '👔', s: '상의·셔츠', sys: SYS_M, hub: '가슴둘레',
+    fields: [{ k: 'c', n: '가슴둘레', hint: '겨드랑이 바로 아래 가장 굵은 곳', ph: '예: 98', len: true, min: 70, max: 150 }] },
+  pants: { n: '바지', ico: '👖', s: '허리 인치', sys: SYS_P, hub: '허리',
+    fields: [{ k: 'w', n: '허리둘레', hint: '바지를 입는 높이(배꼽 아래)에서', ph: '예: 78', len: true, min: 25, max: 160 }] },
+  shoes: { n: '신발', ico: '👟', s: '어른 mm·US·EU', sys: SYS_S, grid: [SH_MIN, SH_MAX], hub: '발 길이',
+    fields: [{ k: 'fl', n: '왼발 길이', hint: 'mm 또는 cm', ph: '예: 243', foot: true }, { k: 'fr', n: '오른발 길이', hint: '선택 · 큰 쪽으로 골라요', ph: '예: 245', foot: true, opt: true }] },
+  bra: { n: '브라', ico: '👙', s: '75B·34B', bra: true, hub: '밑가슴',
+    fields: [{ k: 'ub', n: '밑가슴둘레', hint: '가슴 바로 밑을 수평으로 꼭 맞게', ph: '예: 74', len: true, min: 50, max: 130 },
+      { k: 'bb', n: '윗가슴둘레', hint: '가슴 가장 높은 곳(유두 높이)을 느슨하게', ph: '예: 87', len: true, min: 55, max: 170 }] },
+  kids: { n: '아이 옷', ico: '🧸', s: '키 90·100', sys: SYS_C, hub: '키',
+    fields: [{ k: 'h', n: '아이 키', hint: '신발 벗고 cm', ph: '예: 104', min: 45, max: 175 }] },
+  kshoes: { n: '아이 신발', ico: '🧒', s: 'mm·C·Y', sys: SYS_K, grid: [KS_MIN, KS_MAX], hub: '발 길이',
+    fields: [{ k: 'f', n: '발 길이', hint: '서서 재요 · mm 또는 cm', ph: '예: 143', foot: true }] }
+};
+const CAT_KEYS = ['women', 'men', 'pants', 'shoes', 'bra', 'kids', 'kshoes'];
+const isGrid = c => !!CATS[c].grid;
+
+/* 5mm 칸 신발 — 허브 mm 를 칸에 붙이고(두 칸 사이면 둘 다) 나라별 글로 */
+function gridSnap(c, mm) {
+  const [a, b] = CATS[c].grid;
+  const L = seq(a, b, 5, g => [String(g), g]);
+  const r = ladder(L, mm);
+  if (r.lo || r.hi || !r.lab) return null;
+  return r.j !== undefined ? [L[r.i][1], L[r.j][1]] : [L[r.i][1]];
+}
+function gridTxt(sy, gs) {
+  const suf = sy.suf || '';
+  const a = sy.f(gs[0]);
+  if (gs.length === 1) return a + suf;
+  const b = sy.f(gs[1]);
+  return (a === b ? a : a + '~' + b) + suf;
+}
+/* 한 갈래·한 나라 표기 */
+function sysTxt(c, sy, h) {
+  if (isGrid(c)) { const gs = gridSnap(c, h); return gs ? gridTxt(sy, gs) : ''; }
+  if (sy.of) return sy.of(h);
+  return ladTxt(sy, h);
+}
+/* 사이즈 고르는 목록 — [보이는 글, 허브] */
+function sysOpts(c, sy) {
+  if (isGrid(c)) {
+    if (sy.o) return sy.o.filter(o => o[1] >= CATS[c].grid[0] && o[1] <= CATS[c].grid[1]);
+    const gs = seq(CATS[c].grid[0], CATS[c].grid[1], 5, g => g);
+    if (sy.k === 'eu') return euOpts(gs, c === 'shoes' ? euMM : euKid, c === 'shoes');
+    return gs.map(g => [sy.f(g) + (sy.suf || ''), g]);
+  }
+  if (sy.o) return sy.o;
+  return sy.L.map(x => [x[0] + (sy.suf || ''), x[1]]);
+}
+/* 유럽 신발은 5mm 칸에 없는 숫자(39 · 42 …)도 흔히 적는다 — 칸에 있으면 그 칸, 없으면 앞뒤 칸 가운데 */
+function euOpts(gs, f, fill) {
+  const have = new Map();
+  gs.forEach(g => { const e = f(g); if (!have.has(e)) have.set(e, g); });
+  const vals = Array.from(have.keys());
+  if (fill) {
+    const lo = Math.ceil(vals[0]), hi = Math.floor(vals[vals.length - 1]);
+    for (let e = lo; e <= hi; e++) if (!have.has(e)) vals.push(e);
+    vals.sort((a, b) => a - b);
+  }
+  return vals.map(e => {
+    if (have.has(e)) return [fmtHalf(e), have.get(e)];
+    let a = gs[0];
+    gs.forEach(g => { if (f(g) < e) a = g; });
+    return [fmtHalf(e), a + 2.5];
+  });
+}
+/* 허브 값이 쓸 만한가 */
+function hubOk(c, h) {
+  if (c === 'bra') return Array.isArray(h) && braRow(h).kr !== '';
+  if (typeof h !== 'number' || !isFinite(h)) return false;
+  if (isGrid(c)) return !!gridSnap(c, h);
+  return true;
+}
+
+/* ── 결과 — 큰 글씨 · 나라별 표 · 짧은 요약 ── */
+/* 큰 글씨 [값, 작은 글] — 한국 표기 */
+function bigOf(c, h) {
+  if (c === 'bra') return [braRow(h).kr || '-', ''];
+  const t = sysTxt(c, CATS[c].sys[0], h);
+  if (!t) return ['-', ''];
+  if (isGrid(c)) return [t.replace(/mm$/, ''), 'mm'];
+  if (c === 'pants') return [t, '인치'];
+  if (c === 'men') { const n = sysTxt(c, SYS_M[1], h); return [t, /미만|초과/.test(n) ? '' : n]; }
+  if (c === 'kids') return [t, /미만|초과/.test(t) ? '' : 'cm'];
+  return [t, ''];
+}
+/* 한 줄 이름 — 「여성 옷 55」 「신발 250mm」 */
+function labelOf(c, h) {
+  const b = bigOf(c, h);
+  return CATS[c].n + ' ' + b[0] + (c === 'men' ? '' : b[1]);
+}
+/* 표 한 벌: [[나라, 표기, 작은 글]] */
+function rowsOf(c, h) {
+  if (c === 'bra') {
+    const r = braRow(h);
+    return BRA_SYS.map(sy => [sy.n, r[sy.k] || '-', sy.k === 'us' && r.ei >= 5 ? '브랜드마다 표기 다름' : '']);
+  }
+  return CATS[c].sys.map(sy => [sy.n, sysTxt(c, sy, h) || '-', '']);
+}
+/* 기록·카드에 쓰는 한 줄 요약 */
+function shortOf(c, h) {
+  const pick = { women: ['us', 'uk', 'eu', 'jp'], men: ['us', 'eu', 'jp'], pants: ['cm', 'men', 'women'], shoes: ['usm', 'usw', 'eu'],
+    kshoes: ['us', 'eu'], kids: ['eu', 'uk', 'us'], bra: ['eu', 'uk', 'us'] }[c];
+  const P = { usm: '미국 남', usw: '미국 여', us: '미국', uk: '영국', eu: '유럽', jp: '일본', cm: '', men: '남', women: '여' };
+  if (c === 'bra') { const r = braRow(h); return pick.map(k => (P[k] + ' ' + (r[k] || '-')).trim()).join(' · '); }
+  return pick.map(k => {
+    const sy = CATS[c].sys.find(s => s.k === k);
+    const t = sysTxt(c, sy, h) || '-';
+    return k === 'cm' ? t + 'cm' : (P[k] + ' ' + t).trim();
+  }).join(' · ');
+}
+/* 허브 값을 사람 말로 */
+function hubTxt(c, h) {
+  if (c === 'women' || c === 'men') return '가슴둘레 약 ' + fmtN(h) + 'cm(' + fmtN(h / IN) + '인치)';
+  if (c === 'pants') return '허리 약 ' + fmtN(h) + '인치(' + fmtN(h * IN) + 'cm)';
+  if (c === 'kids') return '키 약 ' + fmtN(h) + 'cm';
+  if (c === 'bra') return '밑가슴 약 ' + fmtN(h[0]) + 'cm · 윗가슴과 차이 약 ' + fmtN(h[1]) + 'cm';
+  const gs = gridSnap(c, h);
+  return gs ? '신발 길이 ' + gs.join('~') + 'mm' : '';
+}
+/* 정적 사이즈표 줄(빌드 결과와 맞는지 시험에서 견준다) */
+function tableHubs(c) {
+  if (c === 'women') return SYS_W[0].L.map(x => x[1]);
+  if (c === 'men') return SYS_M[0].L.map(x => x[1]);
+  if (c === 'pants') return seq(24, 40, 1, n => n);
+  if (c === 'shoes') return seq(220, 300, 5, g => g);
+  if (c === 'kshoes') return seq(100, 230, 5, g => g);
+  if (c === 'kids') return SYS_C[0].L.map(x => x[1]);
+  return [];
+}
+
+/* ════════════════════════════════════════════════════════════
+   입력 — 갈래 · 「사이즈 바꾸기」(표기 고르기) · 「치수로 찾기」(cm·인치)
+   ════════════════════════════════════════════════════════════ */
+const S = { cat: 'women', mode: 'conv', sys: {}, sel: {}, vals: {}, unit: 'cm', pm: 'body', wide: 'no', who: '', hist: [], R: null };
+/* 처음 열었을 때 바로 결과가 보이게 흔한 사이즈를 골라 둔다 */
+const FIRST_SEL = { women: '55', men: 'L', pants: '30', shoes: '250mm', bra: '75|B', kids: '100', kshoes: '150mm' };
+CAT_KEYS.forEach(c => { S.sys[c] = 'kr'; S.sel[c] = { kr: FIRST_SEL[c] }; S.vals[c] = {}; });
+const MODE_NAME = { conv: '사이즈 바꾸기', meas: '치수로 찾기' };
+const SYS_HINT = {
+  women: '옷 안쪽 라벨이나 쇼핑몰에 적힌 표기', men: '옷 안쪽 라벨이나 쇼핑몰에 적힌 표기', pants: '바지 라벨의 W(허리) 숫자',
+  shoes: '신발 혀 안쪽 라벨에 나라별로 적혀 있어요', bra: '라벨의 밑가슴 숫자 + 컵 글자', kids: '아이 옷 라벨 · 영국은 나이로 적어요',
+  kshoes: '신발 안쪽 라벨 · 미국은 C(아이)·Y(큰 아이)'
+};
+const sysList = c => c === 'bra' ? BRA_SYS : CATS[c].sys;
+const curSys = c => sysList(c).find(s => s.k === S.sys[c]) || sysList(c)[0];
+
+/* 고른 표기 → 허브 */
+function convHub(c) {
+  const sy = curSys(c), v = S.sel[c][sy.k];
+  if (c === 'bra') {
+    const [bl, cl] = String(v || '').split('|');
+    const b = sy.bands.find(x => x[0] === bl), cp = sy.cups.find(x => x[0] === cl);
+    return b && cp ? [b[1], cp[1]] : null;
+  }
+  const o = sysOpts(c, sy).find(x => x[0] === v);
+  return o ? o[1] : null;
+}
+/* 표기 칸을 바꿀 때 지금 사이즈와 가장 가까운 표기를 골라 둔다(결과가 튀지 않게) */
+function nearSel(c, sy, h) {
+  if (h == null) return;
+  if (c === 'bra') {
+    const b = bandOf(h[0]);
+    const band = sy.bands.find(x => x[1] === b) || sy.bands[Math.min(sy.bands.length - 1, 3)];
+    let cp = sy.cups[0];
+    sy.cups.forEach(x => { if (Math.abs(x[1] - h[1]) < Math.abs(cp[1] - h[1]) - 1e-9) cp = x; });
+    S.sel[c][sy.k] = band[0] + '|' + cp[0];
+    return;
+  }
+  const opts = sysOpts(c, sy);
+  let best = opts[0];
+  /* 같은 거리면 뒤(큰 쪽) — 옷은 작은 것보다 큰 것이 낫다 */
+  opts.forEach(o => { if (Math.abs(o[1] - h) <= Math.abs(best[1] - h) + 1e-9) best = o; });
+  S.sel[c][sy.k] = best[0];
+}
+
+/* ── 치수 읽기 ── */
+const NUM_RE = /(\d+(?:[.,]\d+)?)/;
+function readNum(raw) {
+  const m = NUM_RE.exec(String(raw).replace(/\s/g, ''));
+  return m ? parseFloat(m[1].replace(',', '.')) : NaN;
+}
+/* 몸 치수 → cm. 인치 단추를 골랐거나 글에 in·인치·" 가 있으면 인치로 */
+function readLen(raw) {
+  const v = readNum(raw);
+  if (isNaN(v)) return NaN;
+  const inch = S.unit === 'in' ? !/cm|센티/i.test(raw) : /in|인치|["″]/i.test(raw);
+  return inch ? v * IN : v;
+}
+/* 발 길이 → mm. 40 보다 작거나 cm 가 붙으면 cm 로 */
+function readFoot(raw) {
+  const v = readNum(raw);
+  if (isNaN(v)) return NaN;
+  return /cm|센티/i.test(raw) || v < 40 ? v * 10 : v;
+}
+const ceil5 = x => Math.ceil(x / 5 - 1e-9) * 5;
+/* 지금 칸에 적힌 치수로 허브를 낸다 — { h, m } 또는 { err } · { empty } */
+function measHub(c) {
+  const v = S.vals[c] || {}, got = {};
+  for (const f of CATS[c].fields) {
+    const raw = String(v[f.k] || '').trim();
+    if (!raw) { if (f.opt) continue; return { empty: true }; }
+    const x = f.foot ? readFoot(raw) : f.len ? readLen(raw) : readNum(raw);
+    if (isNaN(x) || x <= 0) return { err: f.n + ' 칸에 숫자를 넣어 주세요.' };
+    got[f.k] = x;
+  }
+  const rng = (x, a, b, msg) => x < a || x > b ? msg : '';
+  if (c === 'women' || c === 'men') {
+    const x = got.b || got.c, f = CATS[c].fields[0];
+    const e = rng(x, f.min, f.max, '가슴둘레 ' + fmtN(x) + 'cm 가 맞나요? ' + f.min + '~' + f.max + 'cm 사이로 넣어 주세요.' + (x < 45 ? ' 인치로 쟀다면 위에서 「인치」를 고르세요.' : ''));
+    return e ? { err: e } : { h: x, m: { len: x } };
+  }
+  if (c === 'pants') {
+    const w = got.w, flat = S.pm === 'flat';
+    const e = flat ? rng(w, 25, 80, '바지 허리 단면 ' + fmtN(w) + 'cm 가 맞나요? 단면(한쪽 폭)은 보통 30~55cm 입니다.')
+      : rng(w, 45, 160, '허리둘레 ' + fmtN(w) + 'cm 가 맞나요?' + (w < 45 ? ' 인치로 쟀다면 「인치」를, 바지를 펴 놓고 쟀다면 「바지 단면」을 고르세요.' : ''));
+    if (e) return { err: e };
+    const cm = flat ? w * 2 : w;
+    return { h: cm / IN, m: { len: w, cm, flat } };
+  }
+  if (c === 'shoes' || c === 'kshoes') {
+    const kid = c === 'kshoes';
+    const a = kid ? got.f : got.fl, b = kid ? NaN : got.fr;
+    const foot = isNaN(b) || b === undefined ? a : Math.max(a, b);
+    const lo = kid ? 80 : 180, hi = kid ? 240 : 330;
+    if (foot < lo || foot > hi) {
+      return { err: '발 길이 ' + fmtN(foot) + 'mm 가 맞나요? ' + (kid ? (foot > hi ? '24cm 넘으면 위에서 「신발」(어른)을 고르세요.' : '8~24cm 사이로 넣어 주세요.')
+        : (foot < lo ? '18cm 보다 작으면 「아이 신발」을 고르세요.' : '33cm 넘는 발은 이 표에 없습니다.')) };
+    }
+    const add = kid ? 5 : S.wide === 'yes' ? 5 : 0;
+    const rec = ceil5(foot) + add;
+    return { h: rec, m: { foot, a, b: b === undefined ? NaN : b, rec, add } };
+  }
+  if (c === 'bra') {
+    const ub = got.ub, bb = got.bb;
+    if (ub < 50 || ub > 130) return { err: '밑가슴둘레 ' + fmtN(ub) + 'cm 가 맞나요? 보통 60~110cm 입니다.' };
+    const d = bb - ub;
+    if (d < 2) return { err: '윗가슴둘레가 밑가슴보다 커야 합니다. 두 칸이 바뀌지 않았는지 보세요.' };
+    if (d > 32) return { err: '윗가슴과 밑가슴 차이가 ' + fmtN(d) + 'cm 입니다. 둘 다 cm 로 쟀는지 확인해 주세요.' };
+    return { h: [ub, d], m: { ub, bb, d } };
+  }
+  if (c === 'kids') {
+    const h = got.h;
+    if (h < 45 || h > 175) return { err: '키 ' + fmtN(h) + 'cm 가 맞나요? 아이 옷은 45~170cm 사이입니다.' };
+    return { h, m: { h } };
+  }
+  return { empty: true };
+}
+
+/* ── 그리기 ── */
+function setSeg(name, v) {
+  document.querySelectorAll('[data-seg="' + name + '"] button').forEach(b => b.classList.toggle('on', b.dataset.v === String(v)));
+}
+function renderForm() {
+  const c = S.cat, cat = CATS[c];
+  setSeg('cat', c); setSeg('mode', S.mode); setSeg('unit', S.unit); setSeg('pm', S.pm); setSeg('wide', S.wide);
+  $('pane-conv').classList.toggle('hide', S.mode === 'meas');
+  $('viewNote').classList.toggle('hide', S.mode !== 'view');
+  if (S.mode === 'view' && S.view) $('viewNote').textContent = '수첩에 저장한 사이즈(' + hubTxt(S.view.c, S.view.h) + ')를 그대로 보여 주고 있어요. 위에서 표기를 고르면 바뀝니다.';
+  $('pane-meas').classList.toggle('hide', S.mode !== 'meas');
+  /* 표기 단추 */
+  const L = sysList(c);
+  const key = c + ':' + L.map(s => s.k).join(',');
+  if ($('sysSeg').dataset.key !== key) {
+    $('sysSeg').dataset.key = key;
+    $('sysSeg').innerHTML = L.map(sy => '<button type="button" data-v="' + sy.k + '">' + esc(sy.n) + '<span class="s">' + esc(sy.s) + '</span></button>').join('');
+  }
+  setSeg('sys', S.sys[c]);
+  $('sysHint').textContent = SYS_HINT[c];
+  renderSel();
+  /* 치수 칸 */
+  const fk = c;
+  if ($('measFields').dataset.key !== fk) {
+    $('measFields').dataset.key = fk;
+    $('measFields').innerHTML = cat.fields.map(f =>
+      '<div class="row"><div class="lab"><label for="f_' + f.k + '">' + esc(f.n) + (f.opt ? ' <em class="op">선택</em>' : '') + '</label><span class="hint">' + esc(f.hint) + '</span></div>' +
+      '<div class="unit"><input type="text" inputmode="decimal" id="f_' + f.k + '" data-f="' + f.k + '" placeholder="' + esc(f.ph) + '" autocomplete="off" enterkeyhint="done">' +
+      '<span class="u" data-u="' + (f.foot ? 'foot' : f.len ? 'len' : 'cm') + '"></span></div></div>').join('');
+  }
+  cat.fields.forEach(f => { const el = $('f_' + f.k); if (el && document.activeElement !== el) el.value = S.vals[c][f.k] || ''; });
+  const hasLen = cat.fields.some(f => f.len);
+  $('unitRow').classList.toggle('hide', !hasLen);
+  $('pmRow').classList.toggle('hide', c !== 'pants');
+  $('wideRow').classList.toggle('hide', c !== 'shoes');
+  document.querySelectorAll('#measFields .u').forEach(u => {
+    u.textContent = u.dataset.u === 'foot' ? 'mm' : u.dataset.u === 'len' ? (S.unit === 'in' ? '인치' : 'cm') : 'cm';
+  });
+  if (c === 'pants') {
+    const lab = document.querySelector('label[for="f_w"]');
+    if (lab) lab.textContent = S.pm === 'flat' ? '바지 허리 단면' : '허리둘레';
+  }
+  document.querySelectorAll('.howto').forEach(d => d.classList.toggle('hide', d.dataset.cat !== c));
+}
+function renderSel() {
+  const c = S.cat, sy = curSys(c);
+  if (c === 'bra') {
+    const [bl, cl] = String(S.sel[c][sy.k] || '').split('|');
+    $('convSel').innerHTML = sy.bands.map(b => '<option value="' + esc(b[0]) + '">' + esc(b[0]) + '</option>').join('');
+    $('convCup').innerHTML = sy.cups.map(x => '<option value="' + esc(x[0]) + '">' + esc(x[0]) + '</option>').join('');
+    $('convSel').value = bl; $('convCup').value = cl;
+    if ($('convSel').selectedIndex < 0) $('convSel').selectedIndex = Math.min(3, sy.bands.length - 1);
+    if ($('convCup').selectedIndex < 0) $('convCup').selectedIndex = 3;
+    $('convCup').classList.remove('hide');
+    $('convLab').textContent = sy.n + ' 밑가슴 · 컵';
+    S.sel[c][sy.k] = $('convSel').value + '|' + $('convCup').value;
+    return;
+  }
+  $('convCup').classList.add('hide');
+  const opts = sysOpts(c, sy);
+  $('convSel').innerHTML = opts.map(o => '<option value="' + esc(o[0]) + '">' + esc(o[0]) + '</option>').join('');
+  $('convSel').value = S.sel[c][sy.k] || '';
+  if ($('convSel').selectedIndex < 0) $('convSel').selectedIndex = Math.floor(opts.length / 2);
+  S.sel[c][sy.k] = $('convSel').value;
+  $('convLab').textContent = sy.n + ' 사이즈';
+}
+/* 지금 결과 */
+function curRes() {
+  const c = S.cat;
+  if (S.mode === 'view' && S.view && S.view.c === c) return { c, h: S.view.h, by: S.view.by, m: null };
+  if (S.mode !== 'meas') {
+    const h = convHub(c);
+    return h != null && hubOk(c, h) ? { c, h, by: 'conv' } : null;
+  }
+  const r = measHub(c);
+  $('measNote').textContent = r.err || '';
+  if (r.err || r.empty) return null;
+  return hubOk(c, r.h) ? { c, h: r.h, by: 'meas', m: r.m } : null;
+}
+
+/* ════════════════════════════════════════════════════════════
+   결과 · 사이즈 수첩 · 내보내기(그림 · 발 길이 측정지 PDF · 글 · 링크)
+   ════════════════════════════════════════════════════════════ */
+const HIST_KEY = 'clothes_size.hist.v1', PREF_KEY = 'clothes_size.pref.v1';
+const ACC = '#2f5bd3';
+const SITE = 'https://hwj-hub.github.io/clothes_size/';
+const MMPT = 72 / 25.4;
+const CARD_L = 85.60, CARD_S = 53.98;
+function todayDot() { const t = new Date(); return t.getFullYear() + '. ' + (t.getMonth() + 1) + '. ' + t.getDate() + '.'; }
+
+/* ── 안내 — 갈래마다 고를 때 알아 둘 것 ── */
+function factsOf(R) {
+  const c = R.c, h = R.h, m = R.m || {}, F = [];
+  const pair = (r, L, suf) => [L[r.i][0] + (suf || ''), L[r.j][0] + (suf || '')];
+  if (c === 'women' || c === 'men') {
+    const L = CATS[c].sys[0].L, r = ladder(L, h);
+    if (r.lo) F.push(['warn', '<b>' + L[0][0] + '보다 작은 치수</b>예요. ' + (c === 'women' ? '33 사이즈나 주니어 옷' : '아동·주니어 옷') + ' 실측표를 함께 보세요.']);
+    else if (r.hi) F.push(['warn', '<b>' + L[L.length - 1][0] + '보다 큰 치수</b>예요. 빅사이즈 쇼핑몰의 실측표(가슴 단면 × 2)로 고르세요.']);
+    else if (r.j !== undefined) { const p = pair(r, L); F.push(['info', '<b>' + p[0] + josa(p[0], '과', '와') + ' ' + p[1] + ' 사이</b>예요. 몸에 붙는 옷은 <b>' + p[0] + '</b>, 넉넉한 옷·겉옷은 <b>' + p[1] + '</b>' + josa(p[1], '을', '를') + ' 고르세요.']); }
+    else F.push(['ok', '한국 <b>' + r.lab + '</b> 사이즈에 가까워요.']);
+    if (c === 'women') F.push(['info', '나라마다 표준 체형이 달라 숫자가 딱 맞아떨어지지 않아요. 미국 옷은 같은 숫자라도 품이 넉넉하고, 일본 옷은 작게 나오는 편입니다.']);
+    else F.push(['info', '미국 브랜드는 같은 글자라도 품이 커서 <b>한국 L(100)이 미국 M</b> 안팎이고, 일본 브랜드는 작게 나와 한 치수 크게 고르는 사람이 많아요.']);
+    F.push(['info', '해외 직구는 상품 실측표의 <b>가슴 단면 × 2</b>를 내 가슴둘레 <b>' + fmtN(h) + 'cm(' + fmtN(h / IN) + '인치)</b>와 견주는 것이 가장 정확합니다. 여유분이 있는 옷은 5~10cm 더 큽니다.']);
+  } else if (c === 'pants') {
+    const L = SYS_P[0].L, r = ladder(L, h);
+    if (m.flat) F.push(['info', '바지 허리 단면 ' + fmtN(m.len) + 'cm × 2 = 허리 <b>' + fmtN(m.cm) + 'cm</b> → <b>' + fmtN(h) + '인치</b>로 계산했어요.']);
+    else if (R.m) F.push(['info', '허리 ' + fmtN(m.cm) + 'cm ÷ 2.54 = <b>' + fmtN(h) + '인치</b>.']);
+    if (r.j !== undefined) F.push(['info', '<b>' + L[r.i][0] + '인치와 ' + L[r.j][0] + '인치 사이</b>예요. 벨트를 맬 바지는 ' + L[r.i][0] + ', 허리가 딱 맞아야 하는 바지는 ' + L[r.j][0] + josa(L[r.j][0], '을', '를') + ' 고르세요.']);
+    F.push(['info', '같은 30인치라도 브랜드와 핏(슬림·와이드·하이웨이스트)에 따라 실제 허리가 1~2인치 다르게 나옵니다. 상품 실측표의 <b>허리 단면 × 2</b>를 꼭 함께 보세요.']);
+    F.push(['info', 'cm 표기(71·76·81 …)는 인치 × 2.54 를 반올림한 숫자이고, 한국 바지 「S·M·L」은 쇼핑몰마다 1인치쯤 다를 수 있어요.']);
+  } else if (c === 'shoes' || c === 'kshoes') {
+    const gs = gridSnap(c, h) || [h];
+    if (R.m) {
+      F.push(['ok', '발 길이 <b>' + fmtN(m.foot) + 'mm</b> → ' + (c === 'kshoes' ? '자랄 여유 5mm 를 더해 ' : '5mm 단위로 올려 ') + (m.add && c === 'shoes' ? '발볼 여유 5mm 를 더해 ' : '') + '<b>' + m.rec + 'mm</b>를 권해요.']);
+      if (!isNaN(m.b) && Math.abs(m.a - m.b) >= 5) F.push(['warn', '두 발이 <b>' + fmtN(Math.abs(m.a - m.b)) + 'mm</b> 달라요. 신발은 <b>큰 발</b>에 맞춰 고르세요.']);
+      if (c === 'shoes' && m.rec - m.foot < 2 && !m.add) F.push(['info', '발 길이가 사이즈와 거의 같아요. 운동화·등산화는 두꺼운 양말을 생각해 한 치수(5mm) 크게도 신어 보세요.']);
+    }
+    if (gs.length > 1) F.push(['info', '<b>' + gs[0] + 'mm와 ' + gs[1] + 'mm 사이</b>예요. 발볼이 넓거나 두꺼운 양말을 신으면 큰 쪽을 고르세요.']);
+    if (c === 'shoes') {
+      F.push(['info', '같은 발이라도 미국 표기는 <b>남성이 여성보다 1 작아요</b>(남성 7 = 여성 8). 남녀 공용 신발은 대개 남성 표기를 씁니다.']);
+      F.push(['info', '브랜드·모델마다 같은 사이즈라도 ±5mm 차이가 납니다. 처음 사는 브랜드는 리뷰의 「정사이즈·크게 나옴」을 꼭 확인하세요.']);
+    } else {
+      F.push(['info', '아이 신발은 발가락 앞에 <b>5~10mm</b>(어른 새끼손가락 한 마디쯤) 남는 것이 알맞아요. 너무 크면 벗겨져 넘어지기 쉽습니다.']);
+      F.push(['info', '미국 <b>C</b>는 아기·어린이(Child), <b>Y</b>는 큰 아이(Youth) 표기예요. 13.5C 다음이 1Y 입니다. 아이 발은 금방 자라니 몇 달마다 다시 재 보세요.']);
+    }
+  } else if (c === 'bra') {
+    const r = braRow(h);
+    if (r.ki >= 0) {
+      const sis = [];
+      if (r.b - 5 >= 60 && r.ki + 1 < KR_CUPS.length) sis.push((r.b - 5) + KR_CUPS[r.ki + 1][0]);
+      if (r.b + 5 <= 105 && r.ki - 1 >= 0) sis.push((r.b + 5) + KR_CUPS[r.ki - 1][0]);
+      if (sis.length) F.push(['info', '컵 부피가 같은 <b>자매 사이즈</b>: <b>' + sis.join(' · ') + '</b>. 밑가슴이 끼거나 헐렁하면 이쪽을 입어 보세요.']);
+    }
+    if (R.m) {
+      F.push(['info', '밑가슴 ' + fmtN(m.ub) + 'cm · 윗가슴 ' + fmtN(m.bb) + 'cm → 차이 <b>' + fmtN(m.d) + 'cm</b>로 컵을 골랐어요.']);
+      const edge = Math.abs(m.ub / 5 - Math.floor(m.ub / 5) - 0.5) < 0.2;
+      if (edge) { const lo = Math.floor(m.ub / 5) * 5; F.push(['warn', '밑가슴 ' + fmtN(m.ub) + 'cm 는 <b>' + lo + josa(lo, '과', '와') + ' ' + (lo + 5) + '의 경계</b>예요. 두 밑가슴 사이즈를 다 입어 보세요.']); }
+    }
+    F.push(['info', '한국·일본 컵은 <b>2.5cm</b>, 유럽·영국·미국 컵은 <b>2cm</b> 간격이라 같은 몸이라도 한국 B 가 유럽 A 로 나올 수 있어요.']);
+    if (r.ei >= 5) F.push(['warn', 'D 다음 컵은 영국은 DD·E·F, 미국은 DD·DDD 처럼 <b>브랜드마다 이름이 달라요</b>. 해외 제품은 그 브랜드의 사이즈표를 꼭 보세요.']);
+  } else if (c === 'kids') {
+    const L = SYS_C[0].L, r = ladder(L, h);
+    if (r.lo) F.push(['warn', '키 ' + fmtN(h) + 'cm 는 <b>70 사이즈보다 작아요</b>. 신생아 옷은 개월 수(0~3개월 등)와 몸무게로 많이 고릅니다.']);
+    else if (r.hi) F.push(['warn', '키 ' + fmtN(h) + 'cm 는 아이 옷 160 을 넘어요. <b>어른 옷(여성·남성 옷)</b> 사이즈를 보세요.']);
+    else if (r.j !== undefined) F.push(['info', '<b>' + L[r.i][0] + josa(L[r.i][0], '과', '와') + ' ' + L[r.j][0] + ' 사이</b>예요. 아이는 금방 자라니 한 철 넉넉히 입히려면 <b>' + L[r.j][0] + '</b>' + josa(L[r.j][0], '을', '를') + ' 고르세요.']);
+    else F.push(['ok', '<b>' + r.lab + ' 사이즈</b>(키 약 ' + (+r.lab - 5) + '~' + (+r.lab + 5) + 'cm)예요. 넉넉하게 입히려면 한 치수 큰 ' + (+r.lab + 10) + '도 괜찮아요.']);
+    F.push(['info', '유럽 사이즈는 「그 키까지 입는 옷」이라 <b>98</b>은 키 93~98cm 용이에요. 영국은 나이, 미국은 개월(3M)·걸음마(2T~5T)·숫자로 적습니다.']);
+    F.push(['info', '「3호·5호·7호」 같은 호수는 브랜드마다 기준이 달라 따로 바꾸지 않았어요. 상품의 <b>키 cm 표기나 실측표</b>로 고르세요.']);
+  }
+  return F;
+}
+
+/* ── 결과 카드 ── */
+function renderResult() {
+  const R = curRes();
+  S.R = R;
+  const has = !!R;
+  $('resEmpty').classList.toggle('hide', has);
+  $('resBody').classList.toggle('hide', !has);
+  $('pvActs').classList.toggle('off', !has);
+  ['btnSave', 'btnImg', 'btnCopy', 'btnShare'].forEach(id => { $(id).disabled = !has; });
+  if (!has) {
+    $('resEmpty').textContent = S.mode === 'meas' ? ((n => n + josa(n, '을', '를'))(CATS[S.cat].fields.map(f => f.n).filter((x, i) => !CATS[S.cat].fields[i].opt).join('·')) + ' 넣으면 나라별 사이즈가 나옵니다.')
+      : '알고 있는 사이즈를 고르면 나라별 사이즈로 바꿔 드립니다.';
+    $('resMeta').textContent = '';
+    return;
+  }
+  const b = bigOf(R.c, R.h);
+  $('resBig').innerHTML = esc(b[0]) + (b[1] ? '<small>' + esc(b[1]) + '</small>' : '');
+  $('resBig').classList.toggle('long', String(b[0]).length > 5);
+  $('resMeta').textContent = CATS[R.c].n + ' · ' + MODE_NAME[R.by];
+  $('resSub').innerHTML = '한국 사이즈 · <b>' + esc(hubTxt(R.c, R.h)) + '</b> 기준';
+  $('resTbl').innerHTML = rowsOf(R.c, R.h).map(r => '<tr><th>' + esc(r[0]) + '</th><td><b>' + esc(r[1]) + '</b>' + (r[2] ? '<small>' + esc(r[2]) + '</small>' : '') + '</td></tr>').join('');
+  $('resFacts').innerHTML = factsOf(R).map(f => '<li class="' + f[0] + '">' + f[1] + '</li>').join('');
+}
+
+/* ── 사이즈 수첩 ── */
+const validEntry = h => h && CATS[h.c] && hubOk(h.c, h.h);
+function loadHist() {
+  try { const v = JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); if (Array.isArray(v)) S.hist = v.filter(validEntry).slice(0, 30); } catch (e) { S.hist = []; }
+  try {
+    const p = JSON.parse(localStorage.getItem(PREF_KEY) || 'null');
+    if (p) {
+      if (CATS[p.cat]) S.cat = p.cat;
+      if (MODE_NAME[p.mode]) S.mode = p.mode;
+      if (p.unit === 'in' || p.unit === 'cm') S.unit = p.unit;
+      if (p.pm === 'flat' || p.pm === 'body') S.pm = p.pm;
+      if (p.wide === 'yes' || p.wide === 'no') S.wide = p.wide;
+      if (typeof p.who === 'string') S.who = p.who.slice(0, 20);
+      CAT_KEYS.forEach(c => {
+        if (p.sys && sysList(c).some(s => s.k === p.sys[c])) S.sys[c] = p.sys[c];
+        if (p.sel && p.sel[c] && typeof p.sel[c] === 'object') Object.keys(p.sel[c]).forEach(k => { if (typeof p.sel[c][k] === 'string') S.sel[c][k] = p.sel[c][k].slice(0, 20); });
+        if (p.vals && p.vals[c] && typeof p.vals[c] === 'object') CATS[c].fields.forEach(f => { const v = p.vals[c][f.k]; if (typeof v === 'string') S.vals[c][f.k] = v.slice(0, 12); });
+      });
+    }
+  } catch (e) { /* 무시 */ }
+}
+function saveHist() { try { localStorage.setItem(HIST_KEY, JSON.stringify(S.hist)); } catch (e) { /* 무시 */ } }
+function savePref() {
+  try { localStorage.setItem(PREF_KEY, JSON.stringify({ cat: S.cat, mode: S.mode, unit: S.unit, pm: S.pm, wide: S.wide, who: S.who, sys: S.sys, sel: S.sel, vals: S.vals })); } catch (e) { /* 무시 */ }
+}
+const newId = () => Date.now().toString(36) + Math.floor(Math.random() * 1e6).toString(36);
+const roundHub = h => Array.isArray(h) ? h.map(v => Math.round(v * 100) / 100) : Math.round(h * 100) / 100;
+const sameHub = (a, b) => Array.isArray(a) ? Array.isArray(b) && Math.abs(a[0] - b[0]) < 0.01 && Math.abs(a[1] - b[1]) < 0.01 : Math.abs(a - b) < 0.01;
+const sameEntry = (a, b) => a.c === b.c && sameHub(a.h, b.h) && (a.who || '') === (b.who || '');
+function curEntry() { return { c: S.R.c, h: roundHub(S.R.h), by: S.R.by, who: S.who.trim(), t: todayDot() }; }
+function renderHist() {
+  const L = S.hist;
+  $('histCount').textContent = L.length ? L.length + '개' : '';
+  $('histEmpty').classList.toggle('hide', L.length > 0);
+  $('histTools').classList.toggle('hide', L.length === 0);
+  $('histList').innerHTML = L.map(h => {
+    const b = bigOf(h.c, h.h);
+    return '<li><button class="hv" type="button" data-view="' + esc(h.id) + '"><span class="hl"><i>' + CATS[h.c].ico + '</i><b>' + esc(b[0]) + (h.c === 'men' ? '' : '<small>' + esc(b[1]) + '</small>') + '</b><span>' +
+      esc((h.who ? h.who + ' · ' : '') + CATS[h.c].n) + '</span></span>' +
+      '<span class="hs">' + esc(shortOf(h.c, h.h)) + (h.t ? ' · ' + esc(h.t) : '') + '</span></button>' +
+      '<button class="hx" type="button" data-del="' + esc(h.id) + '" aria-label="이 기록 지우기">✕</button></li>';
+  }).join('');
+}
+
+/* ── 글 ── */
+function entryText(h) {
+  const b = bigOf(h.c, h.h);
+  const lines = [CATS[h.c].n + ' 사이즈' + (h.who ? ' — ' + h.who : '') + ' : 한국 ' + b[0] + (h.c === 'men' && b[1] ? '(' + b[1] + ')' : b[1] === 'mm' || b[1] === 'cm' || b[1] === '인치' ? b[1] : '')];
+  lines.push(rowsOf(h.c, h.h).slice(1).filter(r => r[1] !== '-').map(r => r[0] + ' ' + r[1]).join(' · '));
+  lines.push(hubTxt(h.c, h.h) + ' 기준');
+  return lines.join('\n');
+}
+function histText() {
+  return ['내 옷·신발 사이즈'].concat(S.hist.map(h => '· ' + (h.who ? h.who + ' ' : '') + labelOf(h.c, h.h) + ' (' + shortOf(h.c, h.h) + ')')).join('\n') + '\n' + SITE;
+}
+
+/* ── 링크 — 주소 # 뒤에 담는다(서버로 가지 않음) ── */
+const b64u = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+const unb64u = s => { const b = atob(s.replace(/-/g, '+').replace(/_/g, '/')); const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; };
+function shareToken(list) {
+  const o = { v: 1, r: list.map(h => [h.c, roundHub(h.h), (h.who || '').slice(0, 20), h.by === 'meas' ? 1 : 0]) };
+  return b64u(te.encode(JSON.stringify(o)));
+}
+function readToken(tok) {
+  try {
+    const o = JSON.parse(new TextDecoder().decode(unb64u(tok)));
+    if (!o || o.v !== 1 || !Array.isArray(o.r)) return null;
+    const out = [];
+    for (const a of o.r.slice(0, 30)) {
+      if (!Array.isArray(a) || !CATS[a[0]]) continue;
+      const c = a[0];
+      const h = c === 'bra' ? (Array.isArray(a[1]) && a[1].length === 2 ? [+a[1][0], +a[1][1]] : null) : +a[1];
+      if (h == null || !hubOk(c, h)) continue;
+      out.push({ c, h, who: String(a[2] || '').slice(0, 20), by: a[3] ? 'meas' : 'conv' });
+    }
+    return out.length ? out : null;
+  } catch (e) { return null; }
+}
+const shareUrl = list => location.href.replace(/#.*$/, '').replace(/^file:.*$/, SITE) + '#r=' + shareToken(list);
+
+/* ── 그림(사이즈 카드) — 문서 쪽(pt) 위에 그려 PNG 로 ── */
+function tOp(s, x, y, z, b, c) { return { o: 't', s: String(s), x, y, z, b: !!b, c: c || '#1f2937' }; }
+function tCenter(s, cx, y, z, b, c) { return tOp(s, cx - textW(s, z, b) / 2, y, z, b, c); }
+function tRight(s, rx, y, z, b, c) { return tOp(s, rx - textW(s, z, b), y, z, b, c); }
+function wrapText(s, maxW, z, b) {
+  const words = String(s).split(' '), lines = [];
+  let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (cur && textW(t, z, b) > maxW) { lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+function para(ops, s, x, y, maxW, z, b, c, lh) {
+  const L = wrapText(s, maxW, z, b);
+  L.forEach((t, i) => ops.push(tOp(t, x, y + i * lh, z, b, c)));
+  return y + L.length * lh;
+}
+const INK = '#151a26', SUBC = '#3b4457', GRAY = '#6b7385';
+function cardPage(list) {
+  const W = 540, body = [];
+  const one = list.length === 1;
+  let y;
+  if (one) {
+    const h = list[0], b = bigOf(h.c, h.h);
+    y = 132;
+    body.push(tCenter((h.who ? h.who + ' · ' : '') + CATS[h.c].n + ' 사이즈', W / 2, y, 17, true, SUBC));
+    const big = fitText(b[0], W - 120, 84, true, 40);
+    body.push(tCenter(big.s, W / 2, y + 92, big.z, true, ACC));
+    body.push(tCenter('한국 사이즈' + (b[1] ? ' · ' + (h.c === 'men' ? '가슴 ' + b[1] : b[1]) : '') + ' · ' + hubTxt(h.c, h.h), W / 2, y + 124, 12.5, false, GRAY));
+    y += 150;
+    const rows = rowsOf(h.c, h.h).slice(1);
+    body.push({ o: 'r', x: 50, y, w: W - 100, h: rows.length * 34 + 12, f: '#ffffff', s: '#dfe3ec', lw: 1, rr: 12 });
+    rows.forEach((r, i) => {
+      const yy = y + 30 + i * 34;
+      body.push(tOp(r[0], 72, yy, 14, false, GRAY));
+      const v = fitText(r[1], W - 300, 16.5, true, 11);
+      body.push(tRight(v.s, W - 72, yy, v.z, true, INK));
+      if (i) body.push({ o: 'l', x1: 66, y1: yy - 23, x2: W - 66, y2: yy - 23, w: 0.8, c: '#edf0f5' });
+    });
+    y += rows.length * 34 + 40;
+    body.push(tCenter(MODE_NAME[h.by] + ' · ' + (h.t || todayDot()), W / 2, y, 12, false, GRAY));
+    y += 4;
+  } else {
+    y = 124;
+    list.forEach(h => {
+      const b = bigOf(h.c, h.h);
+      body.push({ o: 'r', x: 30, y, w: W - 60, h: 60, f: '#ffffff', s: '#dfe3ec', lw: 1, rr: 10 });
+      const nm = fitText((h.who ? h.who + ' · ' : '') + CATS[h.c].n, 150, 14, true, 10);
+      body.push(tOp(nm.s, 46, y + 26, nm.z, true, INK));
+      body.push(tOp(MODE_NAME[h.by], 46, y + 45, 11, false, GRAY));
+      const bg = fitText(b[0] + (h.c === 'men' || !b[1] ? '' : b[1]), 120, 25, true, 13);
+      body.push(tCenter(bg.s, 268, y + 40, bg.z, true, ACC));
+      const sh = shortOf(h.c, h.h).split(' · ');
+      const half = Math.ceil(sh.length / 2);
+      const l1 = fitText(sh.slice(0, half).join(' · '), 170, 12, true, 8.5), l2 = fitText(sh.slice(half).join(' · '), 170, 12, false, 8.5);
+      body.push(tRight(l1.s, W - 46, y + 26, l1.z, true, INK));
+      body.push(tRight(l2.s, W - 46, y + 45, l2.z, false, SUBC));
+      y += 70;
+    });
+  }
+  const H = Math.max(one ? 560 : 380, Math.ceil(y + 80));
+  const ops = [];
+  ops.push({ o: 'r', x: 0, y: 0, w: W, h: H, f: '#f4f6fb' });
+  ops.push({ o: 'r', x: 0, y: 0, w: W, h: 90, f: ACC });
+  /* 옷걸이 그림 */
+  ops.push({ o: 'c', x: 62, y: 30, r: 7, s: '#ffffff', lw: 3.2 });
+  ops.push({ o: 'l', x1: 62, y1: 37, x2: 62, y2: 44, w: 3.2, c: '#ffffff' });
+  ops.push({ o: 'l', x1: 62, y1: 44, x2: 36, y2: 64, w: 3.2, c: '#ffffff' });
+  ops.push({ o: 'l', x1: 62, y1: 44, x2: 88, y2: 64, w: 3.2, c: '#ffffff' });
+  ops.push({ o: 'l', x1: 36, y1: 64, x2: 88, y2: 64, w: 3.2, c: '#ffffff' });
+  ops.push(tOp(one ? '사이즈 카드' : '내 옷·신발 사이즈', 104, 43, 25, true, '#ffffff'));
+  ops.push(tOp(one ? '쇼핑몰·매장에서 바로 보여 주세요' : '가족·선물 사이즈를 한 장에', 104, 68, 13, false, '#dfe7ff'));
+  for (const o of body) ops.push(o);
+  ops.push(tCenter('브랜드마다 같은 표기라도 품이 다를 수 있어요. 상품 실측표를 함께 확인하세요.', W / 2, H - 44, 11, false, '#7a8295'));
+  ops.push(tCenter('옷·신발 사이즈 변환 · hwj-hub.github.io/clothes_size', W / 2, H - 22, 11, true, '#8d9bc4'));
+  return { W, H, ops };
+}
+
+/* ── 발 길이 측정지 + 신발 사이즈표 PDF (A4) ──
+   종이 윗변을 벽에 붙이고 뒤꿈치를 벽에 대고 선다 → 엄지발가락 끝 자리를 읽는다.
+   그래서 선은 「종이 윗변에서 몇 mm」 자리에 긋는다(인쇄가 1~2mm 밀리면 그만큼 고쳐 읽게 150mm 확인 칸을 둔다) */
+function footPages() {
+  const PW = 595.2756, PH = 841.8898, mm = v => v * MMPT;
+  const pages = [];
+  /* 1쪽 */
+  {
+    const ops = [];
+    const ZX = 66, ZW = 80;  /* 발 놓는 칸 */
+    ops.push({ o: 'r', x: mm(ZX), y: mm(4), w: mm(ZW), h: mm(282), f: '#f5f7fc' });
+    ops.push(tCenter('▲ 이 변을 벽에 붙이세요 ▲', mm(ZX + ZW / 2), mm(9), 9, true, ACC));
+    ops.push(tCenter('뒤꿈치를 벽에 대고 서요', mm(ZX + ZW / 2), mm(14), 7.5, false, SUBC));
+    /* 뒤꿈치 → 발끝 길잡이(발 그림은 넣지 않는다 — 그림에 발을 맞추려 들면 오히려 어긋난다) */
+    const fx = ZX + ZW / 2;
+    ops.push(tCenter('뒤꿈치', mm(fx), mm(32), 9, true, '#8b97b8'));
+    ops.push({ o: 'l', x1: mm(fx), y1: mm(36), x2: mm(fx), y2: mm(80), w: 0.8, c: '#c3cce3', d: [3, 3] });
+    ops.push(tCenter('▼', mm(fx), mm(85), 8, true, '#a9b4d0'));
+    ops.push(tCenter('가장 긴 발가락 끝에 표시하고', mm(fx), mm(91), 7.2, false, '#7d89a8'));
+    ops.push(tCenter('표시가 닿은 선을 읽어요', mm(fx), mm(95), 7.2, false, '#7d89a8'));
+    /* 선 — 100~280mm, 5mm 마다 */
+    for (let d = 100; d <= 280; d += 5) {
+      const big = d % 10 === 0;
+      ops.push({ o: 'l', x1: mm(ZX - (big ? 6 : 3)), y1: mm(d), x2: mm(ZX + ZW + (big ? 6 : 3)), y2: mm(d), w: big ? 0.45 : 0.25, c: big ? '#5b6478' : '#9aa3b5' });
+      if (big) {
+        ops.push(tRight(String(d), mm(ZX - 7.5), mm(d + 1.3), 8, true, INK));
+        ops.push(tOp(String(d), mm(ZX + ZW + 7.5), mm(d + 1.3), 8, true, INK));
+      } else {
+        ops.push(tOp(String(d), mm(ZX + ZW + 4.5), mm(d + 1), 5.6, false, GRAY));
+      }
+    }
+    for (let d = 101; d <= 280; d++) if (d % 5) ops.push({ o: 'l', x1: mm(ZX + ZW - 3), y1: mm(d), x2: mm(ZX + ZW), y2: mm(d), w: 0.18, c: '#9aa3b5' });
+    ops.push(tCenter('mm', mm(ZX + ZW + 11), mm(95), 7, true, GRAY));
+    /* 왼쪽 안내 */
+    const LX = 10, LW = 41;
+    let y = mm(12);
+    ops.push(tOp('발 길이 측정지', mm(LX), y + 6, 15, true, INK));
+    y += mm(9);
+    ops.push(tOp('A4 · 실제 크기(100%) 인쇄', mm(LX), y, 7.5, true, ACC));
+    y += mm(8);
+    const steps = ['인쇄 창에서 배율을 「실제 크기」 또는 「100%」로 고르세요.',
+      '오른쪽 자를 자로 재 보세요. 0 에서 10 까지가 정확히 10cm 여야 합니다.',
+      '종이 윗변에서 150 선까지를 자로 재 보세요. 15cm 와 다르면 그 차이만큼 고쳐 읽어요.',
+      '종이를 바닥에 놓고 윗변을 벽에 딱 붙입니다.',
+      '양말을 신고 뒤꿈치를 벽에 댄 채 똑바로 서서, 가장 긴 발가락 끝에 펜을 세워 표시하세요.',
+      '표시가 닿은 선을 읽습니다. 다른 발도 재서 큰 쪽을 씁니다.',
+      '저녁에 재면 붓기가 반영돼 더 정확해요.'];
+    steps.forEach((s, i) => {
+      ops.push({ o: 'c', x: mm(LX + 2.2), y: y - mm(1.1), r: mm(2.2), f: ACC });
+      ops.push(tCenter(String(i + 1), mm(LX + 2.2), y + 0.2, 6, true, '#ffffff'));
+      y = para(ops, s, mm(LX + 6), y, mm(LW - 6), 7.6, false, SUBC, mm(3.8)) + mm(2.6);
+    });
+    y += mm(2);
+    para(ops, '280mm 넘게 긴 발은 이 종이에 들어가지 않아요. 벽에 대고 표시한 뒤 줄자로 재세요. 아이 발은 100mm 부터 읽을 수 있어요.', mm(LX), y, mm(LW), 7, false, GRAY, mm(3.5));
+    /* 오른쪽 — 10cm 확인 자 + 읽는 법 */
+    const RX = 176, RY0 = 110;
+    ops.push(tOp('10cm 확인', mm(RX - 6), mm(RY0 - 6), 8, true, INK));
+    ops.push({ o: 'l', x1: mm(RX), y1: mm(RY0), x2: mm(RX), y2: mm(RY0 + 100), w: 0.5, c: INK });
+    for (let i = 0; i <= 100; i++) {
+      const w = i % 10 === 0 ? 4 : i % 5 === 0 ? 2.8 : 1.6;
+      ops.push({ o: 'l', x1: mm(RX), y1: mm(RY0 + i), x2: mm(RX + w), y2: mm(RY0 + i), w: i % 10 === 0 ? 0.45 : 0.25, c: INK });
+      if (i % 10 === 0) ops.push(tOp(String(i / 10), mm(RX + 5.5), mm(RY0 + i + 1.2), 7, false, SUBC));
+    }
+    ops.push(tOp('cm', mm(RX + 5), mm(RY0 + 106), 7, true, GRAY));
+    let ry = mm(RY0 + 116);
+    ry = para(ops, '읽은 mm 를 5 단위로 올리면 한국 신발 사이즈예요. 243 → 245', mm(RX - 6), ry, mm(30), 7, true, INK, mm(3.6));
+    para(ops, '발볼이 넓으면 5mm 더 크게. 2쪽 표에서 미국·유럽 사이즈를 찾으세요.', mm(RX - 6), ry + mm(1.5), mm(30), 6.8, false, SUBC, mm(3.4));
+    ops.push(tCenter('옷·신발 사이즈 변환 · hwj-hub.github.io/clothes_size', mm(ZX + ZW / 2), mm(292), 6.5, false, GRAY));
+    pages.push({ W: PW, H: PH, ops });
+  }
+  /* 2쪽 — 신발 사이즈표 */
+  {
+    const ops = [];
+    ops.push(tOp('신발 사이즈표 — 한국(mm) · 미국 · 영국 · 유럽 · 일본', mm(14), mm(19), 14.5, true, INK));
+    ops.push({ o: 'l', x1: mm(14), y1: mm(23), x2: PW - mm(14), y2: mm(23), w: 0.6, c: '#d5dae5' });
+    const table = (x0, y0, title, head, widths, rows) => {
+      ops.push(tOp(title, mm(x0), mm(y0), 10.5, true, ACC));
+      let yy = y0 + 3;
+      const TW = widths.reduce((a, b) => a + b, 0);
+      ops.push({ o: 'r', x: mm(x0), y: mm(yy), w: mm(TW), h: mm(6), f: '#eef1f8' });
+      let x = x0;
+      head.forEach((t, i) => { ops.push(tCenter(t, mm(x + widths[i] / 2), mm(yy + 4.2), 7, true, SUBC)); x += widths[i]; });
+      yy += 6;
+      rows.forEach((r, ri) => {
+        if (ri % 2) ops.push({ o: 'r', x: mm(x0), y: mm(yy), w: mm(TW), h: mm(5.4), f: '#f7f8fc' });
+        let xx = x0;
+        r.forEach((v, i) => { ops.push(tCenter(v, mm(xx + widths[i] / 2), mm(yy + 3.9), 7.4, i === 0, INK)); xx += widths[i]; });
+        yy += 5.4;
+      });
+      return yy;
+    };
+    const ad = seq(220, 300, 5, g => [String(g), ...SYS_S.slice(1).map(sy => sy.f(g))]);
+    const yA = table(14, 31, '어른 신발', ['한국 mm', '미국 남', '미국 여', '영국', '유럽', '일본 cm'], [16, 14, 14, 13, 13, 15], ad);
+    const kd = seq(100, 215, 5, g => [String(g), ...SYS_K.slice(1).map(sy => sy.f(g))]);
+    table(112, 31, '아이 신발', ['한국 mm', '미국', '유럽', '일본 cm'], [20, 20, 20, 20], kd);
+    let y = mm(Math.max(yA, 31 + 3 + 6 + kd.length * 5.4) + 9);
+    ops.push(tOp('고르는 요령', mm(14), y, 10.5, true, ACC));
+    y += mm(6);
+    ['한국 신발 사이즈는 발 길이(mm)입니다. 잰 길이를 5mm 단위로 올려 고르세요(243mm → 245).',
+      '발볼이 넓거나 발등이 높으면, 또 두꺼운 양말을 신는 운동화·등산화는 5mm 크게 고르세요.',
+      '미국은 같은 발이라도 남성 표기가 여성보다 1 작습니다(남성 7 = 여성 8). 남녀 공용은 대개 남성 표기입니다.',
+      '유럽 사이즈는 0.5 칸이 약 3.3mm 라 한국 5mm 칸과 딱 맞지 않아요. 표에 없는 숫자(39·42 등)는 앞뒤 칸 사이입니다.',
+      '아이 신발은 발 길이에 5~10mm 여유를 더해 고르고, 발이 금방 자라니 몇 달마다 다시 재세요.',
+      '브랜드·모델마다 같은 사이즈라도 ±5mm 다를 수 있습니다. 이 표는 참고용이니 브랜드 사이즈표를 함께 확인하세요.']
+      .forEach((t, i) => { y = para(ops, (i + 1) + '. ' + t, mm(16), y, mm(178), 8.2, false, SUBC, mm(4.1)) + mm(1); });
+    ops.push(tCenter('옷·신발 사이즈 변환 · hwj-hub.github.io/clothes_size', PW / 2, PH - mm(10), 7, false, GRAY));
+    pages.push({ W: PW, H: PH, ops });
+  }
+  return pages;
+}
+
+/* ════════════════════════════════════════════════════════════
+   인앱 브라우저 (네이버·카카오톡 앱 안에서 열었을 때)
+
+   앱 안 화면은 OS 가 주는 WebView 인데 내려받기 기능이 없다. blob: 주소를 넘기면
+   아무 일도 일어나지 않고 끝난다(카카오 공식 안내: a[download] 는 안드로이드만,
+   iOS 는 data: 주소 방식). 서버가 없는 도구라 응답 헤더로 내려줄 수도 없다.
+     ① 저장은 blob: 대신 data: 주소로 시도한다
+     ② 시작하기 전에 창을 띄워 브라우저를 옮기게 한다 — 다 쓰고 나서 옮기면
+        내용을 다시 써야 한다(내용은 그 탭에만 보관)
+     ③ 아이폰은 사파리를 강제로 열 수 없어 주소 복사 + 메뉴 안내로 간다
+   ════════════════════════════════════════════════════════════ */
+const UA = navigator.userAgent || '';
+const IA = {
+  naver: /NAVER\(inapp/i.test(UA),
+  kakao: /KAKAOTALK/i.test(UA),
+  line: /\bLine\//i.test(UA),
+  ios: /iPhone|iPad|iPod/i.test(UA),
+  android: /Android/i.test(UA)
+};
+IA.on = IA.naver || IA.kakao || IA.line ||
+  /Instagram|FBAN|FBAV|FB_IAB|DaumApps|everytimeApp|band\/|KAKAOSTORY/i.test(UA) ||
+  (IA.android && /;\s*wv\)/i.test(UA));   /* 안드로이드 WebView 표시 */
+
+/* 다른 브라우저로 넘기기. 앱마다 길이 달라 순서대로 고른다 */
+function externalUrl() {
+  const url = location.href;
+  if (IA.kakao) return 'kakaotalk://web/openExternal?url=' + encodeURIComponent(url);
+  if (IA.line) return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'openExternalBrowser=1';
+  /* 안드로이드는 크롬을 직접 연다. 크롬이 없으면 fallback 주소로 되돌아온다 */
+  if (IA.android) return 'intent://' + url.replace(/^https?:\/\//i, '') +
+    '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
+  return '';          /* 아이폰은 사파리를 강제로 열 수 없다 */
+}
+function copyAddr(guide) {
+  const url = location.href;
+  const done = () => toast(guide ? '주소를 복사했습니다. 사파리를 열고 붙여 넣거나, 오른쪽 아래 메뉴에서 「다른 브라우저로 열기」를 누르세요.' : '주소를 복사했습니다.', 5200);
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(url).then(done, () => fallbackCopy(url, done)); return; }
+  } catch (e) { /* 아래로 */ }
+  fallbackCopy(url, done);
+}
+function fallbackCopy(text, done) {
+  const t = document.createElement('textarea');
+  t.value = text; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;left:-9999px;top:0';
+  document.body.appendChild(t); t.select(); t.setSelectionRange(0, text.length);
+  try { document.execCommand('copy'); done(); } catch (e) { toast('주소를 길게 눌러 복사해 주세요.', 4200); }
+  t.remove();
+}
+/* 앱 안에서는 blob: 이 통하지 않아 data: 주소로 바꿔 넘긴다.
+   data: 는 문자열이라 너무 크면 앱이 통째로 거부한다 — 큰 엑셀은 수십 MB 가 될 수 있어 상한을 둔다 */
+function downloadInApp(blob, name) {
+  const how = () => '위쪽 「' + $('iaGo').textContent + '」를 눌러 주세요.';
+  if (blob.size > 10 * 1024 * 1024) { toast('앱 안에서는 10MB가 넘는 파일을 저장할 수 없습니다. ' + how(), 5600); return; }
+  const go = href => {
+    const a = document.createElement('a');
+    a.href = href; a.download = name; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+  };
+  const fr = new FileReader();
+  fr.onload = () => { try { go(fr.result); } catch (e) { /* 안내로 넘어간다 */ } };
+  fr.onerror = () => toast('앱 안에서는 저장이 막혀 있습니다. ' + how(), 5200);
+  fr.readAsDataURL(blob);
+}
+/* 앱 안에서 열렸으면 작성을 막고 창을 띄운다.
+   띠만 띄워 두면 다 채운 뒤에야 저장이 안 되는 걸 알게 되는데,
+   입력은 그 탭에만 있어서 브라우저를 옮기는 순간 처음부터 다시 써야 한다 */
+function initInApp() {
+  if (!IA.on) return;
+  const app = IA.naver ? '네이버 앱' : IA.kakao ? '카카오톡' : IA.line ? '라인' : '앱';
+  const copyOnly = IA.ios && !IA.kakao && !IA.line;   /* 아이폰은 사파리를 강제로 열 수 없다 */
+  /* 카카오·라인은 앱의 자체 통로(kakaotalk:// · openExternalBrowser)로 기본 브라우저가 열린다.
+     크롬을 콕 집어 여는 것은 안드로이드 intent:// 뿐이라 단추 문구와 순서를 나눈다 */
+  const chromeIntent = IA.android && !IA.kakao && !IA.line;
+
+  document.body.classList.add('inapp');
+  $('iaMsg').textContent = app + ' 안에서는 그림·PDF 저장이 안 될 수 있어요.';
+  $('doneInapp').classList.remove('hide');
+
+  $('iaDesc').innerHTML = '<b>' + app + '</b> 안에서 열렸습니다. 이 화면에서는 ' +
+    '<b>그림·PDF 파일이 저장되지 않을 수 있습니다.</b> 사이즈 바꾸기는 그대로 되지만, 사이즈 수첩은 이 앱 안에만 남습니다.';
+  const steps = copyOnly
+    ? ['아래 <b>주소 복사</b>를 누르세요.',
+       '오른쪽 아래 <b>메뉴</b>에서 「다른 브라우저로 열기」를 누르거나, <b>사파리</b> 주소창에 붙여 넣으세요.']
+    : chromeIntent
+      ? ['아래 <b>크롬에서 열기</b>를 누르세요.',
+         '크롬이 없으면 오른쪽 위 <b>메뉴</b>에서 「다른 브라우저로 열기」를 누르세요.']
+      : ['아래 <b>다른 브라우저로 열기</b>를 누르세요.',
+         '열리지 않으면 ' + (IA.ios ? '화면의' : '오른쪽 위') + ' <b>메뉴</b>에서 「다른 브라우저로 열기」를 누르세요.'];
+  $('iaSteps').innerHTML = steps.map(s => '<li>' + s + '</li>').join('');
+  const label = copyOnly ? '주소 복사' : chromeIntent ? '크롬에서 열기' : '다른 브라우저로 열기';
+  $('iaGo').textContent = label;
+  $('iaGo2').textContent = label;
+  $('doneGo').textContent = label;
+  $('iaSub').textContent = copyOnly
+    ? '사파리에 붙여 넣거나, 오른쪽 아래 메뉴에서 「다른 브라우저로 열기」를 누르세요.'
+    : '사이즈 바꾸기는 그대로 돼요. 파일로 저장하려면 브라우저를 옮겨 주세요.';
+
+  /* 윗머리 띠를 ✕ 로 닫았으면 새로 고쳐도 띠는 다시 띄우지 않는다(막는 창은 열 때마다 뜬다) */
+  let hidden = false;
+  try { hidden = sessionStorage.getItem('clothes_size.iahide') === '1'; } catch (e) { /* 무시 */ }
+  if (hidden) document.body.classList.remove('inapp');
+  /* 사이즈 바꾸기는 앱 안에서도 된다 — 막는 창은 띄우지 않고, 파일 저장만 data: 주소로 돌려 받는다(downloadInApp) */
+}
+/* 창이 떠 있는 동안에는 뒤쪽 입력칸을 아예 만지지 못하게 한다 */
+function lockInApp(on) {
+  document.body.classList.toggle('ia-lock', on);
+  const w = document.querySelector('.wrap');
+  if (on) w.setAttribute('inert', ''); else w.removeAttribute('inert');
+  if (!on) $('iaModal').blur();
+}
+/* 아이폰에서 주소를 복사했으면 창 안에서 바로 알려 준다 — 토스트는 창 위에 잠깐 떴다 사라진다 */
+function iaCopied() {
+  $('iaDesc').innerHTML = '주소를 <b>복사했습니다.</b> 이제 <b>사파리</b>를 열고 주소창에 붙여 넣으세요.';
+  $('iaSteps').innerHTML = '<li>홈 화면에서 <b>사파리</b>를 엽니다.</li>' +
+    '<li>주소창을 길게 눌러 <b>붙여넣기</b> 하세요.</li>' +
+    '<li>또는 이 화면 오른쪽 아래 <b>메뉴</b> → 「다른 브라우저로 열기」.</li>';
+}
+
+/* ════════════════════════════════════════════════════════════
+   광고 (카카오 애드핏) — 자리는 여기 한 곳에서만 만든다
+   · 한 화면 3곳 (애드핏 운영정책: 한 페이지 4개 초과 게재 금지 · 본문 320×100 은 뺐다)
+     모바일 ① 맨 위 320×50 ② 저장 완료 카드 300×250 ③ 하단 오버형 320×50
+     PC     ① 맨 위 320×50 ② 옆 칸 맨 위 320×50 ③ 저장 완료 카드 300×250
+   · ins 는 자리마다 미리 만들어 두고 ba.min.js 는 맨 끝에 한 번만 부른다 —
+     애드핏 로더는 자기가 뜰 때 있는 ins 만 읽어서, 뒤늦게 넣은 ins 는 빈 채로 남는다
+   · 입력·결과·완료·수첩 카드가 화면에 있는 동안에는 오버형을 내려 둔다(핵심 행동 중 광고 노출 금지 · 단추 옆 오클릭 방지)
+     사이즈를 고르거나 치수를 넣는 동안 바로 아래에 광고가 뜨면 잘못 누르기 쉽다
+   · 저장 완료 광고는 창으로 덮지 않고 본문에 카드로 펼친다(「콘텐츠를 덮거나 가리는 영역에 광고 배치 금지」)
+   · 앱 안에서 막는 창이 떠 있으면 광고를 부르지 않는다
+   ※ 단위 ID 는 애드핏에서 크기별로 따로 발급받아 아래 units 에만 적으면 된다.
+     DAN-XXXX… 로 남아 있는 자리는 점선 자리표시자만 그리고 요청은 보내지 않는다.
+     같은 ID 를 한 화면에 함께 뜨는 두 자리에 쓰면 두 번 노출되어 정책 위반이다. */
+const AD = {
+  /* 애드핏 배너 크기는 160×600 · 250×250 · 300×250 · 320×100 · 320×50 · 728×90 뿐인데,
+     이 도구는 그중 휴대폰에서도 들어가는 320×50 · 300×250 만 쓴다 */
+  units: {
+    top:     { id: 'DAN-XXXXXXXXXXXXXXX1', w: 320, h: 50 },   /* 맨 위 · 모바일과 PC 크기가 같아 하나로 겸한다 */
+    side_pc: { id: 'DAN-XXXXXXXXXXXXXXX2', w: 320, h: 50 },   /* PC 옆 칸 맨 위(결과 카드 위) */
+    done:    { id: 'DAN-XXXXXXXXXXXXXXX3', w: 300, h: 250 },  /* 저장 완료 카드 */
+    anchor:  { id: 'DAN-XXXXXXXXXXXXXXX4', w: 320, h: 50 }    /* 모바일 하단 오버형 */
+  },
+  iframeOk: true,   /* iframe 안에서도 띄운다(다른 도구들과 같게). 끄려면 false */
+  popup: true,      /* 저장 완료 카드 */
+  overlay: true,    /* 하단 오버형 */
+  init() {
+    if (this.started) return;
+    this.started = true;
+    this.off = window.top !== window.self && !this.iframeOk;
+    this.pc = window.matchMedia('(min-width:980px)').matches;
+    if (this.off) { document.body.classList.add('no-ad'); return; }  /* 빈 자리가 남지 않게 접는다 */
+    this.put($('ad-top'), 'top');
+    if (this.pc) this.put($('ad-side'), 'side_pc');
+    /* 숨어 있는 자리(하단 오버형·저장 완료 카드)는 화면에 나온 다음에 부른다 —
+       안 보이는 동안 부르면 보는 사람 없이 노출만 잡히고, 애드핏도 「노출수를 인위적으로 늘리는 수단」을 금지한다 */
+    this.load();
+  },
+  /* 자리에 ins 를 만들어 둔다. 단위 ID 를 아직 안 넣었으면 점선 자리만 그리고 요청은 보내지 않는다.
+     높이는 min-height 로 — 내려온 광고가 적어 놓은 높이보다 길어도 잘리지 않게 */
+  put(box, key, preload) {
+    const u = this.units[key];
+    if (!box || !u || box.dataset.ad) return;
+    if (document.querySelectorAll('ins.kakao_ad_area').length >= 4) return;
+    box.dataset.ad = key;
+    box.style.width = u.w + 'px';
+    if (/XXXX/.test(u.id)) { box.style.height = u.h + 'px'; box.innerHTML = '<div class="ad-ph">광고 ' + u.w + ' × ' + u.h + '</div>'; return; }
+    box.style.minHeight = u.h + 'px';
+    /* 광고가 안 내려오면 빈 칸이 남는다 — 공식 콜백으로 접는다. 단위가 여럿이면 이름이 서로 달라야 한다 */
+    const fail = 'adNone_' + key;
+    window[fail] = () => {
+      box.classList.add('ad-none');
+      if (key === 'anchor') { this.closed = true; this.sync(); }
+      if (key === 'done') { const w = $('doneAd'); if (w) w.classList.add('ad-none'); }
+    };
+    const ins = document.createElement('ins');
+    ins.className = 'kakao_ad_area'; ins.style.display = 'none';
+    ins.setAttribute('data-ad-unit', u.id);
+    ins.setAttribute('data-ad-width', String(u.w));
+    ins.setAttribute('data-ad-height', String(u.h));
+    ins.setAttribute('data-ad-onfail', fail);
+    /* preload 를 켜면 애드핏이 「보이는 자리인가」 검사를 건너뛰고 0.7초마다 도는
+       preload 차례에 그려 넣는다 — 방금 펼친 자리를 바로 채우려고 쓴다 */
+    if (preload) ins.setAttribute('data-ad-preload', 'Y');
+    box.appendChild(ins);
+    this.need = true;
+  },
+  /* 숨어 있던 자리를 화면에 내놓은 뒤에 부른다. 기다리지 않게 render 도 한 번 찔러 준다 */
+  show(box, key) {
+    if (this.off || !this.started || !box || box.dataset.ad) return;
+    this.put(box, key, true);
+    this.load();
+    try {
+      const ins = box.querySelector('ins');
+      if (ins && window.adfit && typeof window.adfit.render === 'function') window.adfit.render(ins);
+    } catch (e) { /* 안 되면 0.7초 뒤 preload 차례가 채운다 */ }
+  },
+  load() {
+    if (!this.need || this.loaded) return;
+    this.loaded = true;
+    const s = document.createElement('script');
+    s.type = 'text/javascript'; s.async = true;
+    s.src = 'https://t1.kakaocdn.net/kas/static/ba.min.js';
+    document.body.appendChild(s);
+  },
+  onScreen(el) {
+    if (!el || el.classList.contains('hide')) return false;
+    const r = el.getBoundingClientRect();
+    return r.height > 0 && r.bottom > 0 && r.top < window.innerHeight;
+  },
+  /* 하단 오버형 — 아래쪽 안내 글(사이즈표·재는 법·자주 묻는 것·주의)을 읽는 구간에서만 올라온다.
+     입력·결과·완료·수첩 카드 가운데 하나라도 화면에 보이면 내린다 */
+  sync(barOn) {
+    if (this.off || this.pc || !this.overlay || !this.started) return;
+    const modal = document.body.classList.contains('ia-lock');
+    const ae = document.activeElement;
+    const typing = !!(ae && ae.closest && (ae.closest('#form') || ae.closest('#side')) &&
+      (/^(SELECT|TEXTAREA)$/.test(ae.tagName) || (ae.tagName === 'INPUT' && !/^(checkbox|radio|button|file|range|color)$/.test(ae.type))));
+    const working = WORK_CARDS.some(id => this.onScreen($(id)));
+    const show = !this.closed && !barOn && !modal && !typing && !working && window.scrollY > 320;
+    const was = document.body.classList.contains('anch');
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    $('anchor').classList.toggle('on', show);
+    document.body.classList.toggle('anch', show);
+    /* 이미 맨 아래였으면 늘어난 여백만큼 다시 내려 마지막 줄이 바에 가리지 않게 */
+    if (show && !was && atBottom) window.scrollTo(0, document.documentElement.scrollHeight);
+    if (show) this.show($('ad-anchor'), 'anchor');
+  },
+  /* 저장이 끝나면 결과 카드 밑(PC 는 옆 칸)에 완료 카드를 펼치고 그쪽을 보여 준다 — 창으로 덮지 않는다 */
+  done(msg, steps) {
+    if (!this.popup) { toast(msg, 3200); return; }
+    $('doneMsg').textContent = msg;
+    $('doneSteps').innerHTML = (steps || []).map(x => '<li>' + x + '</li>').join('');
+    $('doneCard').classList.remove('hide');
+    if (!this.off) this.show($('ad-done'), 'done');
+    clearTimeout(this.goT);
+    this.goT = setTimeout(() => {
+      $('doneCard').scrollIntoView({ behavior: 'smooth', block: this.pc ? 'nearest' : 'center' });
+      updateMbar();
+    }, 250);
+  },
+  hideDone() { $('doneCard').classList.add('hide'); updateMbar(); }
+};
+/* 휴대폰 아래 막대 — 입력 카드를 보는 동안 결과 카드가 화면 아래에 있으면
+   지금 사이즈와 결과로 내려가는 단추를 띄운다. 글자를 쓰는 중에는 자판을 가리지 않게 내린다 */
+function updateMbar() {
+  const pv = $('pvCard').getBoundingClientRect(), fm = $('cForm').getBoundingClientRect();
+  const ae = document.activeElement;
+  const typing = !!(ae && (ae.tagName === 'INPUT' && !/^(checkbox|radio|button|range)$/.test(ae.type) || ae.tagName === 'SELECT' || ae.tagName === 'TEXTAREA'));
+  const vh = window.innerHeight;
+  const on = !!S.R && pv.top > vh - 40 && fm.bottom > 120 && fm.top < vh - 120 && !typing;
+  if (S.R) $('mbarTxt').textContent = labelOf(S.R.c, S.R.h) + ' · ' + shortOf(S.R.c, S.R.h);
+  $('mbar').classList.toggle('on', on);
+  AD.sync(on);
+}
+
+/* ════════════════════════════════════════════════════════════
+   화면 — 갈래 · 입력 · 결과 · 수첩 · 저장 · 링크
+   ════════════════════════════════════════════════════════════ */
+const WORK_CARDS = ['cForm', 'pvCard', 'doneCard', 'cHist'];
+function renderAll() { renderForm(); renderResult(); updateMbar(); }
+function renderWho() { if (document.activeElement !== $('inpWho')) $('inpWho').value = S.who; }
+/* 수첩·받은 사이즈를 결과 카드에 띄운다 — 그 갈래의 「사이즈 바꾸기」 로 한국 표기를 골라 넣는다 */
+function viewEntry(h, scroll) {
+  S.cat = h.c; S.mode = 'conv'; S.sys[h.c] = 'kr';
+  const sy = sysList(h.c)[0];
+  nearSel(h.c, sy, h.h);
+  /* 한국 표기가 두 칸 사이(예: 55~66)면 고른 칸 하나로는 같은 값이 안 나온다 — 그럴 때는 허브 그대로 보여 준다 */
+  renderForm();
+  const hub = convHub(h.c);
+  if (hub == null || !sameHub(hub, h.h)) { S.mode = 'view'; S.view = h; renderForm(); }
+  S.who = h.who || ''; renderWho();
+  renderResult(); updateMbar();
+  if (scroll) setTimeout(() => $('pvCard').scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+
+/* ══ 저장 ══ */
+function download(blob, name) {
+  if (IA.on) { downloadInApp(blob, name); return; }
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name; a.rel = 'noopener';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
+const safeName = s => String(s).replace(/[\\/:*?"<>|\s·~()]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 24);
+let busy = false;
+async function doSave(kind) {
+  if (busy) return;
+  if (kind === 'img' && !S.R) return;
+  if (kind === 'hist' && !S.hist.length) return;
+  busy = true;
+  const btn = $({ img: 'btnImg', hist: 'histImg', pdf: 'btnPdf' }[kind]);
+  const old = btn.textContent;
+  btn.disabled = true; btn.textContent = '만드는 중…';
+  try {
+    await yieldUI();
+    let blob, name, steps;
+    if (kind === 'pdf') {
+      blob = await makePDF(footPages(), '발 길이 측정지 · 신발 사이즈표');
+      name = '발길이_측정지_신발사이즈표_A4.pdf';
+      steps = ['인쇄 창에서 배율을 <b>「실제 크기」 또는 「100%」</b>로 고르세요. 「페이지에 맞춤」이면 선이 작아집니다.',
+        '인쇄한 뒤 오른쪽 <b>10cm 자</b>와 <b>윗변에서 150 선까지</b>를 자로 재 확인하세요.',
+        '종이 윗변을 벽에 붙이고 뒤꿈치를 벽에 대고 서서, 가장 긴 발가락 끝 자리를 읽으세요.'];
+    } else if (kind === 'img') {
+      const h = curEntry();
+      blob = await canvasBlob(pageCanvas(cardPage([h]), 2, false), 'image/png');
+      name = safeName(CATS[h.c].n + '_사이즈_' + bigOf(h.c, h.h)[0] + (h.who ? '_' + h.who : '')) + '.png';
+      steps = ['쇼핑몰·매장에서 보여 주거나 메신저로 보내기 좋은 크기입니다.', '나라별 사이즈가 함께 적혀 있어 해외 직구 때 그대로 쓸 수 있어요.'];
+    } else {
+      blob = await canvasBlob(pageCanvas(cardPage(S.hist), 2, false), 'image/png');
+      name = '내_사이즈_수첩_' + S.hist.length + '개.png';
+      steps = ['가족 옷·신발이나 선물을 살 때 한 장으로 보여 주세요.', '수첩은 이 기기에만 남습니다. 다른 기기에서도 보려면 이 그림을 보관하세요.'];
+    }
+    download(blob, name);
+    AD.done('「' + name + '」 파일을 저장했습니다.', steps);
+  } catch (e) {
+    toast('파일을 만들지 못했습니다. 다른 브라우저에서 다시 해 보세요.', 4200);
+  } finally {
+    btn.textContent = old; busy = false;
+    btn.disabled = kind === 'img' ? !S.R : false;
+  }
+}
+function copyText(text, ok) {
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, () => fallbackCopy(text, ok));
+  else fallbackCopy(text, ok);
+}
+async function doShare(list, text) {
+  if (!list.length) return;
+  const url = shareUrl(list);
+  const coarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  if (navigator.share && coarse && !IA.on) {
+    try { await navigator.share({ title: '옷·신발 사이즈', text, url }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+  }
+  copyText(url, () => toast('링크를 복사했습니다. 카톡·문자에 붙여 넣어 보내세요. 받은 사람이 열면 같은 사이즈가 떠요.', 4200));
+}
+function saveEntry() {
+  if (!S.R) return;
+  const h = curEntry();
+  if (S.hist.some(x => sameEntry(x, h))) { toast('수첩에 이미 있는 사이즈예요.'); return; }
+  S.hist.unshift(Object.assign({ id: newId() }, h));
+  S.hist = S.hist.slice(0, 30);
+  saveHist(); renderHist();
+  toast('수첩에 저장했습니다 · ' + (h.who ? h.who + ' ' : '') + labelOf(h.c, h.h), 2800);
+}
+
+/* ══ 받은 링크 — 첫 사이즈를 결과에 띄우고, 수첩에 더할지는 고르게 ══ */
+let RCV = null;
+const clearHash = () => { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* 무시 */ } };
+function checkShare() {
+  const m = /^#r=([A-Za-z0-9_-]+)$/.exec(location.hash || '');
+  if (!m) return;
+  const list = readToken(m[1]);
+  if (!list) { clearHash(); toast('받은 링크를 읽지 못했습니다. 주소가 잘렸는지 확인하세요.', 4000); return; }
+  RCV = list;
+  const desc = list.slice(0, 4).map(h => (h.who ? h.who + ' ' : '') + labelOf(h.c, h.h)).join(' · ') + (list.length > 4 ? ' 외 ' + (list.length - 4) + '개' : '');
+  $('rcvTitle').textContent = '받은 사이즈 ' + list.length + '개';
+  $('rcvSub').textContent = desc;
+  $('rcvBar').classList.remove('hide');
+  viewEntry(list[0], false);
+}
+function takeShare() {
+  if (!RCV) return;
+  let n = 0;
+  RCV.slice().reverse().forEach(h => {
+    if (S.hist.some(x => sameEntry(x, h))) return;
+    S.hist.unshift({ id: newId(), c: h.c, h: roundHub(h.h), by: h.by, who: h.who, t: todayDot() });
+    n++;
+  });
+  S.hist = S.hist.slice(0, 30);
+  saveHist(); renderHist();
+  RCV = null; clearHash(); $('rcvBar').classList.add('hide');
+  toast(n ? '받은 사이즈 ' + n + '개를 수첩에 더했습니다.' : '이미 수첩에 있는 사이즈입니다.', 3000);
+  setTimeout(() => $('cHist').scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+}
+
+/* ══ 이벤트 ══ */
+function init() {
+  loadHist();
+  let prefT = 0;
+  const prefLater = () => { clearTimeout(prefT); prefT = setTimeout(savePref, 400); };
+  const leaveView = () => { if (S.mode === 'view') { S.mode = 'conv'; S.view = null; } };
+
+  document.addEventListener('click', e => {
+    const t = e.target.closest('button');
+    if (!t) return;
+    if (t.dataset.del) { S.hist = S.hist.filter(x => x.id !== t.dataset.del); saveHist(); renderHist(); toast('수첩에서 지웠습니다.'); return; }
+    if (t.dataset.view) { const h = S.hist.find(x => x.id === t.dataset.view); if (h) viewEntry(h, true); return; }
+    if (t.dataset.q) {
+      const [c, sy, v, cup] = t.dataset.q.split('|');
+      S.cat = c; S.mode = 'conv'; S.view = null; S.sys[c] = sy; S.sel[c][sy] = cup ? v + '|' + cup : v;
+      renderAll(); prefLater();
+      if (!window.matchMedia('(min-width:980px)').matches) setTimeout(() => $('pvCard').scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+      return;
+    }
+    if (t.dataset.go) { S.cat = t.dataset.go; leaveView(); renderAll(); prefLater(); $('cForm').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    const seg = t.closest('[data-seg]');
+    if (!seg || t.dataset.v === undefined) return;
+    const k = seg.dataset.seg, v = t.dataset.v;
+    if (k === 'cat') { S.cat = v; leaveView(); }
+    else if (k === 'mode') { S.mode = v; S.view = null; }
+    else if (k === 'sys') {
+      const c = S.cat, cur = S.R && S.R.c === c ? S.R.h : convHub(c);
+      leaveView();
+      S.sys[c] = v;
+      nearSel(c, curSys(c), cur);
+    }
+    else if (k === 'unit') {
+      /* 단위를 바꾸면 적어 둔 숫자도 바꿔 적는다(같은 치수가 유지되게) */
+      if (S.unit !== v) {
+        CATS[S.cat].fields.forEach(f => {
+          if (!f.len) return;
+          const raw = S.vals[S.cat][f.k];
+          const x = readNum(raw || '');
+          if (!isNaN(x) && !/cm|in|인치|["″]/i.test(raw)) S.vals[S.cat][f.k] = fmtN(v === 'in' ? x / IN : x * IN);
+        });
+      }
+      S.unit = v;
+    }
+    else if (k === 'pm') S.pm = v;
+    else if (k === 'wide') S.wide = v;
+    else return;
+    renderAll(); prefLater();
+  });
+  $('convSel').addEventListener('change', () => {
+    const c = S.cat, sy = curSys(c);
+    leaveView();
+    S.sel[c][sy.k] = c === 'bra' ? $('convSel').value + '|' + $('convCup').value : $('convSel').value;
+    renderResult(); updateMbar(); prefLater();
+  });
+  $('convCup').addEventListener('change', () => {
+    const c = S.cat, sy = curSys(c);
+    leaveView();
+    S.sel[c][sy.k] = $('convSel').value + '|' + $('convCup').value;
+    renderResult(); updateMbar(); prefLater();
+  });
+  $('measFields').addEventListener('input', e => {
+    const k = e.target.dataset.f;
+    if (!k) return;
+    S.vals[S.cat][k] = e.target.value.slice(0, 12);
+    renderResult(); updateMbar(); prefLater();
+  });
+  $('measFields').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) e.target.blur(); });
+  $('inpWho').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) e.target.blur(); });
+  $('inpWho').addEventListener('input', () => { S.who = $('inpWho').value.slice(0, 20); prefLater(); });
+
+  /* 결과 · 수첩 */
+  $('btnSave').addEventListener('click', saveEntry);
+  $('btnImg').addEventListener('click', () => doSave('img'));
+  $('btnPdf').addEventListener('click', () => doSave('pdf'));
+  $('btnCopy').addEventListener('click', () => {
+    if (!S.R) return;
+    copyText(entryText(curEntry()) + '\n' + SITE, () => toast('사이즈를 글로 복사했습니다. 메신저나 메모장에 붙여 넣으세요.', 3200));
+  });
+  $('btnShare').addEventListener('click', () => {
+    if (!S.R) return;
+    const h = curEntry();
+    doShare([h], (h.who ? h.who + ' ' : '') + labelOf(h.c, h.h));
+  });
+  $('histImg').addEventListener('click', () => doSave('hist'));
+  $('histCopy').addEventListener('click', () => copyText(histText(), () => toast('수첩을 글로 복사했습니다.', 2800)));
+  $('histShare').addEventListener('click', () => doShare(S.hist, '옷·신발 사이즈 ' + S.hist.length + '개'));
+  /* 수첩 지우기는 두 번 눌러야 — 잘못 눌러 다 날아가지 않게 */
+  let armT = 0;
+  $('histClear').addEventListener('click', () => {
+    const b = $('histClear');
+    if (!b.classList.contains('armed')) { b.classList.add('armed'); b.textContent = '한 번 더 누르면 지워집니다'; clearTimeout(armT); armT = setTimeout(() => { b.classList.remove('armed'); b.textContent = '수첩 모두 지우기'; }, 3500); return; }
+    clearTimeout(armT); b.classList.remove('armed'); b.textContent = '수첩 모두 지우기';
+    S.hist = []; saveHist(); renderHist(); toast('수첩을 모두 지웠습니다.');
+  });
+  $('rcvAdd').addEventListener('click', takeShare);
+  $('rcvNo').addEventListener('click', () => { RCV = null; clearHash(); $('rcvBar').classList.add('hide'); });
+  $('doneHide').addEventListener('click', () => AD.hideDone());
+  $('mbarGo').addEventListener('click', () => { $('pvCard').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+
+  /* 앱 안 브라우저 */
+  initInApp();
+  const goOut = () => { const u = externalUrl(); if (u) { location.href = u; return; } copyAddr(true); iaCopied(); };
+  $('iaGo').addEventListener('click', goOut);
+  $('iaGo2').addEventListener('click', goOut);
+  $('doneGo').addEventListener('click', goOut);
+  $('iaX').addEventListener('click', () => {
+    document.body.classList.remove('inapp');
+    try { sessionStorage.setItem('clothes_size.iahide', '1'); } catch (er) { /* 무시 */ }
+  });
+  $('iaStay').addEventListener('click', () => { lockInApp(false); updateMbar(); });
+
+  const sync = () => updateMbar();
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  document.addEventListener('focusin', sync);
+  document.addEventListener('focusout', () => setTimeout(sync, 60));
+  $('anchorX').addEventListener('click', () => { AD.closed = true; AD.sync(true); });
+
+  renderForm();
+  renderResult();
+  renderWho();
+  renderHist();
+  checkShare();
+  sync();
+  AD.init();
+  document.body.dataset.ready = '1';
+}
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
